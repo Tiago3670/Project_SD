@@ -4,7 +4,8 @@ import java.rmi.RemoteException;
 import java.util.UUID;
 
 public interface FileInterface extends Remote {
-    void SendFile(FileClass f) throws RemoteException;
-    UUID GetIdentificador() throws  RemoteException;
+    String SendFile(FileClass f) throws RemoteException;
     void ToFile(FileClass f) throws IOException;
+
+
 }

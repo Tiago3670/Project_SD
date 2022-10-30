@@ -18,21 +18,21 @@ public class FileManager extends UnicastRemoteObject implements FileInterface  {
     }
 
     @Override
-    public void SendFile(FileClass f) throws RemoteException {
+    public String SendFile(FileClass f) throws RemoteException {
             UUID identificador;
-            identificador = UUID.fromString(f.getName());
-            f.setIdentificador(identificador);
+            identificador = UUID.fromString(UUID.nameUUIDFromBytes(String.valueOf(f.getName()).getBytes()).toString());;
+        f.setIdentificador(identificador);
+
+
         try {
             ToFile(f);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return f.getIdentificadorFile();
     }
 
-    @Override
-    public UUID GetIdentificador() throws RemoteException {
-        return null;
-    }
+
 
     public void ToFile(FileClass f) throws IOException {
         byte[] clientfile = Base64.getDecoder().decode(f.FileBase64().getBytes(StandardCharsets.UTF_8));

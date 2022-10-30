@@ -20,9 +20,9 @@ public class FileClass  implements Serializable {
         return this.FileName;
     }
 
-    public UUID getIdentificadorFile()
+    public String getIdentificadorFile()
     {
-        return this.Identificador;
+        return this.Identificador.toString();
     }
     public void setIdentificador(UUID identificador)
     {
