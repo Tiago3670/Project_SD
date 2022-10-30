@@ -19,7 +19,7 @@ public class Main {
     {
         String identificador;
         File pathfile=new File("C:\\Users\\tiago\\OneDrive\\Área de Trabalho\\teste.txt");
-        FileInterface FileInte = null;
+         FileInterface FileInte = null;
         String FileInBase64=ToBase64(pathfile);
         try {
             FileInte = (FileInterface) Naming.lookup("rmi://localhost:2022/File");

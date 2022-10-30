@@ -17,12 +17,12 @@ public class FileClass  implements Serializable {
     }
     public String getName()
     {
-        return FileName;
+        return this.FileName;
     }
 
     public UUID getIdentificadorFile()
     {
-        return Identificador;
+        return this.Identificador;
     }
     public void setIdentificador(UUID identificador)
     {
@@ -30,6 +30,6 @@ public class FileClass  implements Serializable {
     }
     public String FileBase64()
     {
-        return  FileInBase64;
+        return  this.FileInBase64;
     }
 }
