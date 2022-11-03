@@ -22,13 +22,12 @@ public class FileManager extends UnicastRemoteObject implements FileInterface  {
             UUID identificador;
             identificador = UUID.fromString(UUID.nameUUIDFromBytes(String.valueOf(f.getName()).getBytes()).toString());;
         f.setIdentificador(identificador);
-
-
         try {
             ToFile(f);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return f.getIdentificadorFile();
     }
 
@@ -36,9 +35,10 @@ public class FileManager extends UnicastRemoteObject implements FileInterface  {
 
     public void ToFile(FileClass f) throws IOException {
         byte[] clientfile = Base64.getDecoder().decode(f.FileBase64().getBytes(StandardCharsets.UTF_8));
-        Path serverpath = Paths.get("C:/Users/tiago/OneDrive/Área de Trabalho/EI/3 Ano/SD/teste", f.getName());
+        Path serverpath = Paths.get("C:/Users/tiago/OneDrive/Área de Trabalho/EI/3 Ano/SD/teste", f.getNameIdent());
         Files.write(serverpath, clientfile);
     }
+
 
 
 }

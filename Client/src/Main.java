@@ -18,12 +18,12 @@ public class Main {
     public static void main(String[] args)
     {
         String identificador;
-        File pathfile=new File("C:\\Users\\tiago\\OneDrive\\Área de Trabalho\\teste.txt");
+        File pathfile=new File("C:\\Users\\tiago\\OneDrive\\Área de Trabalho\\e.txt");
         FileInterface FileInte = null;
         String FileInBase64=ToBase64(pathfile);
         try {
             FileInte = (FileInterface) Naming.lookup("rmi://localhost:2022/File");
-            FileClass f=new FileClass(null,"teste.txt",FileInBase64);
+            FileClass f=new FileClass(null,"e.txt",FileInBase64);
             identificador = FileInte.SendFile(f);
             System.out.println("uploading to server...");
             System.out.println("File UIDD:");

@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import java.util.Optional;
 import java.util.UUID;
 
 public class FileClass  implements Serializable {
@@ -19,6 +20,10 @@ public class FileClass  implements Serializable {
     {
         return this.FileName;
     }
+    public String getNameIdent()
+    {
+        return getIdentificadorFile() + "." + getExtension();
+    }
 
     public String getIdentificadorFile()
     {
@@ -28,8 +33,19 @@ public class FileClass  implements Serializable {
     {
         this.Identificador=identificador;
     }
+
+
     public String FileBase64()
     {
         return  this.FileInBase64;
+    }
+
+    public String getExtension() {
+        String extension="";
+        int index = FileName.lastIndexOf('.');
+        if (index > 0) {
+            extension = FileName.substring(index + 1);
+        }
+        return extension;
     }
 }
