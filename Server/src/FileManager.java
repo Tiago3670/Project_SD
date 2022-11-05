@@ -9,10 +9,12 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.UUID;
 
 public class FileManager extends UnicastRemoteObject implements FileInterface  {
+    private ArrayList<FileClass> ListFile = new ArrayList<FileClass>();
 
     protected FileManager() throws RemoteException {
     }
@@ -27,7 +29,7 @@ public class FileManager extends UnicastRemoteObject implements FileInterface  {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        this.ListFile.add(f);
         return f.getIdentificadorFile();
     }
 
@@ -39,6 +41,15 @@ public class FileManager extends UnicastRemoteObject implements FileInterface  {
         Files.write(serverpath, clientfile);
     }
 
-
-
+    @Override
+    public FileClass GetFile(String UIDD) throws IOException {
+        for(int i=0;i < ListFile.size();i++)
+        {
+            if(UIDD.equals(this.ListFile.get(i).getIdentificadorFile()))
+            {
+                return this.ListFile.get(i);
+            }
+        }
+        return null;
+    }
 }
