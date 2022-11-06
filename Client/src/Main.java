@@ -78,9 +78,9 @@ public class Main {
 
             BalancerInte.SendRequest(r);
             UUID Uuid ;
-            Uuid=UUID.fromString("ac998bbb-3545-43a1-adcb-328d72d3407b");
+            Uuid=UUID.fromString("f14bbbdf-8366-4daf-9e5e-1a65fd338bd4");
 
-            //x= BalancerInte.GetEStado(Uuid);
+            x= BalancerInte.GetEStado(Uuid);
             String Estado=null;
             if(x==1)
             {
