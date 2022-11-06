@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e285521d-de92-4503-afcf-8a75a1271931" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../Client/src/BalancerInterface.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Client/src/RequestClass.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Processor.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/BalancerInterface.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/FileClass.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ProcessorClass.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ProcessorInterface.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ProcessorManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ReplicaInterface.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/RequestClass.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ReplicaManager/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ReplicaManager/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ReplicaManager/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ReplicaManager/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ReplicaManager/ReplicaManager.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ReplicaManager/src/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ReplicaManager/src/ProcessorClass.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ReplicaManager/src/ReplicaInterface.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ReplicaManager/src/ReplicaManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../balancer/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../balancer/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../balancer/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../balancer/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../balancer/balancer.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../balancer/src/BalancerInterface.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../balancer/src/BalancerManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../balancer/src/FileClass.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../balancer/src/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../balancer/src/ProcessorClass.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../balancer/src/ProcessorInterface.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../balancer/src/ReplicaInterface.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../balancer/src/RequestClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/out/production/Client/FileClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/out/production/Client/FileClass.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/out/production/Client/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/out/production/Client/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/src/FileClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/FileClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Server/out/production/Server/FileClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Server/out/production/Server/FileClass.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Server/src/FileClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Server/src/FileClass.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2H8lXQva3HcDWqCB0ptWzpZRzlB" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e285521d-de92-4503-afcf-8a75a1271931" name="Changes" comment="" />
+      <created>1667674632494</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1667674632494</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

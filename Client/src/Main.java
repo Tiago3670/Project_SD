@@ -6,6 +6,7 @@ import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.util.Base64;
 import java.util.Scanner;
+import java.util.UUID;
 
 public class Main {
     static Scanner scan = new Scanner(System.in);
@@ -60,19 +61,19 @@ public class Main {
        // Menu();
         try {
             FileInterface FileInte = (FileInterface) Naming.lookup("rmi://localhost:2022/File");
+            BalancerInterface BalancerInte = (BalancerInterface) Naming.lookup("rmi://localhost:2023/Balancer");
             String identificador;
-            File pathfile=new File("C:\\Users\\tiago\\OneDrive\\Área de Trabalho\\ficheiro2.txt");
+            File pathfile=new File("C:\\Users\\tiago\\OneDrive\\Área de Trabalho\\e.txt");
             String FileInBase64=ToBase64(pathfile);
-            FileClass f=new FileClass(null,"ficheiro2.txt",FileInBase64);
+            FileClass f=new FileClass(null,"e.txt",FileInBase64);
             identificador = FileInte.SendFile(f);
             System.out.println("uploading to server...");
             System.out.println("File UIDD:");
-            System.out.println(identificador);
-            
-            FileClass ff= FileInte.GetFile("e6b79a8b-07a6-3546-9de5-e61ce8d38a08");
-            String x= ff.getIdentificadorFile();
-            System.out.println(x.toString());
-
+            //System.out.println(identificador);
+             f= FileInte.GetFile(identificador);
+            RequestClass r=new RequestClass(UUID.randomUUID(),f,f.getIdentificadorUUID(),1,null);
+            System.out.println(f.getIdentificadorUUID().toString());
+            BalancerInte.SendRequest(r);
 
         } catch (RemoteException e) {
             System.out.println(e.getMessage());
