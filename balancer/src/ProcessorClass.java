@@ -27,11 +27,8 @@ public class ProcessorClass  implements Serializable
     }
     public void setEstadoToOcupado() {
         this.Estado = 0;
-        System.out.println("ALTEREI O ESTADO do "+this.getIdentificador()+ " para "+this.Estado);
     }
     public void setEstadoToDisponivel() {
         this.Estado = 1;
-        System.out.println("ALTEREI O ESTADO do "+this.getIdentificador()+ " para "+this.Estado);
-
     }
 }

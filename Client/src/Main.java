@@ -60,6 +60,7 @@ public class Main {
     {
        // Menu();
         try {
+            int x=10;
             FileInterface FileInte = (FileInterface) Naming.lookup("rmi://localhost:2022/File");
             BalancerInterface BalancerInte = (BalancerInterface) Naming.lookup("rmi://localhost:2023/Balancer");
             String identificador;
@@ -68,20 +69,41 @@ public class Main {
             FileClass f=new FileClass(null,"e.txt",FileInBase64);
             identificador = FileInte.SendFile(f);
             System.out.println("uploading to server...");
-            System.out.println("File UIDD:");
-            //System.out.println(identificador);
+
+
              f= FileInte.GetFile(identificador);
-            RequestClass r=new RequestClass(UUID.randomUUID(),f,f.getIdentificadorUUID(),1,null);
-            System.out.println(f.getIdentificadorUUID().toString());
+
+             RequestClass r=new RequestClass(UUID.randomUUID(),f,f.getIdentificadorUUID(),1,null);
+           // System.out.println(r.getIdentificadorProcessor());
+
             BalancerInte.SendRequest(r);
+            UUID Uuid ;
+            Uuid=UUID.fromString("ac998bbb-3545-43a1-adcb-328d72d3407b");
+
+            //x= BalancerInte.GetEStado(Uuid);
+            String Estado=null;
+            if(x==1)
+            {
+                Estado="Processo "+Uuid+ " está em em espera";
+            }
+            else if (x==2)
+            {
+                Estado="Processo "+Uuid+ " está em procesasmento";
+            }
+            else if (x==0)
+            {
+                Estado="Processo "+Uuid+ " está em concluido";
+            }
+            else if (x==10)
+            {
+                Estado="Processo "+Uuid+ " não foi encontrado";
+            }
+            System.out.println(Estado);
 
         } catch (RemoteException e) {
             System.out.println(e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
-
     }
 }

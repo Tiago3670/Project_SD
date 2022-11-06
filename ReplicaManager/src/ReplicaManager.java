@@ -11,8 +11,14 @@ public class ReplicaManager extends UnicastRemoteObject implements ReplicaInterf
 
     @Override
     public void ADDProcessor(ProcessorClass p) throws RemoteException {
+        for(int j=0;j<ProcessorList.size();j++)
+        {
+            if(ProcessorList.get(j).getIdentificador().equals(p.getIdentificador()))
+            {
+                ProcessorList.remove(j);
+            }
+        }
         ProcessorList.add(p);
-
     }
 
     @Override
@@ -32,6 +38,17 @@ public class ReplicaManager extends UnicastRemoteObject implements ReplicaInterf
             if(processorID.equals(ProcessorList().get(i).getIdentificador()))
             {
                 ProcessorList.get(i).setEstadoToOcupado();
+            }
+        }
+    }
+
+    public void Disponivel(UUID processorID) throws RemoteException {
+
+        for(int i=0;i<ProcessorList.size();i++)
+        {
+            if(processorID.equals(ProcessorList().get(i).getIdentificador()))
+            {
+                ProcessorList.get(i).setEstadoToDisponivel();
             }
         }
     }

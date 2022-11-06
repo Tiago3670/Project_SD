@@ -5,49 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e285521d-de92-4503-afcf-8a75a1271931" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../Client/src/BalancerInterface.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Client/src/RequestClass.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Processor.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/BalancerInterface.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/FileClass.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ProcessorClass.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ProcessorInterface.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ProcessorManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ReplicaInterface.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/RequestClass.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ReplicaManager/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ReplicaManager/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ReplicaManager/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ReplicaManager/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ReplicaManager/ReplicaManager.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ReplicaManager/src/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ReplicaManager/src/ProcessorClass.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ReplicaManager/src/ReplicaInterface.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ReplicaManager/src/ReplicaManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../balancer/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../balancer/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../balancer/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../balancer/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../balancer/balancer.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../balancer/src/BalancerInterface.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../balancer/src/BalancerManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../balancer/src/FileClass.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../balancer/src/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../balancer/src/ProcessorClass.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../balancer/src/ProcessorInterface.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../balancer/src/ReplicaInterface.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../balancer/src/RequestClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/out/production/Client/FileClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/out/production/Client/FileClass.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/out/production/Client/BalancerInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/out/production/Client/BalancerInterface.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Client/out/production/Client/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/out/production/Client/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/src/FileClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/FileClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/src/BalancerInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/BalancerInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Client/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Server/out/production/Server/FileClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Server/out/production/Server/FileClass.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Server/src/FileClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Server/src/FileClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Processor/BalancerInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Processor/BalancerInterface.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BalancerInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BalancerInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ProcessorManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProcessorManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ReplicaInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ReplicaInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReplicaManager/src/ProcessorClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ReplicaManager/src/ProcessorClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReplicaManager/src/ReplicaInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ReplicaManager/src/ReplicaInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReplicaManager/src/ReplicaManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../ReplicaManager/src/ReplicaManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../balancer/out/production/balancer/BalancerInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/../balancer/out/production/balancer/BalancerInterface.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../balancer/out/production/balancer/BalancerManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/../balancer/out/production/balancer/BalancerManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../balancer/src/BalancerInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/../balancer/src/BalancerInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../balancer/src/BalancerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../balancer/src/BalancerManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../balancer/src/ProcessorClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/../balancer/src/ProcessorClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../balancer/src/ReplicaInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/../balancer/src/ReplicaInterface.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,7 +52,8 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true"
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "C:/Users/tiago/OneDrive/Área de Trabalho/EI/3 Ano/SD/Project_SD/ReplicaManager"
   }
 }]]></component>
   <component name="RecentsManager">
