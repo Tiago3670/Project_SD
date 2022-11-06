@@ -76,9 +76,9 @@ public class Main {
              RequestClass r=new RequestClass(UUID.randomUUID(),f,f.getIdentificadorUUID(),1,null);
            // System.out.println(r.getIdentificadorProcessor());
 
-            BalancerInte.SendRequest(r);
+            //BalancerInte.SendRequest(r);
             UUID Uuid ;
-            Uuid=UUID.fromString("f14bbbdf-8366-4daf-9e5e-1a65fd338bd4");
+            Uuid=UUID.fromString("ff600b87-97a6-4274-b78c-cc2d36e8263f");
 
             x= BalancerInte.GetEStado(Uuid);
             String Estado=null;
