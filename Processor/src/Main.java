@@ -27,9 +27,6 @@ public class Main implements Serializable {
             processor=new ProcessorManager();
             r.rebind("Processor", processor );
             System.out.println("processor ready");
-            ReplicaInterface ReplicaInte = (ReplicaInterface) Naming.lookup("rmi://localhost:2021/Replica");
-            ReplicaInte.ADDProcessor(p);
-
         }catch(Exception e) {
             System.out.println("->" + e.getMessage());
         }

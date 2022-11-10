@@ -8,7 +8,7 @@ public class RequestClass implements Serializable {
     private UUID IdentificadorFile;
     private  UUID IdentificadorProcessor;
 
-    private int Estado; //varia entre 1->em espera 0->concluido 2->em processamento
+    private int Estado; //varia entre 1->em espera 0->concluido
 
     public  RequestClass (UUID IdentificadorRequest,FileClass f,UUID IdentificadorFile,int Estado,UUID IdentificadorProcessor)
     {
@@ -40,12 +40,10 @@ public class RequestClass implements Serializable {
     }
     public  void setEstadoProcessamento()
     {
-        this.Estado=2;
+        this.Estado=3;
     }
     public  void setEstadoConcluido()
     {
-        this.Estado=0;
+        this.Estado=2;
     }
-
-
 }
