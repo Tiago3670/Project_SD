@@ -1,0 +1,4 @@
+linha 1 ficheiro
+linha 2 deste ficheiro
+linha3 apenas deste ficheiro
+linha 4 adeus
