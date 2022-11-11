@@ -12,15 +12,13 @@ import java.util.Scanner;
 import java.util.UUID;
 
 public class Main {
-
-    static Scanner scan = new Scanner(System.in);
-
+     static Scanner scan = new Scanner(System.in);
      static FileInterface FileInte;
      static BalancerInterface BalancerInte;
      static ProcessorInterface ProcessorInte;
      static {
         try {
-            FileInte = (FileInterface) Naming.lookup("rmi://localhost:2022/File");
+            FileInte = (FileInterface) Naming.lookup("rmi://localhost:2022/Storage");
             BalancerInte = (BalancerInterface) Naming.lookup("rmi://localhost:2023/Balancer");
             ProcessorInte =(ProcessorInterface) Naming.lookup("rmi://localhost:2024/Processor");
         } catch (NotBoundException | RemoteException | MalformedURLException e) {
@@ -48,8 +46,7 @@ public class Main {
            name=scan.next();
            FileClass f=new FileClass(null,name,FileInBase64);
            identificador = FileInte.SendFile(f);
-
-           System.out.println("uploading to server...");
+           System.out.println("uploading to Storage...");
            System.out.println("File UIDD:");
            System.out.println(identificador);
 
@@ -79,7 +76,6 @@ public class Main {
        int estado=0;
        estado=ProcessorInte.GetEstado();
        String frase=null;
-
        if(estado==0)
        {
            frase="Não Enviado";
@@ -100,13 +96,12 @@ public class Main {
        System.out.println("Request "+r.getIdentificadorRequest()+" está no processador "+r.getIdentificadorProcessor());
        System.out.println("Press Enter to continue…");
        System.in.read();
-
    }
     public static void Menu() throws IOException, NotBoundException {
         String op;
         int x=0;
         do {
-        System.out.println("1-Enviar ficheiro para o Servidor.");
+        System.out.println("1-Enviar ficheiro para a Storage.");
         System.out.println("2-Receber um ficheiro dado o seu identificador.");
         System.out.println("3-Enviar um request.");
         System.out.println("4-Saber o estado do pedido.");
@@ -118,11 +113,11 @@ public class Main {
         }
         else if(op.equals("2"))
         {
-                GetFile();
+            GetFile();
         } else if (op.equals("3")) {
             CreateRequest();
         } else if (op.equals("0")) {
-                x=1;
+            x=1;
         } else if (op.equals("4")) {
             getEstado();
         }
@@ -138,9 +133,7 @@ public class Main {
     }
     public static void main(String[] args) throws RemoteException
     {
-       // Menu();
         try {
-            int x=10;
             Menu();
         } catch (RemoteException e) {
             System.out.println(e.getMessage());

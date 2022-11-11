@@ -1,16 +1,11 @@
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.io.Serializable;
-import java.util.UUID;
 
-
-public class RMIServer implements  Serializable{
+public class Main {
     public static Registry r=null;
     public  static FileManager File;
-
-    public static  void main(String args[])
-    {
+    public static void main(String[] args) {
         try{
             r = LocateRegistry.createRegistry(2022);
         }catch(RemoteException a){
@@ -18,11 +13,10 @@ public class RMIServer implements  Serializable{
         }
         try{
             File=new FileManager();
-            r.rebind("File", File );
-            System.out.println("File server ready");
+            r.rebind("Storage", File );
+            System.out.println("Storage ready");
         }catch(Exception e) {
-            System.out.println("File server main " + e.getMessage());
+            System.out.println("File Storage main " + e.getMessage());
         }
     }
-
 }

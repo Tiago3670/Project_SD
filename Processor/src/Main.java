@@ -17,7 +17,6 @@ public class Main implements Serializable {
         String port="2024";
         identificador = UUID.fromString(UUID.nameUUIDFromBytes(String.valueOf(port).getBytes()).toString());;
         ProcessorClass p=new ProcessorClass(identificador,1,2024);
-
         try{
             r = LocateRegistry.createRegistry(p.getPort());
         }catch(RemoteException a){
