@@ -34,7 +34,7 @@ public class Main {
         try {
            File pathfile;
            String identificador,name;
-           //File pathfile=new File("C:\Users\tiago\OneDrive\Área de Trabalho\EI\3 Ano\SD\Project_SD\\e.txt");
+           //File pathfile=new File("C:\Users\tiago\OneDrive\Área de Trabalho\EI\3 Ano\SD\Project_SD\e.txt");
            System.out.println("Url:");
            String url= scan.nextLine();
            url+=scan.nextLine();
@@ -87,10 +87,21 @@ public class Main {
        System.out.println(frase);
    }
    public static void CreateRequest () throws IOException, NotBoundException {
+       File pathfile;
        System.out.println("Identificador do Ficheiro a enviar no request:");
-       String identificador=scan.next();
-       FileClass f = FileInte.GetFile(identificador);
-       RequestClass r=new RequestClass(UUID.randomUUID(),f,f.getIdentificadorUUID(),1,null);
+       String identificadorFile=scan.next();
+       System.out.println("url do Script que se vai executar no request:");
+       String url= scan.nextLine();
+       url+=scan.nextLine();
+       pathfile =new File(url);
+       if(pathfile.isFile()==false)
+           return;
+       pathfile =new File(url);
+       String FileInBase64=ToBase64(pathfile);
+       System.out.println("Name:");
+       String name=scan.next();
+       FileClass ficheiroScript=new FileClass(null,name,FileInBase64);
+       RequestClass r=new RequestClass(UUID.randomUUID(),ficheiroScript,identificadorFile,1,null);
        UUID ident= BalancerInte.SendRequest(r);
        r.setIdentificadorProcessor(ident);
        System.out.println("Request "+r.getIdentificadorRequest()+" está no processador "+r.getIdentificadorProcessor());

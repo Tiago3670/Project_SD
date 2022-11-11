@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
@@ -9,8 +11,11 @@ import java.util.UUID;
 
 public class ProcessorManager extends UnicastRemoteObject implements ProcessorInterface {
 
-    BalancerInterface BalancerInte = (BalancerInterface) Naming.lookup("rmi://localhost:2023/Balancer");
     RequestClass request;
+    FileClass Script;
+
+    FileClass f;
+    FileInterface FileInte=(FileInterface) Naming.lookup("rmi://localhost:2022/Storage");
 
 
     protected ProcessorManager() throws RemoteException, MalformedURLException, NotBoundException {
@@ -21,8 +26,18 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
         return p;
     }
 
-    public void Send(RequestClass r) throws RemoteException, InterruptedException {
+    public void Send(RequestClass r) throws IOException, InterruptedException {
            request=r;
+           if(request==null)
+               return;
+
+           f=FileInte.GetFile(request.getIdentificadorFile());
+           if(f==null)
+               return;
+
+           Script=request.getScript();
+           System.out.println("é nome do file é "+f.getName());
+           System.out.println("é nome do script é "+Script.getName());
            request.setEstadoConcluido();
     }
 
@@ -33,4 +48,6 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
         else
         return request.getEstado();
     }
+
+
 }

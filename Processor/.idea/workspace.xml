@@ -5,28 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e285521d-de92-4503-afcf-8a75a1271931" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../Storage/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Storage/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Storage/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Storage/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Storage/Storage.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Storage/src/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/FileInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Client/out/production/Client/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/out/production/Client/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Client/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Server/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Server/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Server/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Server/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Server/Server.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Server/out/production/Server/FileClass.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Server/out/production/Server/FileInterface.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Server/out/production/Server/FileManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Server/out/production/Server/RMIServer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Server/src/FileClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Storage/src/FileClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Server/src/FileInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Storage/src/FileInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Server/src/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Storage/src/FileManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Server/src/RMIServer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/src/RequestClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/RequestClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Processor/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Processor/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Processor/ProcessorInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Processor/ProcessorInterface.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Processor/ProcessorManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Processor/ProcessorManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ProcessorInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProcessorInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ProcessorManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProcessorManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RequestClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RequestClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../balancer/src/RequestClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/../balancer/src/RequestClass.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
