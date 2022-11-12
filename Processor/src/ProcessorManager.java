@@ -47,10 +47,8 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
            request.setEstadoConcluido();
            byte[] scriptfile = Base64.getDecoder().decode(Script.FileBase64().getBytes(StandardCharsets.UTF_8));
            String scriptdecode = new String(scriptfile, StandardCharsets.UTF_8);
-           System.out.println(scriptdecode);
-
-              ProcessBuilder execut = new ProcessBuilder("cmd","/c",scriptdecode);
-               Process process = execut.start();
+        ProcessBuilder execut = new ProcessBuilder("cmd","/c",scriptdecode);
+        Process process = execut.start();
         StringBuilder output = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(
                 new InputStreamReader(process.getInputStream()))) {
@@ -65,7 +63,9 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
         } catch (IOException e) {
         e.printStackTrace();
         }
-        System.out.println("->"+output);
+        byte[] FileOutput64 = Base64.getDecoder().decode(f.FileBase64().getBytes(StandardCharsets.UTF_8));
+        String StrFileOut = new String(FileOutput64, StandardCharsets.UTF_8);
+        System.out.println(StrFileOut);
     }
 
 
@@ -79,9 +79,8 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
     public void Exec() throws IOException
     {
         byte[] scriptfile = Base64.getDecoder().decode(Script.FileBase64().getBytes(StandardCharsets.UTF_8));
-
-   //     ProcessBuilder processBuilder = new ProcessBuilder("cmd","/c",f);
-     //   Process process = processBuilder.start();
+        //     ProcessBuilder processBuilder = new ProcessBuilder("cmd","/c",f);
+        //   Process process = processBuilder.start();
     }
 
 

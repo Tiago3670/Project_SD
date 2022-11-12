@@ -57,7 +57,6 @@ public class Main {
        }
         System.out.println("Press Enter to continue…");
         System.in.read();
-
    }
    public static  void GetFile() throws IOException
    {
@@ -70,7 +69,6 @@ public class Main {
        System.out.println("O nome do ficheiro é ("+f.getName()+")");
        System.out.println("Press Enter to continue…");
        System.in.read();
-
    }
    public static void getEstado() throws RemoteException {
        int estado=0;
