@@ -5,24 +5,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e285521d-de92-4503-afcf-8a75a1271931" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../balancer/.idea/uiDesigner.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../100lines.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../100lines.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/out/production/Client/BalancerInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/out/production/Client/BalancerInterface.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/out/production/Client/FileInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/out/production/Client/FileInterface.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/out/production/Client/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/out/production/Client/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/src/BalancerInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/BalancerInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Client/src/FileInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/FileInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Client/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/src/ProcessorInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/ProcessorInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/src/RequestClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/RequestClass.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Processor/ProcessorInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Processor/ProcessorInterface.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/100lines.txt" beforeDir="false" afterPath="$PROJECT_DIR$/100lines.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Processor/FileInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Processor/FileInterface.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Processor/ProcessorManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Processor/ProcessorManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Processor/RequestClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Processor/RequestClass.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/FileInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FileInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ProcessorInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProcessorInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ProcessorManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProcessorManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RequestClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RequestClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Storage/out/production/Storage/FileInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Storage/out/production/Storage/FileInterface.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Storage/out/production/Storage/FileManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Storage/out/production/Storage/FileManager.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Storage/src/FileInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Storage/src/FileInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Storage/src/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Storage/src/FileManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../balancer/src/BalancerInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/../balancer/src/BalancerInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../balancer/src/BalancerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../balancer/src/BalancerManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../balancer/src/ProcessorInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/../balancer/src/ProcessorInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../balancer/src/RequestClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/../balancer/src/RequestClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../outfile.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../script.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../teste.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../x.bat" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,17 +58,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/tiago/OneDrive/Área de Trabalho/EI/3 Ano/SD/Project_SD/Processor&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "C:/Users/tiago/OneDrive/Área de Trabalho/EI/3 Ano/SD/Project_SD/Client",
+    "project.structure.last.edited": "SDKs",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.keymap"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="" />

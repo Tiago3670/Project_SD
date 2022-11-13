@@ -58,8 +58,7 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
         {
             ProcessBuilder processBuilder = new ProcessBuilder(url);
             Process processo = processBuilder.start();
-            BufferedReader reader=new BufferedReader(new InputStreamReader(processo.getInputStream()));
-
+            FileInte.SubmitOutput(request.getIdentificadorRequest().toString(),f);
         }
         catch (Exception e)
         {
@@ -68,7 +67,6 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
 
         System.out.println(out);
 
-          FileInte.SubmitOutput(request.getIdentificadorRequest().toString(),f);
           //este ficheiro f para já vai igual ao que vêm , a nossa ideia seria definir um ficheiro output da classe ProcessBuilder e depois no final
 
     }

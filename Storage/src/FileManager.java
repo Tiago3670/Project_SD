@@ -15,7 +15,7 @@ import java.util.UUID;
 
 public class FileManager extends UnicastRemoteObject implements FileInterface  {
     private ArrayList<FileClass> ListFile = new ArrayList<FileClass>();
-
+     ArrayList<String> DoneRequest=new ArrayList<>();
     protected FileManager() throws RemoteException {
     }
 
@@ -32,12 +32,22 @@ public class FileManager extends UnicastRemoteObject implements FileInterface  {
         this.ListFile.add(f);
         return f.getIdentificadorFile();
     }
-
     @Override
-    public void SubmitOutput(String IDRequest, FileClass f) throws RemoteException {
-        System.out.println("Done");
+    public void SubmitOutput(String IDRequest, FileClass f) throws RemoteException
+    {
+        DoneRequest.add(IDRequest);
     }
-
+   public String GetOutput(String IdentificadorRequest) throws IOException
+   {
+        for(int i=0;i<DoneRequest.size();i++)
+        {
+            if(IdentificadorRequest.equals(DoneRequest.get(i)))
+            {
+                    return  IdentificadorRequest +"Script Done";
+            }
+        }
+        return "Request não encontrado!";
+   }
 
     public void ToFile(FileClass f) throws IOException {
         byte[] clientfile = Base64.getDecoder().decode(f.FileBase64().getBytes(StandardCharsets.UTF_8));
@@ -56,4 +66,6 @@ public class FileManager extends UnicastRemoteObject implements FileInterface  {
         }
         return null;
     }
+
+
 }
