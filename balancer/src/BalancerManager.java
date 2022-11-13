@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
@@ -8,7 +9,7 @@ import java.util.UUID;
 
 public class BalancerManager extends UnicastRemoteObject implements BalancerInterface{
     protected BalancerManager() throws RemoteException, MalformedURLException, NotBoundException {}
-    public UUID SendRequest(RequestClass r) throws RemoteException, MalformedURLException, NotBoundException, InterruptedException {
+    public UUID SendRequest(RequestClass r) throws IOException, NotBoundException, InterruptedException {
 
         ProcessorInterface ProcessorInte = (ProcessorInterface) Naming.lookup("rmi://localhost:2024/Processor");
         ProcessorInte.Send(r);

@@ -15,7 +15,7 @@ import static java.lang.Runtime.getRuntime;
 public class ProcessorManager extends UnicastRemoteObject implements ProcessorInterface, Serializable {
 
     RequestClass request;
-    FileClass Script;
+
 
     FileClass f;
     FileInterface FileInte=(FileInterface) Naming.lookup("rmi://localhost:2022/Storage");
@@ -39,34 +39,7 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
            f=FileInte.GetFile(request.getIdentificadorFile());
            if(f==null)
                return;
-        String command="";
-        Script=request.getScript();
-           System.out.println("é nome do file é "+f.getName());
-           System.out.println("é nome do script é "+Script.getName());
-           request.setEstadoConcluido();
-              byte[] scriptfile = Base64.getDecoder().decode(Script.FileBase64().getBytes(StandardCharsets.UTF_8));
-             command = new String(scriptfile, StandardCharsets.UTF_8);
-             StringBuilder out=new StringBuilder();
-                System.out.println(command);
-           try
-           {
-               //ProcessBuilder processBuilder = new ProcessBuilder("C:\\Users\\tiago\\OneDrive\\Área de Trabalho\\EI\\3 Ano\\SD\\Project_SD\\s.bat");
-               // ProcessBuilder processBuilder = new ProcessBuilder("cmd",command);
-               //Process processo = processBuilder.start();
-              Process processo= Runtime.getRuntime().exec(command);
-               BufferedReader read=new BufferedReader(new InputStreamReader(processo.getInputStream()));
-               String line;
-               while ((line=read.readLine()) != null )
-               {
-                   out.append(line+"\n");
-               }
-           }
-           catch (Exception e)
-           {
-               e.printStackTrace();
-           }
-
-        System.out.println(out);
+            Exec(r.getUrl());
     }
 
 
@@ -77,11 +50,27 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
         return request.getEstado();
     }
 
-    public void Exec() throws IOException
+    public void Exec(String url) throws IOException
     {
-        byte[] scriptfile = Base64.getDecoder().decode(Script.FileBase64().getBytes(StandardCharsets.UTF_8));
-        //     ProcessBuilder processBuilder = new ProcessBuilder("cmd","/c",f);
-        //   Process process = processBuilder.start();
+        request.setEstadoConcluido();
+        StringBuilder out=new StringBuilder();
+        try
+        {
+            ProcessBuilder processBuilder = new ProcessBuilder(url);
+            Process processo = processBuilder.start();
+            BufferedReader reader=new BufferedReader(new InputStreamReader(processo.getInputStream()));
+
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        System.out.println(out);
+
+          FileInte.SubmitOutput(request.getIdentificadorRequest().toString(),f);
+          //este ficheiro f para já vai igual ao que vêm , a nossa ideia seria definir um ficheiro output da classe ProcessBuilder e depois no final
+
     }
 
 

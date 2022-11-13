@@ -33,6 +33,10 @@ public class FileManager extends UnicastRemoteObject implements FileInterface  {
         return f.getIdentificadorFile();
     }
 
+    @Override
+    public void SubmitOutput(String IDRequest, FileClass f) throws RemoteException {
+        System.out.println("Done");
+    }
 
 
     public void ToFile(FileClass f) throws IOException {
