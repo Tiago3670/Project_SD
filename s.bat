@@ -1,6 +1,6 @@
-@echo OFF
+@echo off
 SETLOCAL ENABLEDELAYEDEXPANSION
-SET "destdir=C:\Users\tiago\OneDrive\Área de Trabalho\EI\3 Ano\SD\Project_SD\"
+SET "destdir=C:\Users\tiago\OneDrive\Área de Trabalho\EI\3 Ano\SD\Project_SD\Processor\"
 SET "filename1=100lines.txt"
 SET "outfile=100lines.txt"
 SET /a count=0

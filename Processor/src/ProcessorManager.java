@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;
 import java.rmi.Naming;
@@ -15,7 +12,7 @@ import java.util.UUID;
 
 import static java.lang.Runtime.getRuntime;
 
-public class ProcessorManager extends UnicastRemoteObject implements ProcessorInterface {
+public class ProcessorManager extends UnicastRemoteObject implements ProcessorInterface, Serializable {
 
     RequestClass request;
     FileClass Script;
@@ -32,7 +29,9 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
         return p;
     }
 
-    public void Send(RequestClass r) throws IOException, InterruptedException {
+    @SuppressWarnings("deprecation")
+
+    public void Send(RequestClass r) throws IOException {
            request=r;
            if(request==null)
                return;
@@ -40,32 +39,34 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
            f=FileInte.GetFile(request.getIdentificadorFile());
            if(f==null)
                return;
-
-           Script=request.getScript();
+        String command="";
+        Script=request.getScript();
            System.out.println("é nome do file é "+f.getName());
            System.out.println("é nome do script é "+Script.getName());
            request.setEstadoConcluido();
-           byte[] scriptfile = Base64.getDecoder().decode(Script.FileBase64().getBytes(StandardCharsets.UTF_8));
-           String scriptdecode = new String(scriptfile, StandardCharsets.UTF_8);
-        ProcessBuilder execut = new ProcessBuilder("cmd","/c",scriptdecode);
-        Process process = execut.start();
-        StringBuilder output = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(process.getInputStream()))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                output.append(line + System.lineSeparator());
-            }
+              byte[] scriptfile = Base64.getDecoder().decode(Script.FileBase64().getBytes(StandardCharsets.UTF_8));
+             command = new String(scriptfile, StandardCharsets.UTF_8);
+             StringBuilder out=new StringBuilder();
+                System.out.println(command);
+           try
+           {
+               //ProcessBuilder processBuilder = new ProcessBuilder("C:\\Users\\tiago\\OneDrive\\Área de Trabalho\\EI\\3 Ano\\SD\\Project_SD\\s.bat");
+               // ProcessBuilder processBuilder = new ProcessBuilder("cmd",command);
+               //Process processo = processBuilder.start();
+              Process processo= Runtime.getRuntime().exec(command);
+               BufferedReader read=new BufferedReader(new InputStreamReader(processo.getInputStream()));
+               String line;
+               while ((line=read.readLine()) != null )
+               {
+                   out.append(line+"\n");
+               }
+           }
+           catch (Exception e)
+           {
+               e.printStackTrace();
+           }
 
-        }
-         catch (RemoteException  e) {
-        e.printStackTrace();
-        } catch (IOException e) {
-        e.printStackTrace();
-        }
-        byte[] FileOutput64 = Base64.getDecoder().decode(f.FileBase64().getBytes(StandardCharsets.UTF_8));
-        String StrFileOut = new String(FileOutput64, StandardCharsets.UTF_8);
-        System.out.println(StrFileOut);
+        System.out.println(out);
     }
 
 

@@ -34,7 +34,7 @@ public class Main {
         try {
            File pathfile;
            String identificador,name;
-           //File pathfile=new File("C:\Users\tiago\OneDrive\Área de Trabalho\EI\3 Ano\SD\Project_SD\e.txt");
+           //File pathfile=new File("C:\Users\tiago\OneDrive\Área de Trabalho\EI\3 Ano\SD\Project_SD\100lines.txt");
            System.out.println("Url:");
            String url= scan.nextLine();
            url+=scan.nextLine();
