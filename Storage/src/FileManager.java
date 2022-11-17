@@ -12,8 +12,8 @@ import java.util.UUID;
 public class FileManager extends UnicastRemoteObject implements FileInterface  {
     private ArrayList<FileClass> ListFile = new ArrayList<FileClass>();
     ArrayList<String> DoneRequest=new ArrayList<>();
-    //private String dir = "C:/Users/tiago/OneDrive/Área de Trabalho/EI/3 Ano/SD/teste";
-    private String dir = "C:/Users/dseabra/IdeaProjects/2022/Project_SD/teste";
+    private String dir = "C:/Users/tiago/OneDrive/Área de Trabalho/EI/3 Ano/SD/teste";
+    //private String dir = "C:/Users/dseabra/IdeaProjects/2022/Project_SD/teste";
 
     protected FileManager() throws RemoteException {
     }

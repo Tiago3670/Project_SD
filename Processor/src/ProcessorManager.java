@@ -1,9 +1,11 @@
 import java.io.*;
 import java.net.MalformedURLException;
+import java.nio.file.Files;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Base64;
 
 public class ProcessorManager extends UnicastRemoteObject implements ProcessorInterface, Serializable {
 
@@ -47,29 +49,24 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
 
     public void Exec(String url) throws IOException
     {
-        try
-        {
-            //ProcessBuilder processBuilder = new ProcessBuilder(url);
-            //Process processo = processBuilder.start();
-            String command = "cmd /c " + url + "\"" + "100lines.txt" + "\"";
-
-            //request.getIdentificadorFile()
-
-            Process Runtime = java.lang.Runtime.getRuntime().exec(command);
-            Runtime.waitFor();
-            
-            FileInte.SubmitOutput(request.getIdentificadorRequest().toString(), f);
-
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        request.setEstadoConcluido();
-
-          //este ficheiro f para já vai igual ao que vêm , a nossa ideia seria definir um ficheiro output da classe ProcessBuilder e depois no final
+        StringBuilder output = new StringBuilder();
+        String command = "cmd /c " + url + "\"" + f.getUrlDir() +"\""+ request.getIdentificadorFile() + "\"";
+        Process process = Runtime.getRuntime().exec(command);
+            try (BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(process.getInputStream()))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    output.append(line + System.lineSeparator());
+                }
+                request.setEstadoConcluido();
+                System.out.println(output);
+                FileInte.SubmitOutput(request.getIdentificadorRequest().toString(),f);
+            } catch (RemoteException | MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
     }
-
 
 }

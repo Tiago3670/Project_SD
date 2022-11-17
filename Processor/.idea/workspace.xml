@@ -4,7 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e285521d-de92-4503-afcf-8a75a1271931" name="Changes" comment="" />
+    <list default="true" id="e285521d-de92-4503-afcf-8a75a1271931" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../Client/src/FileClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/FileClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Client/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/100lines.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/FileClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FileClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ProcessorInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProcessorInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ProcessorManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProcessorManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Storage/src/FileClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Storage/src/FileClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Storage/src/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Storage/src/FileManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../balancer/src/FileClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/../balancer/src/FileClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../s.bat" beforeDir="false" afterPath="$PROJECT_DIR$/../s.bat" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -84,7 +97,6 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

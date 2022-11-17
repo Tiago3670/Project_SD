@@ -10,6 +10,10 @@ public class FileClass  implements Serializable {
     private String FileName;
     private String FileInBase64;
 
+    private String urlDir="C:/Users/tiago/OneDrive/Área de Trabalho/EI/3 Ano/SD/teste";
+
+
+
     public FileClass (UUID Identificador,String FileName,String FileInBase64)
     {
         this.Identificador=Identificador;
@@ -24,11 +28,17 @@ public class FileClass  implements Serializable {
     {
         return getIdentificadorFile() + "." + getExtension();
     }
+    public String getUrlDir()
+    {
+        return urlDir;
+    }
+
 
     public String getIdentificadorFile()
     {
         return this.Identificador.toString();
     }
+
     public UUID getIdentificadorUUID()
     {
         return this.Identificador;
