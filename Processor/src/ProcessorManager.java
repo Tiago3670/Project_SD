@@ -49,9 +49,17 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
     {
         try
         {
-            ProcessBuilder processBuilder = new ProcessBuilder(url);
-            Process processo = processBuilder.start();
-            FileInte.SubmitOutput(request.getIdentificadorRequest().toString(),f);
+            //ProcessBuilder processBuilder = new ProcessBuilder(url);
+            //Process processo = processBuilder.start();
+            String command = "cmd /c " + url + "\"" + "100lines.txt" + "\"";
+
+            //request.getIdentificadorFile()
+
+            Process Runtime = java.lang.Runtime.getRuntime().exec(command);
+            Runtime.waitFor();
+            
+            FileInte.SubmitOutput(request.getIdentificadorRequest().toString(), f);
+
         }
         catch (Exception e)
         {

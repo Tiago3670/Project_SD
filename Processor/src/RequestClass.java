@@ -1,5 +1,4 @@
 import java.io.Serializable;
-import java.rmi.Remote;
 import java.util.UUID;
 
 public class RequestClass implements Serializable {
@@ -48,5 +47,4 @@ public class RequestClass implements Serializable {
         this.Estado=2;
     }
     String getUrl(){return this.Script;}
-
 }

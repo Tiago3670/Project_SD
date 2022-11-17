@@ -24,7 +24,7 @@ public class Main {
         }
      }
 
-    public Main() throws MalformedURLException, NotBoundException, RemoteException {
+    public Main() throws MalformedURLException, NotBoundException, Remote1Exception {
     }
 
     public static void SendFile() throws IOException {
