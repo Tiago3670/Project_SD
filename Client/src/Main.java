@@ -101,8 +101,8 @@ public class Main {
        pathfile =new File(url);
        if(pathfile.isFile()==false)
            return;
-
-       RequestClass r=new RequestClass(UUID.randomUUID(),url,identificadorFile,1,null);
+       String FileInBase64=ToBase64(pathfile);
+       RequestClass r=new RequestClass(UUID.randomUUID(),FileInBase64,identificadorFile,1,null);
        UUID ident= BalancerInte.SendRequest(r);
        r.setIdentificadorProcessor(ident);
        System.out.println("Request "+r.getIdentificadorRequest()+" está no processador "+r.getIdentificadorProcessor());

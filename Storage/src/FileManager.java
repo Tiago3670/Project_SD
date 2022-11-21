@@ -1,3 +1,6 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -32,8 +35,19 @@ public class FileManager extends UnicastRemoteObject implements FileInterface  {
             return f.getIdentificadorFile();
     }
     @Override
-    public void SubmitOutput(String IDRequest, FileClass f) throws RemoteException
-    {
+    public void SubmitOutput(FileClass f,String IDRequest,String FOutput) throws IOException {
+        for(int i=0;i<ListFile.size();i++)
+        {
+            if(ListFile.get(i).getIdentificadorFile().equals(f.getIdentificadorFile()))
+            {
+                File file= new File(dir+"/"+f.getIdentificadorFile()+".txt");
+                FileOutputStream out=new FileOutputStream(file);
+                out.write(FOutput.getBytes());
+                out.flush();
+                out.close();
+            }
+        }
+
         DoneRequest.add(IDRequest);
     }
 
