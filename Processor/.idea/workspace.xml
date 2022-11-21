@@ -4,23 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e285521d-de92-4503-afcf-8a75a1271931" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../Client/.idea/runConfigurations.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/src/FileInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/FileInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Client/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/FileInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FileInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ProcessorInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProcessorInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ProcessorManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProcessorManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Storage/.idea/runConfigurations.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Storage/src/FileInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Storage/src/FileInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Storage/src/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Storage/src/FileManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../balancer/.idea/runConfigurations.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ei.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../ei.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../s.bat" beforeDir="false" afterPath="$PROJECT_DIR$/../s.bat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../teste/ei.txt" beforeDir="false" />
-    </list>
+    <list default="true" id="e285521d-de92-4503-afcf-8a75a1271931" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
