@@ -18,7 +18,7 @@ public class Main {
         try {
             FileInte = (FileInterface) Naming.lookup("rmi://localhost:2022/Storage");
             BalancerInte = (BalancerInterface) Naming.lookup("rmi://localhost:2023/Balancer");
-            ProcessorInte =(ProcessorInterface) Naming.lookup("rmi://localhost:2024/Processor");
+           // ProcessorInte =(ProcessorInterface) Naming.lookup("rmi://localhost:2024/Processor");
         } catch (NotBoundException | RemoteException | MalformedURLException e) {
             throw new RuntimeException(e);
         }
@@ -79,7 +79,7 @@ public class Main {
    }
    public static void getEstado() throws RemoteException {
        int estado=0;
-       estado=ProcessorInte.GetEstado();
+
        String frase=null;
        if(estado==0)
        {

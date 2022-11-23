@@ -1,6 +1,7 @@
+import com.sun.management.OperatingSystemMXBean;
+
 import java.io.*;
 import java.lang.management.ManagementFactory;
-import java.lang.management.OperatingSystemMXBean;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.net.*;
@@ -12,7 +13,12 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.text.DecimalFormat;
 import java.util.Base64;
+import java.util.Random;
+import java.util.UUID;
+
+import static java.lang.Thread.sleep;
 
 public class ProcessorManager extends UnicastRemoteObject implements ProcessorInterface, Serializable {
 
@@ -24,6 +30,7 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
     FileClass f;
     ProcessorClass p;
 
+    private double cpu_mean_usage;
 
     FileInterface FileInte=(FileInterface) Naming.lookup("rmi://localhost:2022/Storage");
 
@@ -39,8 +46,31 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
     public void SetProcessor(ProcessorClass p) throws RemoteException {
         p=p;
     }
-    public void cpuUsage()
-    {
+    public void cpuUsage() throws InterruptedException {
+
+        com.sun.management.OperatingSystemMXBean osBean = ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class);
+        int it = 0, it_max = 9;
+        while(it <= it_max)
+        {
+            double x = osBean.getSystemCpuLoad();
+            cpu_mean_usage += x;
+
+            try {
+                sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if(it == it_max)
+            {
+                cpu_mean_usage /= it_max+1;
+                    return;
+            }
+            else
+            {
+                it++;
+            }
+
+        }
 
     }
 
@@ -112,17 +142,18 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
               public void run() {
                   while(true){
                       //message= port,cpusage
-                  String message=p.getPort()+",5";
+                  String message=p.getPort()+",";
                   try {
                       System.out.println("Im in the theard");
                       socket = new DatagramSocket();
-                      group = InetAddress.getByName("230.0.0.0");
-                      buf = message.getBytes();
                       cpuUsage();
+                      group = InetAddress.getByName("230.0.0.0");
+                      message=message+cpu_mean_usage;
+                      buf = message.getBytes();
                       DatagramPacket packet = new DatagramPacket(buf, buf.length, group, 4446);
                       socket.send(packet);
                       socket.close();
-                      Thread.sleep(30000);
+                      sleep(30000);
                   } catch (SocketException e) {
                       throw new RuntimeException(e);
                   } catch (UnknownHostException e) {

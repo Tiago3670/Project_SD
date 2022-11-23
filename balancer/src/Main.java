@@ -19,8 +19,6 @@ public class Main implements Serializable {
             balancer=new BalancerManager();
             r.rebind("Balancer", balancer );
             System.out.println("Balancer ready");
-
-
         }catch(Exception e) {
             System.out.println("->"+e.getMessage());
         }

@@ -7,29 +7,29 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
 public class BalancerManager extends UnicastRemoteObject implements BalancerInterface {
 
-    HashMap<String, Integer> hashprocessors = new HashMap<String, Integer>();
+    HashMap<String, Double> hashprocessors = new HashMap<String, Double>();
     ArrayList<ProcessorClass> ProcessorList = new ArrayList<ProcessorClass>();
     protected MulticastSocket socket = null;
     InetAddress group;
-
+    DecimalFormat df = new DecimalFormat("#%");
     ProcessorClass best;
     protected byte[] buf = new byte[256];
 
     protected BalancerManager() throws IOException, NotBoundException {
           MulticastReceiver();
-
     }
 
     public UUID SendRequest(RequestClass r) throws IOException, NotBoundException, InterruptedException {
 
-       best= BestProcessor();
-        String Link= best.getLink();
+         best= BestProcessor();
+         String Link= best.getLink();
 
         if (hashprocessors.containsKey(Link))
         {
@@ -69,9 +69,9 @@ public class BalancerManager extends UnicastRemoteObject implements BalancerInte
                         socket.receive(packet);
                         received = new String(packet.getData(), 0, packet.getLength());
                         String []portstr = received.split(",");
-                        int CPUusage=Integer.parseInt(portstr[1]);
-                        System.out.println("->"+portstr[0]);
+                        double CPUusage=Double.parseDouble(portstr[1]);
                         String Link = "rmi://localhost:" + portstr[0] + "/Processor";
+                        System.out.println("Processor:"+ Link +" "+df.format(CPUusage));
                         if ("end".equals(received)) {
                             break;
                         }
@@ -87,8 +87,14 @@ public class BalancerManager extends UnicastRemoteObject implements BalancerInte
                             }
                         }else{
                             hashprocessors.replace(Link,CPUusage);
+                           /* for(int i=0;i<ProcessorList.size();i++)
+                            {
+                                if(ProcessorList.get(i).getPort()==Integer.parseInt(portstr[0]))
+                                {
+                                    ProcessorList.get(i).Ativo();
+                                }
+                            }*/
                         }
-
                     }
                     socket.leaveGroup(group);
                     socket.close();
@@ -99,6 +105,38 @@ public class BalancerManager extends UnicastRemoteObject implements BalancerInte
             }
         });
         threadBalancer.start();
-
     }
+    /*int estado;
+
+    public int ProcessorsActive(ProcessorClass p)
+    {
+
+        Thread threadBalancer2 = (new Thread() {
+            public void run()
+            {
+              //0-> ativo 1->desativo
+                try {
+                    int x=p.getOldValidated();
+                    sleep(30000);
+                    if(p.getOldValidated()==x)
+                    {
+                        hashprocessors.remove(p.getLink());
+                        for(int i=0;i<ProcessorList.size();i++)
+                        {
+                            if(ProcessorList.get(i)==p)
+                            {
+                                estado=1;
+                                ProcessorList.remove(i);
+                            }
+                        }
+                    }
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+        threadBalancer2.start();
+        return estado;
+    }*/
+
 }

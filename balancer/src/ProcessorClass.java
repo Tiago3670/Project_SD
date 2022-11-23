@@ -5,9 +5,13 @@ import java.util.UUID;
 public class ProcessorClass  implements Serializable
 {
     private UUID Identificador;
-    private int cpuusage;
+    private Double cpuusage;
+
+    private int Estado; //1 ativo 0 desativo
     private String Link;
     private int Port;
+
+    private int oldValidated=0;
 
     public  ProcessorClass(int port)
     {
@@ -29,11 +33,20 @@ public class ProcessorClass  implements Serializable
         return this.Link;
     }
 
-    public int getCpuusage() {
+    public Double getCpuusage() {
         return this.cpuusage;
     }
-    public void setCpuusage(int cpuusage)
+    public void setCpuusage(Double cpuusage)
     {
         this.cpuusage=cpuusage;
+    }
+
+    public void Ativo()
+    {
+        this.oldValidated++;
+    }
+
+    public int getOldValidated() {
+        return this.oldValidated;
     }
 }
