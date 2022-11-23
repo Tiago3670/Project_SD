@@ -5,30 +5,35 @@ import java.util.UUID;
 public class ProcessorClass  implements Serializable
 {
     private UUID Identificador;
-    private int Estado;//varia entre disponivel->1  e ocupado->0
+    private int cpuusage;
+    private String Link;
     private int Port;
 
-    public  ProcessorClass(UUID Identificador,int Estado,int port)
+    public  ProcessorClass(int port)
     {
-        this.Identificador=Identificador;
-        this.Estado=Estado;
+        this.Identificador=UUID.fromString(UUID.nameUUIDFromBytes(String.valueOf(port).getBytes()).toString());;
         this.Port=port;
+        Link = "rmi://localhost:" + port + "/Processor";
     }
+
 
     public UUID getIdentificador()
     {
         return this.Identificador;
     }
     public int getPort() {
-        return Port;
+        return this.Port;
     }
-    public int getEstado() {
-        return Estado;
+
+    public String getLink() {
+        return this.Link;
     }
-    public void setEstadoToOcupado() {
-        this.Estado = 0;
+
+    public int getCpuusage() {
+        return this.cpuusage;
     }
-    public void setEstadoToDisponivel() {
-        this.Estado = 1;
+    public void setCpuusage(int cpuusage)
+    {
+        this.cpuusage=cpuusage;
     }
 }

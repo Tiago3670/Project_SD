@@ -45,15 +45,15 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
     }
 
     public void Send(RequestClass r) throws IOException, InterruptedException {
-           request=r;
-           if(request==null)
-               return;
+        request=r;
+        if(request==null)
+            return;
 
-            f=FileInte.GetFile(request.getIdentificadorFile());
+        f=FileInte.GetFile(request.getIdentificadorFile());
 
-           if(f==null)
-               return;
-            Exec(r.getUrl());
+        if(f==null)
+            return;
+        Exec(r.getUrl());
     }
 
 
@@ -61,7 +61,7 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
         if(request==null)
             return 0;
         else
-        return request.getEstado();
+            return request.getEstado();
     }
 
     public void Exec(String url) throws IOException, InterruptedException {
@@ -86,54 +86,54 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
         System.out.println(command);
         Process process = Runtime.getRuntime().exec(command);
         process.waitFor();
-            try (BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(process.getInputStream()))) {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    output.append(line + System.lineSeparator());
-                }
-                System.out.println(output);
-                if(output!=null)
-                {
-                    request.setEstadoConcluido();
-                    FileInte.SubmitOutput(f,request.getIdentificadorRequest().toString(),output.toString());
-                }
-
-            } catch (RemoteException | MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+        try (BufferedReader reader = new BufferedReader(
+                new InputStreamReader(process.getInputStream()))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                output.append(line + System.lineSeparator());
             }
-      batfile.delete();
+            System.out.println(output);
+            if(output!=null)
+            {
+                request.setEstadoConcluido();
+                FileInte.SubmitOutput(f,request.getIdentificadorRequest().toString(),output.toString());
+            }
+
+        } catch (RemoteException | MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        batfile.delete();
     }
 
-      public  void MulticastPublisher() throws IOException {
-          Thread threadProcessor = (new Thread() {
-              public void run() {
-                  while(true){
-                      //message= port,cpusage
-                  String message=p.getPort()+",5";
-                  try {
-                      System.out.println("Im in the theard");
-                      socket = new DatagramSocket();
-                      group = InetAddress.getByName("230.0.0.0");
-                      buf = message.getBytes();
-                      cpuUsage();
-                      DatagramPacket packet = new DatagramPacket(buf, buf.length, group, 4446);
-                      socket.send(packet);
-                      socket.close();
-                      Thread.sleep(30000);
-                  } catch (SocketException e) {
-                      throw new RuntimeException(e);
-                  } catch (UnknownHostException e) {
-                      throw new RuntimeException(e);
-                  } catch (IOException e) {
-                      throw new RuntimeException(e);
-                  } catch (InterruptedException e) {
-                      throw new RuntimeException(e);
-                  }
-              }}
-          });
-          threadProcessor.start();
-      }
+    public  void MulticastPublisher() throws IOException {
+        Thread threadProcessor = (new Thread() {
+            public void run() {
+                while(true){
+                    //message= port,cpusage
+                    String message=p.getPort()+",4";
+                    try {
+                        System.out.println("Im in the theard");
+                        socket = new DatagramSocket();
+                        group = InetAddress.getByName("230.0.0.0");
+                        buf = message.getBytes();
+                        cpuUsage();
+                        DatagramPacket packet = new DatagramPacket(buf, buf.length, group, 4446);
+                        socket.send(packet);
+                        socket.close();
+                        Thread.sleep(30000);
+                    } catch (SocketException e) {
+                        throw new RuntimeException(e);
+                    } catch (UnknownHostException e) {
+                        throw new RuntimeException(e);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }}
+        });
+        threadProcessor.start();
+    }
 }

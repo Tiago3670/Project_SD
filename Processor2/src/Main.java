@@ -15,8 +15,8 @@ public class Main implements Serializable {
     public static void main(String[] args) throws MalformedURLException, NotBoundException, RemoteException {
         UUID identificador;
         String port="2024";
-       // identificador = UUID.fromString(UUID.nameUUIDFromBytes(String.valueOf(port).getBytes()).toString());;
-        ProcessorClass p=new ProcessorClass(2024);
+        // identificador = UUID.fromString(UUID.nameUUIDFromBytes(String.valueOf(port).getBytes()).toString());;
+        ProcessorClass p=new ProcessorClass(2025);
         try{
             r = LocateRegistry.createRegistry(p.getPort());
         }catch(RemoteException a){
