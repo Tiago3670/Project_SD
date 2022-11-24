@@ -47,10 +47,8 @@ public class FileManager extends UnicastRemoteObject implements FileInterface  {
                 out.close();
             }
         }
-
         DoneRequest.add(IDRequest);
     }
-
    public String GetOutput(String IdentificadorRequest) throws IOException
    {
         for(int i=0;i<DoneRequest.size();i++)

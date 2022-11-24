@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class BalancerManager extends UnicastRemoteObject implements BalancerInterface {
-
     HashMap<String, Double> hashprocessors = new HashMap<String, Double>();
     ArrayList<ProcessorClass> ProcessorList = new ArrayList<ProcessorClass>();
     protected MulticastSocket socket = null;
@@ -25,12 +24,9 @@ public class BalancerManager extends UnicastRemoteObject implements BalancerInte
     protected BalancerManager() throws IOException, NotBoundException {
           MulticastReceiver();
     }
-
     public UUID SendRequest(RequestClass r) throws IOException, NotBoundException, InterruptedException {
-
          best= BestProcessor();
          String Link= best.getLink();
-
         if (hashprocessors.containsKey(Link))
         {
             ProcessorInterface ProcessorInte = (ProcessorInterface) Naming.lookup(Link);
@@ -40,7 +36,6 @@ public class BalancerManager extends UnicastRemoteObject implements BalancerInte
 
         return r.getIdentificadorProcessor();
     }
-
     public ProcessorClass BestProcessor()
     {
         best=ProcessorList.get(0);

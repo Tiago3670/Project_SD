@@ -5,29 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e285521d-de92-4503-afcf-8a75a1271931" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../Client/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Processor/BalancerInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Processor/BalancerInterface.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Processor/FileClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Processor/FileClass.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Processor/FileInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Processor/FileInterface.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Processor/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Processor/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Processor/ProcessorClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Processor/ProcessorClass.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Processor/ProcessorInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Processor/ProcessorInterface.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Processor/ProcessorManager$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Processor/ProcessorManager$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Processor/ProcessorManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Processor/ProcessorManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Processor/ReplicaInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Processor/ReplicaInterface.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Processor/RequestClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Processor/RequestClass.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ProcessorClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProcessorClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ProcessorManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProcessorManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Processor2/src/ProcessorClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Processor2/src/ProcessorClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Processor2/src/ProcessorManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Processor2/src/ProcessorManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../balancer/out/production/balancer/BalancerManager$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../balancer/out/production/balancer/BalancerManager$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../balancer/out/production/balancer/BalancerManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/../balancer/out/production/balancer/BalancerManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../balancer/out/production/balancer/ProcessorClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/../balancer/out/production/balancer/ProcessorClass.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Processor2/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Processor2/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Storage/src/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Storage/src/FileManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../balancer/src/BalancerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../balancer/src/BalancerManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../balancer/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../balancer/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../balancer/src/ProcessorClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/../balancer/src/ProcessorClass.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,11 +38,11 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "last_opened_file_path": "C:/Users/tiago/OneDrive/Área de Trabalho/EI/3 Ano/SD/Project_SD/Client"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/tiago/OneDrive/Área de Trabalho/EI/3 Ano/SD/Project_SD/Client&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="" />
