@@ -13,34 +13,38 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class BalancerManager extends UnicastRemoteObject implements BalancerInterface {
-    HashMap<String, Double> hashprocessors = new HashMap<String, Double>();
+    //HashMap<String, Double> hashprocessors = new HashMap<String, Double>();
     ArrayList<ProcessorClass> ProcessorList = new ArrayList<ProcessorClass>();
     protected MulticastSocket socket = null;
     InetAddress group;
     DecimalFormat df = new DecimalFormat("#%");
     ProcessorClass best;
     protected byte[] buf = new byte[256];
-
+    CordenadorInterface CordenadorInte = (CordenadorInterface)  Naming.lookup("rmi://localhost:2026/Cordenador");
     protected BalancerManager() throws IOException, NotBoundException {
          // MulticastReceiver();
 
     }
 
-    public void GetProcessors() throws IOException
+    public void GetProcessors()
     {
+      /*  ProcessorList= CordenadorInte.GetProcessores();
+        for(int i=0;i<ProcessorList.size();i++)
+        {
+           System.out.println(ProcessorList.get(i).getLink());
+        }
+        System.out.println("fim");
+        System.out.println();*/
+        System.out.println("fim");
 
     }
     public UUID SendRequest(RequestClass r) throws IOException, NotBoundException, InterruptedException {
          best= BestProcessor();
          String Link= best.getLink();
-        if (hashprocessors.containsKey(Link))
-        {
-            ProcessorInterface ProcessorInte = (ProcessorInterface) Naming.lookup(Link);
-            ProcessorInte.Send(r);
-            r.setIdentificadorProcessor(best.getIdentificador());
-        }
-
-        return r.getIdentificadorProcessor();
+         ProcessorInterface ProcessorInte = (ProcessorInterface) Naming.lookup(Link);
+         ProcessorInte.Send(r);
+         r.setIdentificadorProcessor(best.getIdentificador());
+         return r.getIdentificadorProcessor();
     }
     public ProcessorClass BestProcessor()
     {
@@ -54,10 +58,7 @@ public class BalancerManager extends UnicastRemoteObject implements BalancerInte
         }
         return best;
     }
-    public void GetProcessors()
-    {
-        //ProcessorList=
-    }
+
    /*
    public  void MulticastReceiver () throws  IOException
     {
@@ -138,5 +139,8 @@ public class BalancerManager extends UnicastRemoteObject implements BalancerInte
         threadBalancer2.start();
         return estado;
     }*/
-
+   public void AddProcessor(ProcessorClass p) throws RemoteException
+   {
+       System.out.println(p.getLink());
+   }
 }

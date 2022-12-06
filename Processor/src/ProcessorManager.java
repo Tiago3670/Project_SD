@@ -140,10 +140,10 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
           Thread threadProcessor = (new Thread() {
               public void run() {
                   while(true){
-                      //message= port,cpusage
+                      //message= port,cpusage,
                   String message=p.getPort()+",";
                   try {
-                      System.out.println("Im in the theard");
+                      //System.out.println("Im in the theard");
                       socket = new DatagramSocket();
                       cpuUsage();
                       group = InetAddress.getByName("230.0.0.0");
@@ -155,14 +155,13 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
                       }
                       else
                       {
-                          message=message+",is alive";
-
+                          message=message+",update";
                       }
                       buf = message.getBytes();
                       DatagramPacket packet = new DatagramPacket(buf, buf.length, group, 4446);
                       socket.send(packet);
                       socket.close();
-                      sleep(30000);
+                      sleep(3000);
                   } catch (SocketException e) {
                       throw new RuntimeException(e);
                   } catch (UnknownHostException e) {
