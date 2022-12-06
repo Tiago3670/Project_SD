@@ -5,9 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e285521d-de92-4503-afcf-8a75a1271931" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../balancer/src/CordenadorInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Processor2/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Processor2/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Storage/src/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Storage/src/FileManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ProcessorManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProcessorManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReplicaManager/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReplicaManager/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReplicaManager/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReplicaManager/.idea/runConfigurations.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReplicaManager/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReplicaManager/ReplicaManager.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReplicaManager/out/production/ReplicaManager/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReplicaManager/out/production/ReplicaManager/ProcessorClass.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReplicaManager/out/production/ReplicaManager/ReplicaInterface.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReplicaManager/out/production/ReplicaManager/ReplicaManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReplicaManager/src/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReplicaManager/src/ProcessorClass.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReplicaManager/src/ReplicaInterface.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ReplicaManager/src/ReplicaManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../balancer/src/BalancerInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/../balancer/src/BalancerInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../balancer/src/BalancerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../balancer/src/BalancerManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -38,11 +53,11 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/tiago/OneDrive/Área de Trabalho/EI/3 Ano/SD/Project_SD/Client&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "last_opened_file_path": "C:/Users/tiago/OneDrive/Área de Trabalho/EI/3 Ano/SD/Project_SD/Storage"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="" />

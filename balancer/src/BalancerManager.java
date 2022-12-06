@@ -22,7 +22,13 @@ public class BalancerManager extends UnicastRemoteObject implements BalancerInte
     protected byte[] buf = new byte[256];
 
     protected BalancerManager() throws IOException, NotBoundException {
-          MulticastReceiver();
+         // MulticastReceiver();
+
+    }
+
+    public void GetProcessors() throws IOException
+    {
+
     }
     public UUID SendRequest(RequestClass r) throws IOException, NotBoundException, InterruptedException {
          best= BestProcessor();
@@ -48,8 +54,12 @@ public class BalancerManager extends UnicastRemoteObject implements BalancerInte
         }
         return best;
     }
-
-    public  void MulticastReceiver () throws  IOException
+    public void GetProcessors()
+    {
+        //ProcessorList=
+    }
+   /*
+   public  void MulticastReceiver () throws  IOException
     {
         Thread threadBalancer = (new Thread() {
             public void run()
@@ -82,13 +92,7 @@ public class BalancerManager extends UnicastRemoteObject implements BalancerInte
                             }
                         }else{
                             hashprocessors.replace(Link,CPUusage);
-                           /* for(int i=0;i<ProcessorList.size();i++)
-                            {
-                                if(ProcessorList.get(i).getPort()==Integer.parseInt(portstr[0]))
-                                {
-                                    ProcessorList.get(i).Ativo();
-                                }
-                            }*/
+
                         }
                     }
                     socket.leaveGroup(group);
@@ -101,6 +105,7 @@ public class BalancerManager extends UnicastRemoteObject implements BalancerInte
         });
         threadBalancer.start();
     }
+    */
     /*int estado;
 
     public int ProcessorsActive(ProcessorClass p)

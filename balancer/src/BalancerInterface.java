@@ -7,4 +7,5 @@ import java.util.UUID;
 
 public interface BalancerInterface extends Remote {
     public UUID SendRequest(RequestClass r) throws IOException, NotBoundException, InterruptedException;
+    public void GetProcessors() throws RemoteException;
 }

@@ -33,7 +33,7 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
     private double cpu_mean_usage;
 
     FileInterface FileInte=(FileInterface) Naming.lookup("rmi://localhost:2022/Storage");
-
+    int enviar=0;
     protected ProcessorManager(ProcessorClass po) throws IOException, NotBoundException {
         p=po;
         MulticastPublisher();
@@ -108,7 +108,6 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
         out.flush();
         out.close();
 
-
         StringBuilder output = new StringBuilder();
         //String command = "cmd /c " + url + " " + f.getUrlDir() + "\""+ request.getIdentificadorFile() + "\"";
         String command = "cmd /c " + batfile + " \""+ scriptdecode +"\"";
@@ -149,6 +148,16 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
                       cpuUsage();
                       group = InetAddress.getByName("230.0.0.0");
                       message=message+cpu_mean_usage;
+                      if(enviar==0)
+                      {
+                          message=message+",setup";
+                          enviar++;
+                      }
+                      else
+                      {
+                          message=message+",is alive";
+
+                      }
                       buf = message.getBytes();
                       DatagramPacket packet = new DatagramPacket(buf, buf.length, group, 4446);
                       socket.send(packet);
