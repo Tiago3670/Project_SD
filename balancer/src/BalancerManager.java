@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
@@ -12,7 +13,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class BalancerManager extends UnicastRemoteObject implements BalancerInterface {
+public class BalancerManager extends UnicastRemoteObject implements BalancerInterface , Serializable {
+    private static final long serialVersionUID = 4000529155687724350L;
+
     //HashMap<String, Double> hashprocessors = new HashMap<String, Double>();
     ArrayList<ProcessorClass> ProcessorList = new ArrayList<ProcessorClass>();
     protected MulticastSocket socket = null;
@@ -26,6 +29,8 @@ public class BalancerManager extends UnicastRemoteObject implements BalancerInte
 
     }
 
+
+
     public void GetProcessors()
     {
       /*  ProcessorList= CordenadorInte.GetProcessores();
@@ -38,6 +43,12 @@ public class BalancerManager extends UnicastRemoteObject implements BalancerInte
         System.out.println("fim");
 
     }
+
+    @Override
+    public void AddProcessor(ProcessorClass p) throws RemoteException {
+
+    }
+
     public UUID SendRequest(RequestClass r) throws IOException, NotBoundException, InterruptedException {
          best= BestProcessor();
          String Link= best.getLink();
@@ -139,8 +150,5 @@ public class BalancerManager extends UnicastRemoteObject implements BalancerInte
         threadBalancer2.start();
         return estado;
     }*/
-   public void AddProcessor(ProcessorClass p) throws RemoteException
-   {
-       System.out.println(p.getLink());
-   }
+
 }

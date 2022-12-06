@@ -6,6 +6,7 @@ import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
 public class Main implements Serializable {
+
     public static Registry r=null;
     public  static BalancerManager balancer;
 
