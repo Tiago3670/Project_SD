@@ -9,11 +9,12 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.text.DecimalFormat;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class CordenadorManager extends UnicastRemoteObject implements CordenadorInterface , Serializable {
-    //private static final long serialVersionUID = 2509159142972867020L;
-
     BalancerInterface BalancerInte = null;
 
     ArrayList<ProcessorClass> ProcessorList = new ArrayList<ProcessorClass>();
@@ -26,11 +27,11 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
 
     protected CordenadorManager() throws IOException, NotBoundException {
         ProcessorReciver();
+        CheckProcessors(null);
     }
 
-    public  void ProcessorReciver () throws IOException
-    {
-        Thread threadBalancer = (new Thread() {
+    public  void ProcessorReciver () throws IOException, NotBoundException {
+        Thread threadCordenador = (new Thread() {
             public void run()
             {
                 try {
@@ -47,18 +48,25 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
                             break;
                         }
                         System.out.println(portstr[2]);
-
+                        String Link = null;
+                        Link = "rmi://localhost:" + portstr[0] + "/Processor";
                         if(portstr[2].equals("setup")) //criar o processador
                         {
                             double CPUusage=Double.parseDouble(portstr[1]);
-                           String Link = "rmi://localhost:" + portstr[0] + "/Processor";
                            // System.out.println("Processor:"+ Link +" "+df.format(CPUusage));
                             ProcessorList.add(new ProcessorClass(Integer.parseInt(portstr[0])));
                             System.out.println("add->"+Link);
                             SendProcessors(Link);
                         } else if (portstr[2].equals("update")) //upadate processor
                         {
-
+                            for(int j=0;j<ProcessorList.size();j++)
+                            {
+                                if(ProcessorList.get(j).getLink().equals(Link))
+                                {
+                                    Instant d =Instant.now();
+                                    ProcessorList.get(j).setEstado(d);
+                                }
+                            }
                         }
                     }
                     socket.leaveGroup(group);
@@ -68,32 +76,65 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
                 } catch (NotBoundException e) {
                     throw new RuntimeException(e);
                 }
-
             }
         });
-        threadBalancer.start();
+        threadCordenador.start();
+    }
+    public void CheckProcessors(String link)
+    {
+      /*  Date d=new Date();
+        Date dd=new Date();
+        System.out.println("date  : "+d.getDate());
+        System.out.println("Second of the minute is  : "+d.getMinutes()+","+d.getSeconds());
+        dd.setSeconds(d.getSeconds()-30);
+        System.out.println("30 seconds antes : "+dd.getMinutes()+","+dd.getSeconds());
+        */
+
+        Thread theardcheckativos = (new Thread() {
+            public void run()
+            {
+                while (true) {
+                    if(ProcessorList.size()>0)
+                    {
+
+                        Instant  current, interval,date_Processor;
+                        current = Instant.now();
+
+                        for(int j=0;j<ProcessorList.size();j++)
+                        {
+                            date_Processor= ProcessorList.get(j).getEstado();
+                            interval = Instant.ofEpochSecond(ChronoUnit.SECONDS.between(date_Processor,current));
+                            System.out.println("seconds bettew="+interval.getEpochSecond());
+                           if(interval.getEpochSecond()>10) //se o intervalo de tempo passar os 30 segundos significa que ja
+                            {                               // não recebemos sinal deste processador há 30 segundos
+                                //ProcessorList.get(j).SetDesativo();
+                                //notificar o balancer
+                                System.out.println("O "+ProcessorList.get(j).getLink()+" Rebentou");
+                                ProcessorList.remove(j);
+                            }
+                        }
+                    }
+
+                    try {
+                        sleep(10000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        theardcheckativos.start();
 
     }
-
-
-
 
     @Override
     public void SendProcessors(String Link) throws RemoteException, MalformedURLException, NotBoundException {
-
-      /*  for(int i=0;i<ProcessorList.size();i++)
-        {
-            if(ProcessorList.get(i).getLink().equals(Link))
-            {
+        BalancerInte=(BalancerInterface) Naming.lookup("rmi://localhost:2023/Balancer");
+        for(int i=0;i<ProcessorList.size();i++) {
+            if (ProcessorList.get(i).getLink().equals(Link)) {
                 BalancerInte.AddProcessor(ProcessorList.get(0));
                 return;
             }
-        }*/
-        notfy();
-    }
-    public void notfy() throws MalformedURLException, NotBoundException, RemoteException {
-        BalancerInte=(BalancerInterface) Naming.lookup("rmi://localhost:2023/Balancer");
-        BalancerInte.AddProcessor(ProcessorList.get(0));
-
+        }
     }
 }

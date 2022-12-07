@@ -5,6 +5,7 @@ import java.rmi.RemoteException;
 import java.util.UUID;
 
 public interface BalancerInterface extends Remote {
+
     public void AddProcessor(ProcessorClass p) throws RemoteException;
 
 }

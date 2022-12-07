@@ -18,15 +18,10 @@ public class BalancerManager extends UnicastRemoteObject implements BalancerInte
 
     //HashMap<String, Double> hashprocessors = new HashMap<String, Double>();
     ArrayList<ProcessorClass> ProcessorList = new ArrayList<ProcessorClass>();
-    protected MulticastSocket socket = null;
-    InetAddress group;
     DecimalFormat df = new DecimalFormat("#%");
-    ProcessorClass best;
-    protected byte[] buf = new byte[256];
-    CordenadorInterface CordenadorInte = (CordenadorInterface)  Naming.lookup("rmi://localhost:2026/Cordenador");
+    ProcessorClass best;CordenadorInterface CordenadorInte = (CordenadorInterface)  Naming.lookup("rmi://localhost:2026/Cordenador");
     protected BalancerManager() throws IOException, NotBoundException {
          // MulticastReceiver();
-
     }
 
 
@@ -46,7 +41,8 @@ public class BalancerManager extends UnicastRemoteObject implements BalancerInte
 
     @Override
     public void AddProcessor(ProcessorClass p) throws RemoteException {
-
+        ProcessorList.add(p);
+        System.out.println("Adicionei o "+ p.getLink());
     }
 
     public UUID SendRequest(RequestClass r) throws IOException, NotBoundException, InterruptedException {
@@ -70,85 +66,5 @@ public class BalancerManager extends UnicastRemoteObject implements BalancerInte
         return best;
     }
 
-   /*
-   public  void MulticastReceiver () throws  IOException
-    {
-        Thread threadBalancer = (new Thread() {
-            public void run()
-            {
-                try {
-                    socket = new MulticastSocket(4446);
-                    group = InetAddress.getByName("230.0.0.0");
-                    socket.joinGroup(group);
-                    String received;
-                    while (true) {
-                        DatagramPacket packet = new DatagramPacket(buf, buf.length);
-                        socket.receive(packet);
-                        received = new String(packet.getData(), 0, packet.getLength());
-                        String []portstr = received.split(",");
-                        double CPUusage=Double.parseDouble(portstr[1]);
-                        String Link = "rmi://localhost:" + portstr[0] + "/Processor";
-                        System.out.println("Processor:"+ Link +" "+df.format(CPUusage));
-                        if ("end".equals(received)) {
-                            break;
-                        }
-                        if (!hashprocessors.containsKey(Link)) {
-                            hashprocessors.put(Link, CPUusage);
-                            ProcessorList.add(new ProcessorClass(Integer.parseInt(portstr[0])));
-                            for(int i=0;i<ProcessorList.size();i++)
-                            {
-                                if(ProcessorList.get(i).getPort()==Integer.parseInt(portstr[0]))
-                                {
-                                    ProcessorList.get(i).setCpuusage(CPUusage);
-                                }
-                            }
-                        }else{
-                            hashprocessors.replace(Link,CPUusage);
-
-                        }
-                    }
-                    socket.leaveGroup(group);
-                    socket.close();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-
-            }
-        });
-        threadBalancer.start();
-    }
-    */
-    /*int estado;
-
-    public int ProcessorsActive(ProcessorClass p)
-    {
-
-        Thread threadBalancer2 = (new Thread() {
-            public void run()
-            {
-              //0-> ativo 1->desativo
-                try {
-                    int x=p.getOldValidated();
-                    sleep(30000);
-                    if(p.getOldValidated()==x)
-                    {
-                        hashprocessors.remove(p.getLink());
-                        for(int i=0;i<ProcessorList.size();i++)
-                        {
-                            if(ProcessorList.get(i)==p)
-                            {
-                                estado=1;
-                                ProcessorList.remove(i);
-                            }
-                        }
-                    }
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
-        threadBalancer2.start();
-        return estado;
-    }*/
 
 }

@@ -5,11 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e285521d-de92-4503-afcf-8a75a1271931" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../Cordenador/out/production/Cordenador/CordenadorManager$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Cordenador/out/production/Cordenador/CordenadorManager$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Cordenador/out/production/Cordenador/CordenadorManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Cordenador/out/production/Cordenador/CordenadorManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Cordenador/out/production/Cordenador/ProcessorClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Cordenador/out/production/Cordenador/ProcessorClass.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Cordenador/src/BalancerInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Cordenador/src/BalancerInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Cordenador/src/CordenadorManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Cordenador/src/CordenadorManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Cordenador/src/ProcessorClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Cordenador/src/ProcessorClass.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Processor/ProcessorClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Processor/ProcessorClass.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ProcessorClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProcessorClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ReplicaInterface.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Processor2/src/ProcessorClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Processor2/src/ProcessorClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Processor2/src/ProcessorManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Processor2/src/ProcessorManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../balancer/out/production/balancer/BalancerManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/../balancer/out/production/balancer/BalancerManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../balancer/out/production/balancer/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/../balancer/out/production/balancer/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../balancer/src/BalancerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../balancer/src/BalancerManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../balancer/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../balancer/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../balancer/src/ProcessorClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/../balancer/src/ProcessorClass.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +51,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "last_opened_file_path": "C:/Users/tiago/OneDrive/Área de Trabalho/EI/3 Ano/SD/Project_SD/Storage"
+    "last_opened_file_path": "C:/Users/tiago/OneDrive/Área de Trabalho/EI/3 Ano/SD/Project_SD/Processor2"
   }
 }]]></component>
   <component name="RecentsManager">
