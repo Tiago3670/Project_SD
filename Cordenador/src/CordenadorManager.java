@@ -47,7 +47,7 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
                         if ("end".equals(received)) {
                             break;
                         }
-                        System.out.println(portstr[2]);
+                        //System.out.println(portstr[2]);
                         String Link = null;
                         Link = "rmi://localhost:" + portstr[0] + "/Processor";
                         if(portstr[2].equals("setup")) //criar o processador
@@ -82,14 +82,6 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
     }
     public void CheckProcessors(String link)
     {
-      /*  Date d=new Date();
-        Date dd=new Date();
-        System.out.println("date  : "+d.getDate());
-        System.out.println("Second of the minute is  : "+d.getMinutes()+","+d.getSeconds());
-        dd.setSeconds(d.getSeconds()-30);
-        System.out.println("30 seconds antes : "+dd.getMinutes()+","+dd.getSeconds());
-        */
-
         Thread theardcheckativos = (new Thread() {
             public void run()
             {
@@ -104,17 +96,20 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
                         {
                             date_Processor= ProcessorList.get(j).getEstado();
                             interval = Instant.ofEpochSecond(ChronoUnit.SECONDS.between(date_Processor,current));
-                            System.out.println("seconds bettew="+interval.getEpochSecond());
-                           if(interval.getEpochSecond()>10) //se o intervalo de tempo passar os 30 segundos significa que ja
+                           // System.out.println("seconds bettew="+interval.getEpochSecond());
+                           if(interval.getEpochSecond()>25) //se o intervalo de tempo passar os 30 segundos significa que ja
                             {                               // não recebemos sinal deste processador há 30 segundos
-                                //ProcessorList.get(j).SetDesativo();
                                 //notificar o balancer
+                                try {
+                                    BalancerInte.RemoveProcessor(ProcessorList.get(j).getLink());
+                                } catch (RemoteException e) {
+                                    throw new RuntimeException(e);
+                                }
                                 System.out.println("O "+ProcessorList.get(j).getLink()+" Rebentou");
                                 ProcessorList.remove(j);
                             }
                         }
                     }
-
                     try {
                         sleep(10000);
                     } catch (InterruptedException e) {
@@ -136,5 +131,17 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
                 return;
             }
         }
+    }
+    public ProcessorClass BestProcessor() throws RemoteException
+    {
+        best=ProcessorList.get(0);
+        for(int i=1;i<ProcessorList.size();i++)
+        {
+            if(ProcessorList.get(i).getCpuusage()<best.getCpuusage())
+            {
+                best=ProcessorList.get(i);
+            }
+        }
+        return best;
     }
 }

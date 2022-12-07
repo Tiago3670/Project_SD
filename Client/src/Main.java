@@ -77,20 +77,6 @@ public class Main {
        System.out.println("Press Enter to continue…");
        System.in.read();
    }
-   public static void getEstado() throws RemoteException {
-       int estado=0;
-
-       String frase=null;
-       if(estado==0)
-       {
-           frase="Não Enviado";
-       }
-       else if (estado==2)
-       {
-           frase="Processo está em concluido";
-       }
-       System.out.println(frase);
-   }
    public static void CreateRequest () throws IOException, NotBoundException, InterruptedException {
        File pathfile;
        System.out.println("Identificador do Ficheiro a enviar no request:");
@@ -116,10 +102,8 @@ public class Main {
         System.out.println("1-Enviar ficheiro para a Storage.");
         System.out.println("2-Receber um ficheiro dado o seu identificador.");
         System.out.println("3-Enviar um request.");
-        System.out.println("4-Saber o estado do request.");
-        System.out.println("5-Receber o output do ficheiro.");
-
-            System.out.println("0-Para sair.");
+        System.out.println("4-Receber o output do ficheiro.");
+        System.out.println("0-Para sair.");
         op=scan.next();
         if(op.equals("1"))
         {
@@ -133,8 +117,6 @@ public class Main {
         } else if (op.equals("0")) {
             x=1;
         } else if (op.equals("4")) {
-            getEstado();
-        }else if (op.equals("5")) {
             getOutput();
         }
         }while (x!=1);

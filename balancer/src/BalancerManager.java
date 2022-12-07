@@ -13,58 +13,53 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class BalancerManager extends UnicastRemoteObject implements BalancerInterface , Serializable {
-    private static final long serialVersionUID = 4000529155687724350L;
+import static java.lang.Thread.sleep;
 
-    //HashMap<String, Double> hashprocessors = new HashMap<String, Double>();
+public class BalancerManager extends UnicastRemoteObject implements BalancerInterface , Serializable {
     ArrayList<ProcessorClass> ProcessorList = new ArrayList<ProcessorClass>();
+    ArrayList<RequestClass> RequestList = new ArrayList<RequestClass>();
     DecimalFormat df = new DecimalFormat("#%");
     ProcessorClass best;CordenadorInterface CordenadorInte = (CordenadorInterface)  Naming.lookup("rmi://localhost:2026/Cordenador");
     protected BalancerManager() throws IOException, NotBoundException {
-         // MulticastReceiver();
     }
-
-
-
-    public void GetProcessors()
-    {
-      /*  ProcessorList= CordenadorInte.GetProcessores();
-        for(int i=0;i<ProcessorList.size();i++)
-        {
-           System.out.println(ProcessorList.get(i).getLink());
-        }
-        System.out.println("fim");
-        System.out.println();*/
-        System.out.println("fim");
-
-    }
-
     @Override
     public void AddProcessor(ProcessorClass p) throws RemoteException {
         ProcessorList.add(p);
         System.out.println("Adicionei o "+ p.getLink());
     }
-
-    public UUID SendRequest(RequestClass r) throws IOException, NotBoundException, InterruptedException {
-         best= BestProcessor();
-         String Link= best.getLink();
-         ProcessorInterface ProcessorInte = (ProcessorInterface) Naming.lookup(Link);
-         ProcessorInte.Send(r);
-         r.setIdentificadorProcessor(best.getIdentificador());
-         return r.getIdentificadorProcessor();
-    }
-    public ProcessorClass BestProcessor()
-    {
-        best=ProcessorList.get(0);
-        for(int i=1;i<ProcessorList.size();i++)
+    public void RemoveProcessor(String link) throws RemoteException, InterruptedException {
+        if(ProcessorList.size()>0)
         {
-            if(ProcessorList.get(i).getCpuusage()<best.getCpuusage())
+            for(int i=0;i<ProcessorList.size();i++)
             {
-                best=ProcessorList.get(i);
+                if(ProcessorList.get(i).getLink().equals(link))
+                {
+                   // sleep(30000);
+                    if(best!=null)
+                    if(best.getLink().equals(link))
+                    {
+                        best=null;
+                    }
+                    System.out.println("Removi o "+ProcessorList.get(i).getLink());
+                    ProcessorList.remove(i);
+                }
             }
         }
-        return best;
     }
-
-
+    public UUID SendRequest(RequestClass r) throws IOException, NotBoundException, InterruptedException
+    {
+         best=CordenadorInte.BestProcessor();
+         if(best!=null)
+         {
+             ProcessorInterface ProcessorInte = (ProcessorInterface) Naming.lookup(best.getLink());
+             ProcessorInte.Send(r);
+             r.setIdentificadorProcessor(best.getIdentificador());
+             RequestList.add(r);
+             best=null;
+             return r.getIdentificadorProcessor();
+         }
+         else{
+             return null;
+         }
+    }
 }

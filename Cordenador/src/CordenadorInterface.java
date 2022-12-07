@@ -7,4 +7,5 @@ import java.util.ArrayList;
 public interface CordenadorInterface extends Remote {
 
     public void SendProcessors(String Link) throws RemoteException, MalformedURLException, NotBoundException;
+    public ProcessorClass BestProcessor() throws RemoteException;
 }
