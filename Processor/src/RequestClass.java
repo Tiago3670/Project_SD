@@ -7,7 +7,7 @@ public class RequestClass implements Serializable {
     private String IdentificadorFile;
     private  UUID IdentificadorProcessor;
 
-    private int Estado; //varia entre 1->em espera 0->concluido
+    private int Estado; // 0->concluido
 
     public  RequestClass (UUID IdentificadorRequest,String script,String IdentificadorFile,int Estado,UUID IdentificadorProcessor)
     {
@@ -38,13 +38,9 @@ public class RequestClass implements Serializable {
     {
         return this.Estado;
     }
-    public  void setEstadoProcessamento()
-    {
-        this.Estado=3;
-    }
     public  void setEstadoConcluido()
     {
-        this.Estado=2;
+        this.Estado=0;
     }
     String getUrl(){return this.Script;}
 }

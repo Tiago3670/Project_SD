@@ -5,11 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e285521d-de92-4503-afcf-8a75a1271931" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../Cordenador/out/production/Cordenador/CordenadorManager$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Cordenador/out/production/Cordenador/CordenadorManager$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Cordenador/src/CordenadorManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Cordenador/src/CordenadorManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Cordenador/src/ProcessorClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Cordenador/src/ProcessorClass.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Processor/ReplicaInterface.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../balancer/out/production/balancer/ProcessorClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/../balancer/out/production/balancer/ProcessorClass.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ProcessorInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProcessorInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ProcessorManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProcessorManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RequestClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RequestClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../balancer/out/production/balancer/BalancerManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/../balancer/out/production/balancer/BalancerManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../balancer/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../balancer/src/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

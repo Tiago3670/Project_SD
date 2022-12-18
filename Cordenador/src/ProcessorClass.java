@@ -11,7 +11,7 @@ public class ProcessorClass implements Serializable
     private Double cpuusage;
     private String Link;
     private int Port;
-     private Instant estado; //ativo || naoativo
+     private Instant estado;
 
     public ProcessorClass(int port)
     {
