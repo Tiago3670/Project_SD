@@ -8,6 +8,7 @@ public interface BalancerInterface extends Remote {
 
     public void AddProcessor(ProcessorClass p) throws RemoteException;
     public  void RemoveProcessor(String link) throws RemoteException;
+    public void ResumeTasks(ProcessorClass p) throws IOException, NotBoundException, InterruptedException ;
 
 
-}
+    }

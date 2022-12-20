@@ -14,6 +14,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Random;
 import java.util.UUID;
@@ -23,14 +24,14 @@ import static java.lang.Thread.sleep;
 public class ProcessorManager extends UnicastRemoteObject implements ProcessorInterface, Serializable {
 
     RequestClass request;
-
     private DatagramSocket socket;
     private InetAddress group;
     private byte[]buf;
     FileClass f;
     ProcessorClass p;
-
+    ArrayList<RequestClass> RequestBackupList = new ArrayList<RequestClass>();
     private double cpu_mean_usage;
+    ProcessorInterface ProcessorBackup;
 
     FileInterface FileInte=(FileInterface) Naming.lookup("rmi://localhost:2022/Storage");
     int enviar=0;
@@ -73,6 +74,42 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
         }
 
     }
+    public void EXECBACKUP(UUID identificadorProcessor) throws IOException, InterruptedException {
+        if(RequestBackupList.size()>0)
+        {
+            for(int i=0;i<RequestBackupList.size();i++)
+            {
+                if(RequestBackupList.get(i).getIdentificadorProcessor().equals(identificadorProcessor))
+                {
+                    Send(RequestBackupList.get(i));
+                }
+            }
+        }
+    }
+    public void ADDBackupList(RequestClass r)
+    {
+        RequestBackupList.add(r);
+
+        for(int i=0;i<RequestBackupList.size();i++)
+        {
+         System.out.println(RequestBackupList.get(i).getIdentificadorProcessor());
+        }
+    }
+    public void RemoveRequest(RequestClass r)
+    {
+        if(RequestBackupList.size()>0)
+        {
+            for(int i=0;i<RequestBackupList.size();i++)
+            {
+                if(RequestBackupList.get(i).getIdentificadorRequest().equals(r.getIdentificadorRequest()))
+                {
+                    RequestBackupList.remove(i);
+                    System.out.println("Removi");
+                    return;
+                }
+            }
+        }
+    }
 
     public void Send(RequestClass r) throws IOException, InterruptedException {
         request=r;
@@ -83,18 +120,19 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
 
         if(f==null)
             return;
-        Exec(r.getUrl());
+
+        System.out.println(request.getEstado());
+
+
+        Exec(request.getUrl());
     }
 
 
-    public int GetEstado() throws RemoteException {
-        if(request==null)
-            return 0;
-        else
-            return request.getEstado();
-    }
 
-    public void Exec(String url) throws IOException, InterruptedException {
+
+   /* public void Exec(String url) throws IOException, InterruptedException {
+
+
         f = FileInte.GetFile(request.getIdentificadorFile());
         byte[] scriptfile = Base64.getDecoder().decode(f.FileBase64().getBytes(StandardCharsets.UTF_8));
         String scriptdecode = new String(scriptfile, StandardCharsets.UTF_8);
@@ -102,7 +140,6 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
 
         File batfile= new File("temp.bat");
         String x;
-
         FileOutputStream out=new FileOutputStream(batfile);
         out.write(script);
         out.flush();
@@ -115,26 +152,99 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
         System.out.println(command);
         Process process = Runtime.getRuntime().exec(command);
         process.waitFor();
-        try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(process.getInputStream()))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                output.append(line + System.lineSeparator());
+            try (BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(process.getInputStream()))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    output.append(line + System.lineSeparator());
+                }
+                System.out.println(output);
+                if(output!=null)
+                {
+                    request.setEstadoConcluido();
+                    FileInte.SubmitOutput(f,request.getIdentificadorRequest().toString(),output.toString());
+                }
+
+            } catch (RemoteException | MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            System.out.println(output);
-            if(output!=null)
-            {
-                request.setEstadoConcluido();
-                FileInte.SubmitOutput(f,request.getIdentificadorRequest().toString(),output.toString());
+      batfile.delete();
+    }
+*/
+
+
+    public void Exec(String url) throws IOException, InterruptedException {
+        Thread threadExec = (new Thread() {
+            public void run() {
+                while (true) {
+                    if (request.getEstado() == 1)
+                    {
+                        try {
+                            f = FileInte.GetFile(request.getIdentificadorFile());
+                            byte[] scriptfile = Base64.getDecoder().decode(f.FileBase64().getBytes(StandardCharsets.UTF_8));
+                            String scriptdecode = new String(scriptfile, StandardCharsets.UTF_8);
+                            byte[] script = Base64.getDecoder().decode(url.getBytes(StandardCharsets.UTF_8));
+
+                            File batfile = new File("temp.bat");
+                            String x;
+
+                            FileOutputStream out = new FileOutputStream(batfile);
+                            out.write(script);
+                            out.flush();
+                            out.close();
+
+                            StringBuilder output = new StringBuilder();
+                            //String command = "cmd /c " + url + " " + f.getUrlDir() + "\""+ request.getIdentificadorFile() + "\"";
+                            String command = "cmd /c " + batfile + " \"" + scriptdecode + "\"";
+
+                            System.out.println(command);
+                            Process process = Runtime.getRuntime().exec(command);
+                            process.waitFor();
+                            try (BufferedReader reader = new BufferedReader(
+                                    new InputStreamReader(process.getInputStream()))) {
+                                String line;
+                                while ((line = reader.readLine()) != null) {
+                                    output.append(line + System.lineSeparator());
+                                }
+                                System.out.println(output);
+                                if (output != null) {
+                                    request.setEstadoConcluido();
+                                    RemoveRequest(request);
+                                    if(request.getIdentificadorProcessorBackup()!=p.getLink()) {
+                                        if (request.getIdentificadorProcessorBackup() != null) {
+                                            ProcessorBackup = (ProcessorInterface) Naming.lookup(request.getIdentificadorProcessorBackup());
+                                            ProcessorBackup.RemoveRequest(request);
+                                        }
+                                        FileInte.SubmitOutput(f, request.getIdentificadorRequest().toString(), output.toString());
+                                    }
+                                }
+                            } catch (RemoteException | MalformedURLException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            } catch (NotBoundException e) {
+                                throw new RuntimeException(e);
+                            }
+                            batfile.delete();
+                        } catch (SocketException e) {
+                            throw new RuntimeException(e);
+                        } catch (UnknownHostException e) {
+                            throw new RuntimeException(e);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }
             }
 
-        } catch (RemoteException | MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        batfile.delete();
+        });
+        threadExec.start();
     }
+
 
     public  void MulticastPublisher() throws IOException {
         Thread threadProcessor = (new Thread() {

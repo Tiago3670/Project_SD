@@ -3,10 +3,14 @@ import java.rmi.Remote;
 import java.util.UUID;
 
 public class RequestClass implements Serializable {
+    private static final long serialVersionUID = 5902050570918905273L;
+
     private UUID IdentificadorRequest;
     private String  Script;
     private String IdentificadorFile;
     private  UUID IdentificadorProcessor;
+    private  UUID IdentificadorProcessorBackup;
+
 
     private int Estado; //varia entre 1->em espera 0->concluido
 
@@ -18,7 +22,11 @@ public class RequestClass implements Serializable {
         this.Estado=1;
         this.IdentificadorProcessor=IdentificadorProcessor;
     }
-
+    void setIdentificadorProcessorBackup(UUID Processor) {IdentificadorProcessorBackup=Processor;}
+    UUID getIdentificadorProcessorBackup(UUID Processor)
+    {
+        return this.IdentificadorProcessorBackup;
+    }
     void setIdentificadorProcessor(UUID Processor)
     {
         this.IdentificadorProcessor=Processor;

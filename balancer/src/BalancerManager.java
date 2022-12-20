@@ -19,7 +19,8 @@ public class BalancerManager extends UnicastRemoteObject implements BalancerInte
     ArrayList<ProcessorClass> ProcessorList = new ArrayList<ProcessorClass>();
     ArrayList<RequestClass> RequestList = new ArrayList<RequestClass>();
     DecimalFormat df = new DecimalFormat("#%");
-    ProcessorClass best;CordenadorInterface CordenadorInte = (CordenadorInterface)  Naming.lookup("rmi://localhost:2026/Cordenador");
+    ProcessorClass best;
+    CordenadorInterface CordenadorInte = (CordenadorInterface)  Naming.lookup("rmi://localhost:2026/Cordenador");
     protected BalancerManager() throws IOException, NotBoundException {
     }
     @Override
@@ -27,14 +28,13 @@ public class BalancerManager extends UnicastRemoteObject implements BalancerInte
         ProcessorList.add(p);
         System.out.println("Adicionei o "+ p.getLink());
     }
-    public void RemoveProcessor(String link) throws RemoteException, InterruptedException {
+    public void RemoveProcessor(String link) throws RemoteException, InterruptedException, MalformedURLException, NotBoundException {
         if(ProcessorList.size()>0)
         {
             for(int i=0;i<ProcessorList.size();i++)
             {
                 if(ProcessorList.get(i).getLink().equals(link))
                 {
-                   // sleep(30000);
                     if(best!=null)
                     if(best.getLink().equals(link))
                     {
@@ -46,14 +46,44 @@ public class BalancerManager extends UnicastRemoteObject implements BalancerInte
             }
         }
     }
+
+    public void ResumeTasks(ProcessorClass p) throws IOException, NotBoundException, InterruptedException {
+
+
+           for(int j=0;j<RequestList.size();j++)
+            {
+                if(RequestList.get(j).getIdentificadorProcessor().equals(p.getIdentificador()))
+                {
+                    if(RequestList.get(j).getIdentificadorProcessorBackup()!=null) {
+                        ProcessorInterface Process = (ProcessorInterface) Naming.lookup(RequestList.get(j).getIdentificadorProcessorBackup());
+                        Process.EXECBACKUP(p.getIdentificador());
+                    }
+                }
+            }
+    }
+
     public UUID SendRequest(RequestClass r) throws IOException, NotBoundException, InterruptedException
     {
-         best=CordenadorInte.BestProcessor();
-         if(best!=null)
+        best=CordenadorInte.BestProcessor(); //retorna melhor processador
+        ProcessorClass backup;
+        backup=CordenadorInte.BackupProcessor(best); //vai retornar um processador diferente do que vai receber o request
+        int x=0;
+        if(backup==null)
+        {
+          x=1;
+        }
+
+        if(best!=null)
          {
              ProcessorInterface ProcessorInte = (ProcessorInterface) Naming.lookup(best.getLink());
-             ProcessorInte.Send(r);
              r.setIdentificadorProcessor(best.getIdentificador());
+             if(x!=1)
+             {
+               r.setIdentificadorProcessorBackup(backup.getLink());
+               ProcessorInterface ProcessorBackup = (ProcessorInterface) Naming.lookup(backup.getLink());
+               ProcessorBackup.ADDBackupList(r);
+             }
+             ProcessorInte.Send(r);
              RequestList.add(r);
              best=null;
              return r.getIdentificadorProcessor();

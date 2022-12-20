@@ -16,6 +16,7 @@ import java.util.Date;
 
 public class CordenadorManager extends UnicastRemoteObject implements CordenadorInterface , Serializable {
     BalancerInterface BalancerInte = null;
+    ArrayList<RequestClass> RequestList = new ArrayList<RequestClass>();
 
     ArrayList<ProcessorClass> ProcessorList = new ArrayList<ProcessorClass>();
     protected MulticastSocket socket = null;
@@ -56,13 +57,14 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
                            // System.out.println("Processor:"+ Link +" "+df.format(CPUusage));
                             ProcessorList.add(new ProcessorClass(Integer.parseInt(portstr[0])));
                             System.out.println("add->"+Link);
-                            SendProcessors(Link);
+                            SendProcessors(Link,CPUusage);
                         } else if (portstr[2].equals("update")) //upadate processor
                         {
                             for(int j=0;j<ProcessorList.size();j++)
                             {
                                 if(ProcessorList.get(j).getLink().equals(Link))
                                 {
+                                    ProcessorList.get(j).setCpuusage(Double.parseDouble(portstr[1]));
                                     Instant d =Instant.now();
                                     ProcessorList.get(j).setEstado(d);
                                 }
@@ -88,7 +90,6 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
                 while (true) {
                     if(ProcessorList.size()>0)
                     {
-
                         Instant  current, interval,date_Processor;
                         current = Instant.now();
 
@@ -101,8 +102,16 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
                             {                               // não recebemos sinal deste processador há 30 segundos
                                 //notificar o balancer
                                 try {
+                                    RemoveProcessor(ProcessorList.get(j));
                                     BalancerInte.RemoveProcessor(ProcessorList.get(j).getLink());
                                 } catch (RemoteException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                catch (NotBoundException e) {
+                                    throw new RuntimeException(e);
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                } catch (InterruptedException e) {
                                     throw new RuntimeException(e);
                                 }
                                 System.out.println("O "+ProcessorList.get(j).getLink()+" Rebentou");
@@ -119,15 +128,19 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
             }
         });
         theardcheckativos.start();
-
     }
 
+    public  void RemoveProcessor(ProcessorClass p) throws NotBoundException, IOException, InterruptedException {
+      BalancerInte.ResumeTasks(p);
+    }
     @Override
-    public void SendProcessors(String Link) throws RemoteException, MalformedURLException, NotBoundException {
+    public void SendProcessors(String Link,Double CpuUsage) throws RemoteException, MalformedURLException, NotBoundException {
         BalancerInte=(BalancerInterface) Naming.lookup("rmi://localhost:2023/Balancer");
+
         for(int i=0;i<ProcessorList.size();i++) {
             if (ProcessorList.get(i).getLink().equals(Link)) {
-                BalancerInte.AddProcessor(ProcessorList.get(0));
+                ProcessorList.get(i).setCpuusage(CpuUsage);
+                BalancerInte.AddProcessor(ProcessorList.get(i));
                 return;
             }
         }
@@ -135,13 +148,33 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
     public ProcessorClass BestProcessor() throws RemoteException
     {
         best=ProcessorList.get(0);
-        for(int i=1;i<ProcessorList.size();i++)
+        for(int i=0;i<ProcessorList.size();i++)
         {
             if(ProcessorList.get(i).getCpuusage()<best.getCpuusage())
             {
-                best=ProcessorList.get(i);
+              return best=ProcessorList.get(i);
             }
         }
+        System.out.println("best processor:"+best.getLink());
         return best;
     }
+    public ProcessorClass BackupProcessor(ProcessorClass P)
+    {
+        ProcessorClass Backup;
+        if(ProcessorList.size()==1)
+        {
+            return null;
+        }
+
+        for(int i=0;i<ProcessorList.size();i++)
+        {
+            if(ProcessorList.get(i).getLink()!=P.getLink())
+            {
+                return  ProcessorList.get(i);
+            }
+        }
+        return  null;
+
+    }
+
 }

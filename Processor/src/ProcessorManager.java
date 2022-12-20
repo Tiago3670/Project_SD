@@ -14,6 +14,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Random;
 import java.util.UUID;
@@ -23,14 +24,14 @@ import static java.lang.Thread.sleep;
 public class ProcessorManager extends UnicastRemoteObject implements ProcessorInterface, Serializable {
 
     RequestClass request;
-
     private DatagramSocket socket;
     private InetAddress group;
     private byte[]buf;
     FileClass f;
     ProcessorClass p;
-
+    ArrayList<RequestClass> RequestBackupList = new ArrayList<RequestClass>();
     private double cpu_mean_usage;
+    ProcessorInterface ProcessorBackup;
 
     FileInterface FileInte=(FileInterface) Naming.lookup("rmi://localhost:2022/Storage");
     int enviar=0;
@@ -73,6 +74,36 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
         }
 
     }
+    public void EXECBACKUP(UUID identificadorProcessor) throws IOException, InterruptedException {
+        if(RequestBackupList.size()>0)
+        {
+            for(int i=0;i<RequestBackupList.size();i++)
+            {
+                if(RequestBackupList.get(i).getIdentificadorProcessor().equals(identificadorProcessor))
+                {
+                   Send(RequestBackupList.get(i));
+                }
+            }
+        }
+    }
+    public void ADDBackupList(RequestClass r)
+    {
+        RequestBackupList.add(r);
+    }
+    public void RemoveRequest(RequestClass r)
+    {
+        if(RequestBackupList.size()>0)
+        {
+            for(int i=0;i<RequestBackupList.size();i++)
+            {
+                if(RequestBackupList.get(i).getIdentificadorRequest().equals(r.getIdentificadorRequest()))
+                {
+                    RequestBackupList.remove(i);
+                    return;
+                }
+            }
+        }
+    }
 
     public void Send(RequestClass r) throws IOException, InterruptedException {
            request=r;
@@ -83,7 +114,11 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
 
            if(f==null)
                return;
-            Exec(r.getUrl());
+
+        System.out.println(request.getEstado());
+
+
+        Exec(request.getUrl());
     }
 
 
@@ -99,7 +134,6 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
 
         File batfile= new File("temp.bat");
         String x;
-
         FileOutputStream out=new FileOutputStream(batfile);
         out.write(script);
         out.flush();
@@ -139,9 +173,8 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
         Thread threadExec = (new Thread() {
             public void run() {
                 while (true) {
-                    System.out.println(request.getEstado());
-                   // if (request.getEstado() == 1)
-                    //{
+                   if (request.getEstado() == 1)
+                   {
                         try {
                             f = FileInte.GetFile(request.getIdentificadorFile());
                             byte[] scriptfile = Base64.getDecoder().decode(f.FileBase64().getBytes(StandardCharsets.UTF_8));
@@ -172,12 +205,21 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
                                 System.out.println(output);
                                 if (output != null) {
                                     request.setEstadoConcluido();
-                                    FileInte.SubmitOutput(f, request.getIdentificadorRequest().toString(), output.toString());
+                                    RemoveRequest(request);
+                                    if(request.getIdentificadorProcessorBackup()!=p.getLink()) {
+                                        if (request.getIdentificadorProcessorBackup() != null) {
+                                            ProcessorBackup = (ProcessorInterface) Naming.lookup(request.getIdentificadorProcessorBackup());
+                                            ProcessorBackup.RemoveRequest(request);
+                                        }
+                                        FileInte.SubmitOutput(f, request.getIdentificadorRequest().toString(), output.toString());
+                                    }
                                 }
                             } catch (RemoteException | MalformedURLException e) {
                                 e.printStackTrace();
                             } catch (IOException e) {
                                 e.printStackTrace();
+                            } catch (NotBoundException e) {
+                                throw new RuntimeException(e);
                             }
                             batfile.delete();
                         } catch (SocketException e) {
@@ -189,11 +231,7 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
-                  /*  }
-                    else
-                    {
-                        System.out.println("oi");
-                    }*/
+                   }
                 }
             }
 
