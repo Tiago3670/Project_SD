@@ -64,7 +64,7 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
             if(it == it_max)
             {
                 cpu_mean_usage /= it_max+1;
-                    return;
+                return;
             }
             else
             {
@@ -81,7 +81,7 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
             {
                 if(RequestBackupList.get(i).getIdentificadorProcessor().equals(identificadorProcessor))
                 {
-                   Send(RequestBackupList.get(i));
+                    Send(RequestBackupList.get(i));
                 }
             }
         }
@@ -99,6 +99,7 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
                 if(RequestBackupList.get(i).getIdentificadorRequest().equals(r.getIdentificadorRequest()))
                 {
                     RequestBackupList.remove(i);
+                    System.out.println("Removi");
                     return;
                 }
             }
@@ -106,14 +107,14 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
     }
 
     public void Send(RequestClass r) throws IOException, InterruptedException {
-           request=r;
-           if(request==null)
-               return;
+        request=r;
+        if(request==null)
+            return;
 
-            f=FileInte.GetFile(request.getIdentificadorFile());
+        f=FileInte.GetFile(request.getIdentificadorFile());
 
-           if(f==null)
-               return;
+        if(f==null)
+            return;
 
         System.out.println(request.getEstado());
 
@@ -122,59 +123,12 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
     }
 
 
-
-
-   /* public void Exec(String url) throws IOException, InterruptedException {
-
-
-        f = FileInte.GetFile(request.getIdentificadorFile());
-        byte[] scriptfile = Base64.getDecoder().decode(f.FileBase64().getBytes(StandardCharsets.UTF_8));
-        String scriptdecode = new String(scriptfile, StandardCharsets.UTF_8);
-        byte[] script = Base64.getDecoder().decode(url.getBytes(StandardCharsets.UTF_8));
-
-        File batfile= new File("temp.bat");
-        String x;
-        FileOutputStream out=new FileOutputStream(batfile);
-        out.write(script);
-        out.flush();
-        out.close();
-
-        StringBuilder output = new StringBuilder();
-        //String command = "cmd /c " + url + " " + f.getUrlDir() + "\""+ request.getIdentificadorFile() + "\"";
-        String command = "cmd /c " + batfile + " \""+ scriptdecode +"\"";
-
-        System.out.println(command);
-        Process process = Runtime.getRuntime().exec(command);
-        process.waitFor();
-            try (BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(process.getInputStream()))) {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    output.append(line + System.lineSeparator());
-                }
-                System.out.println(output);
-                if(output!=null)
-                {
-                    request.setEstadoConcluido();
-                    FileInte.SubmitOutput(f,request.getIdentificadorRequest().toString(),output.toString());
-                }
-
-            } catch (RemoteException | MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-      batfile.delete();
-    }
-*/
-
-
     public void Exec(String url) throws IOException, InterruptedException {
         Thread threadExec = (new Thread() {
             public void run() {
                 while (true) {
-                   if (request.getEstado() == 1)
-                   {
+                    if (request.getEstado() == 1)
+                    {
                         try {
                             f = FileInte.GetFile(request.getIdentificadorFile());
                             byte[] scriptfile = Base64.getDecoder().decode(f.FileBase64().getBytes(StandardCharsets.UTF_8));
@@ -183,6 +137,12 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
 
                             File batfile = new File("temp.bat");
                             String x;
+                            File temp2 = new File("temp2.txt");
+
+                            FileOutputStream outtxt = new FileOutputStream(temp2);
+                            outtxt.write(scriptdecode.getBytes());
+                            outtxt.flush();
+                            outtxt.close();
 
                             FileOutputStream out = new FileOutputStream(batfile);
                             out.write(script);
@@ -191,37 +151,34 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
 
                             StringBuilder output = new StringBuilder();
                             //String command = "cmd /c " + url + " " + f.getUrlDir() + "\""+ request.getIdentificadorFile() + "\"";
-                            String command = "cmd /c " + batfile + " \"" + scriptdecode + "\"";
+                            // String command = "cmd /c " + batfile.getAbsolutePath() + " \"" + temp2.getAbsolutePath() + "\"";
+                            String command = "cmd /c " + "temp.bat "  + temp2 + " ";
 
+                            // System.out.println(scriptdecode.toString());
                             System.out.println(command);
                             Process process = Runtime.getRuntime().exec(command);
+                            BufferedReader reader   = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                            String line;
+                            while ((line = reader.readLine()) != null) {
+                                output.append(line).append(System.getProperty("line.separator"));
+                            }
                             process.waitFor();
-                            try (BufferedReader reader = new BufferedReader(
-                                    new InputStreamReader(process.getInputStream()))) {
-                                String line;
-                                while ((line = reader.readLine()) != null) {
-                                    output.append(line + System.lineSeparator());
-                                }
-                                System.out.println(output);
-                                if (output != null) {
-                                    request.setEstadoConcluido();
-                                    RemoveRequest(request);
-                                    if(request.getIdentificadorProcessorBackup()!=p.getLink()) {
-                                        if (request.getIdentificadorProcessorBackup() != null) {
-                                            ProcessorBackup = (ProcessorInterface) Naming.lookup(request.getIdentificadorProcessorBackup());
-                                            ProcessorBackup.RemoveRequest(request);
-                                        }
-                                        FileInte.SubmitOutput(f, request.getIdentificadorRequest().toString(), output.toString());
+                            reader.close();
+                            System.out.println("->"+output.length());
+
+                            if (output.length() > 0) {
+                                request.setEstadoConcluido();
+                                if(request.getIdentificadorProcessorBackup()!=p.getLink()) {
+                                    if (request.getIdentificadorProcessorBackup() != null) {
+                                        System.out.println("processor backup:"+request.getIdentificadorProcessorBackup());
+                                        ProcessorBackup = (ProcessorInterface) Naming.lookup(request.getIdentificadorProcessorBackup());
+                                        ProcessorBackup.RemoveRequest(request);
                                     }
+                                    FileInte.SubmitOutput(f, request.getIdentificadorRequest().toString(), output.toString());
                                 }
-                            } catch (RemoteException | MalformedURLException e) {
-                                e.printStackTrace();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            } catch (NotBoundException e) {
-                                throw new RuntimeException(e);
                             }
                             batfile.delete();
+                            temp2.delete();
                         } catch (SocketException e) {
                             throw new RuntimeException(e);
                         } catch (UnknownHostException e) {
@@ -230,8 +187,10 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
                             throw new RuntimeException(e);
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
+                        } catch (NotBoundException e) {
+                            throw new RuntimeException(e);
                         }
-                   }
+                    }
                 }
             }
 
@@ -241,42 +200,42 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
 
 
     public  void MulticastPublisher() throws IOException {
-          Thread threadProcessor = (new Thread() {
-              public void run() {
-                  while(true){
-                      //message= port,cpusage,
-                  String message=p.getPort()+",";
-                  try {
-                      //System.out.println("Im in the theard");
-                      socket = new DatagramSocket();
-                      cpuUsage();
-                      group = InetAddress.getByName("230.0.0.0");
-                      message=message+cpu_mean_usage;
-                      if(enviar==0)
-                      {
-                          message=message+",setup";
-                          enviar++;
-                      }
-                      else
-                      {
-                          message=message+",update";
-                      }
-                      buf = message.getBytes();
-                      DatagramPacket packet = new DatagramPacket(buf, buf.length, group, 4446);
-                      socket.send(packet);
-                      socket.close();
-                      sleep(3000);
-                  } catch (SocketException e) {
-                      throw new RuntimeException(e);
-                  } catch (UnknownHostException e) {
-                      throw new RuntimeException(e);
-                  } catch (IOException e) {
-                      throw new RuntimeException(e);
-                  } catch (InterruptedException e) {
-                      throw new RuntimeException(e);
-                  }
-              }}
-          });
-          threadProcessor.start();
-      }
+        Thread threadProcessor = (new Thread() {
+            public void run() {
+                while(true){
+                    //message= port,cpusage,
+                    String message=p.getPort()+",";
+                    try {
+                        //System.out.println("Im in the theard");
+                        socket = new DatagramSocket();
+                        cpuUsage();
+                        group = InetAddress.getByName("230.0.0.0");
+                        message=message+cpu_mean_usage;
+                        if(enviar==0)
+                        {
+                            message=message+",setup";
+                            enviar++;
+                        }
+                        else
+                        {
+                            message=message+",update";
+                        }
+                        buf = message.getBytes();
+                        DatagramPacket packet = new DatagramPacket(buf, buf.length, group, 4446);
+                        socket.send(packet);
+                        socket.close();
+                        sleep(3000);
+                    } catch (SocketException e) {
+                        throw new RuntimeException(e);
+                    } catch (UnknownHostException e) {
+                        throw new RuntimeException(e);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }}
+        });
+        threadProcessor.start();
+    }
 }

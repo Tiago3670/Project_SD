@@ -17,7 +17,6 @@ import java.util.Date;
 public class CordenadorManager extends UnicastRemoteObject implements CordenadorInterface , Serializable {
     BalancerInterface BalancerInte = null;
     ArrayList<RequestClass> RequestList = new ArrayList<RequestClass>();
-
     ArrayList<ProcessorClass> ProcessorList = new ArrayList<ProcessorClass>();
     protected MulticastSocket socket = null;
     InetAddress group;
@@ -114,7 +113,7 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
                                 } catch (InterruptedException e) {
                                     throw new RuntimeException(e);
                                 }
-                                System.out.println("O "+ProcessorList.get(j).getLink()+" Rebentou");
+                                System.out.println("O "+ ProcessorList.get(j).getLink() + " Rebentou");
                                 ProcessorList.remove(j);
                             }
                         }
@@ -160,20 +159,16 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
     }
     public ProcessorClass BackupProcessor(ProcessorClass P)
     {
-        ProcessorClass Backup;
-        if(ProcessorList.size()==1)
-        {
-            return null;
-        }
-
+      ProcessorClass backup = null;
+       System.out.println(P.getLink());
         for(int i=0;i<ProcessorList.size();i++)
         {
-            if(ProcessorList.get(i).getLink()!=P.getLink())
+            if(!ProcessorList.get(i).getLink().equals(P.getLink()))
             {
-                return  ProcessorList.get(i);
+                backup=ProcessorList.get(i);
             }
         }
-        return  null;
+        return  backup;
 
     }
 

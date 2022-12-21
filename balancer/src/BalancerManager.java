@@ -20,6 +20,8 @@ public class BalancerManager extends UnicastRemoteObject implements BalancerInte
     ArrayList<RequestClass> RequestList = new ArrayList<RequestClass>();
     DecimalFormat df = new DecimalFormat("#%");
     ProcessorClass best;
+
+    ProcessorInterface ProcessorBackup;
     CordenadorInterface CordenadorInte = (CordenadorInterface)  Naming.lookup("rmi://localhost:2026/Cordenador");
     protected BalancerManager() throws IOException, NotBoundException {
     }
@@ -66,22 +68,28 @@ public class BalancerManager extends UnicastRemoteObject implements BalancerInte
     {
         best=CordenadorInte.BestProcessor(); //retorna melhor processador
         ProcessorClass backup;
+        System.out.println("best: "+best.getLink());
         backup=CordenadorInte.BackupProcessor(best); //vai retornar um processador diferente do que vai receber o request
         int x=0;
         if(backup==null)
         {
           x=1;
         }
+        else
+        {
+            System.out.println("back: "+backup.getLink());
+        }
 
         if(best!=null)
          {
              ProcessorInterface ProcessorInte = (ProcessorInterface) Naming.lookup(best.getLink());
              r.setIdentificadorProcessor(best.getIdentificador());
-             if(x!=1)
+             if (x!=1)
              {
                r.setIdentificadorProcessorBackup(backup.getLink());
-               ProcessorInterface ProcessorBackup = (ProcessorInterface) Naming.lookup(backup.getLink());
+               ProcessorBackup = (ProcessorInterface) Naming.lookup(backup.getLink());
                ProcessorBackup.ADDBackupList(r);
+               ProcessorBackup=null;
              }
              ProcessorInte.Send(r);
              RequestList.add(r);

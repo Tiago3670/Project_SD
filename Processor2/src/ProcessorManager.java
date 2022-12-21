@@ -74,7 +74,7 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
         }
 
     }
-    public void EXECBACKUP(UUID identificadorProcessor) throws IOException, InterruptedException {
+    public synchronized void EXECBACKUP(UUID identificadorProcessor) throws IOException, InterruptedException {
         if(RequestBackupList.size()>0)
         {
             for(int i=0;i<RequestBackupList.size();i++)
@@ -86,16 +86,11 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
             }
         }
     }
-    public void ADDBackupList(RequestClass r)
+    public synchronized void ADDBackupList(RequestClass r)
     {
         RequestBackupList.add(r);
-
-        for(int i=0;i<RequestBackupList.size();i++)
-        {
-         System.out.println(RequestBackupList.get(i).getIdentificadorProcessor());
-        }
     }
-    public void RemoveRequest(RequestClass r)
+    public synchronized void RemoveRequest(RequestClass r)
     {
         if(RequestBackupList.size()>0)
         {
@@ -115,66 +110,12 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
         request=r;
         if(request==null)
             return;
-
         f=FileInte.GetFile(request.getIdentificadorFile());
-
         if(f==null)
             return;
 
-        System.out.println(request.getEstado());
-
-
         Exec(request.getUrl());
     }
-
-
-
-
-   /* public void Exec(String url) throws IOException, InterruptedException {
-
-
-        f = FileInte.GetFile(request.getIdentificadorFile());
-        byte[] scriptfile = Base64.getDecoder().decode(f.FileBase64().getBytes(StandardCharsets.UTF_8));
-        String scriptdecode = new String(scriptfile, StandardCharsets.UTF_8);
-        byte[] script = Base64.getDecoder().decode(url.getBytes(StandardCharsets.UTF_8));
-
-        File batfile= new File("temp.bat");
-        String x;
-        FileOutputStream out=new FileOutputStream(batfile);
-        out.write(script);
-        out.flush();
-        out.close();
-
-        StringBuilder output = new StringBuilder();
-        //String command = "cmd /c " + url + " " + f.getUrlDir() + "\""+ request.getIdentificadorFile() + "\"";
-        String command = "cmd /c " + batfile + " \""+ scriptdecode +"\"";
-
-        System.out.println(command);
-        Process process = Runtime.getRuntime().exec(command);
-        process.waitFor();
-            try (BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(process.getInputStream()))) {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    output.append(line + System.lineSeparator());
-                }
-                System.out.println(output);
-                if(output!=null)
-                {
-                    request.setEstadoConcluido();
-                    FileInte.SubmitOutput(f,request.getIdentificadorRequest().toString(),output.toString());
-                }
-
-            } catch (RemoteException | MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-      batfile.delete();
-    }
-*/
-
-
     public void Exec(String url) throws IOException, InterruptedException {
         Thread threadExec = (new Thread() {
             public void run() {
@@ -189,6 +130,12 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
 
                             File batfile = new File("temp.bat");
                             String x;
+                            File temp2 = new File("temp2.txt");
+
+                            FileOutputStream outtxt = new FileOutputStream(temp2);
+                            outtxt.write(scriptdecode.getBytes());
+                            outtxt.flush();
+                            outtxt.close();
 
                             FileOutputStream out = new FileOutputStream(batfile);
                             out.write(script);
@@ -197,37 +144,35 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
 
                             StringBuilder output = new StringBuilder();
                             //String command = "cmd /c " + url + " " + f.getUrlDir() + "\""+ request.getIdentificadorFile() + "\"";
-                            String command = "cmd /c " + batfile + " \"" + scriptdecode + "\"";
+                            // String command = "cmd /c " + batfile.getAbsolutePath() + " \"" + temp2.getAbsolutePath() + "\"";
+                             String command = "cmd /c " + "temp.bat "  + temp2 + " ";
 
+                           // System.out.println(scriptdecode.toString());
                             System.out.println(command);
                             Process process = Runtime.getRuntime().exec(command);
-                            process.waitFor();
-                            try (BufferedReader reader = new BufferedReader(
-                                    new InputStreamReader(process.getInputStream()))) {
-                                String line;
+                            BufferedReader reader   = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                            String line;
                                 while ((line = reader.readLine()) != null) {
-                                    output.append(line + System.lineSeparator());
+                                    output.append(line).append(System.getProperty("line.separator"));
                                 }
-                                System.out.println(output);
-                                if (output != null) {
+                                process.waitFor();
+                                reader.close();
+                                System.out.println("->"+output.length());
+
+                            if (output.length() > 0) {
                                     request.setEstadoConcluido();
-                                    RemoveRequest(request);
                                     if(request.getIdentificadorProcessorBackup()!=p.getLink()) {
                                         if (request.getIdentificadorProcessorBackup() != null) {
+                                            System.out.println("processor backup:"+request.getIdentificadorProcessorBackup());
                                             ProcessorBackup = (ProcessorInterface) Naming.lookup(request.getIdentificadorProcessorBackup());
                                             ProcessorBackup.RemoveRequest(request);
                                         }
                                         FileInte.SubmitOutput(f, request.getIdentificadorRequest().toString(), output.toString());
                                     }
                                 }
-                            } catch (RemoteException | MalformedURLException e) {
-                                e.printStackTrace();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            } catch (NotBoundException e) {
-                                throw new RuntimeException(e);
-                            }
                             batfile.delete();
+
+                            temp2.delete();
                         } catch (SocketException e) {
                             throw new RuntimeException(e);
                         } catch (UnknownHostException e) {
@@ -235,6 +180,8 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        } catch (NotBoundException e) {
                             throw new RuntimeException(e);
                         }
                     }
