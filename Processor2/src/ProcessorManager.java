@@ -1,6 +1,7 @@
 import com.sun.management.OperatingSystemMXBean;
 
 import java.io.*;
+import java.lang.invoke.VolatileCallSite;
 import java.lang.management.ManagementFactory;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -29,18 +30,15 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
     private byte[]buf;
     FileClass f;
     ProcessorClass p;
-    ArrayList<RequestClass> RequestBackupList = new ArrayList<RequestClass>();
+    volatile ArrayList<RequestClass> RequestBackupList = new ArrayList<RequestClass>();
     private double cpu_mean_usage;
     ProcessorInterface ProcessorBackup;
-
     FileInterface FileInte=(FileInterface) Naming.lookup("rmi://localhost:2022/Storage");
     int enviar=0;
     protected ProcessorManager(ProcessorClass po) throws IOException, NotBoundException {
         p=po;
         MulticastPublisher();
     }
-
-
     public ProcessorClass GetProcessor(ProcessorClass p) throws RemoteException {
         return p;
     }
@@ -70,11 +68,9 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
             {
                 it++;
             }
-
         }
-
     }
-    public synchronized void EXECBACKUP(UUID identificadorProcessor) throws IOException, InterruptedException {
+    public void EXECBACKUP(UUID identificadorProcessor) throws IOException, InterruptedException {
         if(RequestBackupList.size()>0)
         {
             for(int i=0;i<RequestBackupList.size();i++)
@@ -86,11 +82,11 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
             }
         }
     }
-    public synchronized void ADDBackupList(RequestClass r)
+    public void ADDBackupList(RequestClass r) throws RemoteException
     {
         RequestBackupList.add(r);
     }
-    public synchronized void RemoveRequest(RequestClass r)
+    public void RemoveRequest(RequestClass r)
     {
         if(RequestBackupList.size()>0)
         {
@@ -110,13 +106,17 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
         request=r;
         if(request==null)
             return;
+
         f=FileInte.GetFile(request.getIdentificadorFile());
+
         if(f==null)
             return;
 
+        System.out.println(request.getEstado());
         Exec(request.getUrl());
     }
-    public void Exec(String url) throws IOException, InterruptedException {
+
+    public  synchronized  void Exec(String url) throws IOException, InterruptedException {
         Thread threadExec = (new Thread() {
             public void run() {
                 while (true) {
@@ -145,43 +145,34 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
                             StringBuilder output = new StringBuilder();
                             //String command = "cmd /c " + url + " " + f.getUrlDir() + "\""+ request.getIdentificadorFile() + "\"";
                             // String command = "cmd /c " + batfile.getAbsolutePath() + " \"" + temp2.getAbsolutePath() + "\"";
-                             String command = "cmd /c " + "temp.bat "  + temp2 + " ";
+                            String command = "cmd /c " + "temp.bat "  + temp2 + " ";
 
-                           // System.out.println(scriptdecode.toString());
+                            // System.out.println(scriptdecode.toString());
                             System.out.println(command);
                             Process process = Runtime.getRuntime().exec(command);
                             BufferedReader reader   = new BufferedReader(new InputStreamReader(process.getInputStream()));
                             String line;
-                                while ((line = reader.readLine()) != null) {
-                                    output.append(line).append(System.getProperty("line.separator"));
-                                }
-                                process.waitFor();
-                                reader.close();
-                                System.out.println("->"+output.length());
+                            while ((line = reader.readLine()) != null) {
+                                output.append(line).append(System.getProperty("line.separator"));
+                            }
+                            process.waitFor();
+                            reader.close();
+                            System.out.println("->"+output.length());
 
                             if (output.length() > 0) {
-                                    request.setEstadoConcluido();
-                                    if(request.getIdentificadorProcessorBackup()!=p.getLink()) {
-                                        if (request.getIdentificadorProcessorBackup() != null) {
-                                            System.out.println("processor backup:"+request.getIdentificadorProcessorBackup());
-                                            ProcessorBackup = (ProcessorInterface) Naming.lookup(request.getIdentificadorProcessorBackup());
-                                            ProcessorBackup.RemoveRequest(request);
-                                        }
-                                        FileInte.SubmitOutput(f, request.getIdentificadorRequest().toString(), output.toString());
+                                request.setEstadoConcluido();
+                                if(request.getIdentificadorProcessorBackup()!=p.getLink()) {
+                                    if (request.getIdentificadorProcessorBackup() != null) {
+                                        System.out.println("processor backup:"+request.getIdentificadorProcessorBackup());
+                                        ProcessorBackup = (ProcessorInterface) Naming.lookup(request.getIdentificadorProcessorBackup());
+                                        ProcessorBackup.RemoveRequest(request);
                                     }
+                                    FileInte.SubmitOutput(f, request.getIdentificadorRequest().toString(), output.toString());
                                 }
+                            }
                             batfile.delete();
-
                             temp2.delete();
-                        } catch (SocketException e) {
-                            throw new RuntimeException(e);
-                        } catch (UnknownHostException e) {
-                            throw new RuntimeException(e);
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
-                        } catch (NotBoundException e) {
+                        } catch (NotBoundException | InterruptedException | IOException e) {
                             throw new RuntimeException(e);
                         }
                     }
@@ -193,14 +184,12 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
     }
 
 
-    public  void MulticastPublisher() throws IOException {
+    public  synchronized void MulticastPublisher() throws IOException {
         Thread threadProcessor = (new Thread() {
             public void run() {
                 while(true){
-                    //message= port,cpusage,
                     String message=p.getPort()+",";
                     try {
-                        //System.out.println("Im in the theard");
                         socket = new DatagramSocket();
                         cpuUsage();
                         group = InetAddress.getByName("230.0.0.0");
@@ -219,16 +208,11 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
                         socket.send(packet);
                         socket.close();
                         sleep(3000);
-                    } catch (SocketException e) {
-                        throw new RuntimeException(e);
-                    } catch (UnknownHostException e) {
-                        throw new RuntimeException(e);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    } catch (InterruptedException e) {
+                    } catch (InterruptedException | IOException e) {
                         throw new RuntimeException(e);
                     }
-                }}
+                }
+            }
         });
         threadProcessor.start();
     }

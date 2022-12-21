@@ -10,4 +10,5 @@ public interface ProcessorInterface extends Remote {
     public void RemoveRequest(RequestClass r) throws RemoteException;
     public void EXECBACKUP(UUID identificadorProcessor) throws IOException, InterruptedException ;
     public void ADDBackupList(RequestClass r) throws RemoteException;
+
 }

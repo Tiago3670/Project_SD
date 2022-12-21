@@ -50,8 +50,6 @@ public class BalancerManager extends UnicastRemoteObject implements BalancerInte
     }
 
     public void ResumeTasks(ProcessorClass p) throws IOException, NotBoundException, InterruptedException {
-
-
            for(int j=0;j<RequestList.size();j++)
             {
                 if(RequestList.get(j).getIdentificadorProcessor().equals(p.getIdentificador()))
