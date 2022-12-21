@@ -16,11 +16,9 @@ import java.util.UUID;
 import static java.lang.Thread.sleep;
 
 public class BalancerManager extends UnicastRemoteObject implements BalancerInterface , Serializable {
-    ArrayList<ProcessorClass> ProcessorList = new ArrayList<ProcessorClass>();
-    ArrayList<RequestClass> RequestList = new ArrayList<RequestClass>();
-    DecimalFormat df = new DecimalFormat("#%");
+    volatile ArrayList<ProcessorClass> ProcessorList = new ArrayList<ProcessorClass>();
+    volatile ArrayList<RequestClass> RequestList = new ArrayList<RequestClass>();
     ProcessorClass best;
-
     ProcessorInterface ProcessorBackup;
     CordenadorInterface CordenadorInte = (CordenadorInterface)  Naming.lookup("rmi://localhost:2026/Cordenador");
     protected BalancerManager() throws IOException, NotBoundException {
@@ -49,7 +47,7 @@ public class BalancerManager extends UnicastRemoteObject implements BalancerInte
         }
     }
 
-    public void ResumeTasks(ProcessorClass p) throws IOException, NotBoundException, InterruptedException {
+    public synchronized void ResumeTasks(ProcessorClass p) throws IOException, NotBoundException, InterruptedException {
            for(int j=0;j<RequestList.size();j++)
             {
                 if(RequestList.get(j).getIdentificadorProcessor().equals(p.getIdentificador()))
@@ -62,21 +60,27 @@ public class BalancerManager extends UnicastRemoteObject implements BalancerInte
             }
     }
 
-    public UUID SendRequest(RequestClass r) throws IOException, NotBoundException, InterruptedException
+    public synchronized String GetLinkProcessor(String identificador) throws RemoteException
     {
+        for (int i=0;i<ProcessorList.size();i++)
+        {
+            if(ProcessorList.get(i).getIdentificador().toString().equals(identificador))
+            {
+                return ProcessorList.get(i).getLink();
+            }
+        }
+        return null;
+    }
+
+    public synchronized UUID SendRequest(RequestClass r) throws IOException, NotBoundException, InterruptedException
+    {
+        int x=0;
         best=CordenadorInte.BestProcessor(); //retorna melhor processador
         ProcessorClass backup;
         System.out.println("best: "+best.getLink());
         backup=CordenadorInte.BackupProcessor(best); //vai retornar um processador diferente do que vai receber o request
-        int x=0;
-        if(backup==null)
-        {
-          x=1;
-        }
-        else
-        {
-            System.out.println("back: "+backup.getLink());
-        }
+        if(backup==null) {x=1;}
+        else {System.out.println("back: "+backup.getLink());}
 
         if(best!=null)
          {
@@ -94,8 +98,6 @@ public class BalancerManager extends UnicastRemoteObject implements BalancerInte
              best=null;
              return r.getIdentificadorProcessor();
          }
-         else{
-             return null;
-         }
+         else{return null;}
     }
 }

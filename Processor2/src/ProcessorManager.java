@@ -31,7 +31,7 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
     FileClass f;
     ProcessorClass p;
     volatile ArrayList<RequestClass> RequestBackupList = new ArrayList<RequestClass>();
-    private double cpu_mean_usage;
+    volatile double cpu_mean_usage;
     ProcessorInterface ProcessorBackup;
     FileInterface FileInte=(FileInterface) Naming.lookup("rmi://localhost:2022/Storage");
     int enviar=0;
@@ -42,9 +42,7 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
     public ProcessorClass GetProcessor(ProcessorClass p) throws RemoteException {
         return p;
     }
-    public void SetProcessor(ProcessorClass p) throws RemoteException {
-        p=p;
-    }
+
     public void cpuUsage() throws InterruptedException {
 
         com.sun.management.OperatingSystemMXBean osBean = ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class);
@@ -116,7 +114,19 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
         Exec(request.getUrl());
     }
 
-    public  synchronized  void Exec(String url) throws IOException, InterruptedException {
+    public synchronized int GetEstado(String IdentificadorRequest) throws RemoteException
+    {
+        if(IdentificadorRequest.equals(request.getIdentificadorRequest().toString()))
+        {
+            return request.getEstado();
+        }
+        else{
+            return 1000;
+        }
+    }
+
+
+    public synchronized void Exec(String url) throws IOException, InterruptedException {
         Thread threadExec = (new Thread() {
             public void run() {
                 while (true) {
