@@ -12,7 +12,7 @@ public class RequestClass implements Serializable {
     private  String LinkProcessorBackup;
 
 
-    private int Estado; //varia entre 1->em espera 0->concluido
+    private int Estado; //varia entre 1->em espera 2->concluido
 
     public  RequestClass (UUID IdentificadorRequest,String script,String IdentificadorFile,int Estado,UUID IdentificadorProcessor)
     {
@@ -46,10 +46,6 @@ public class RequestClass implements Serializable {
     public  int getEstado()
     {
         return this.Estado;
-    }
-    public  void setEstadoProcessamento()
-    {
-        this.Estado=3;
     }
     public  void setEstadoConcluido()
     {

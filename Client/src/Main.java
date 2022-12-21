@@ -77,6 +77,33 @@ public class Main {
        System.out.println("Press Enter to continue…");
        System.in.read();
    }
+
+   public  static void getEstado() throws IOException, NotBoundException {
+       System.out.println("Qual o processador?");
+       String IdentificadorProcessador=scan.next();
+       System.out.println("Qual o request?");
+       String IdentificadorRequest=scan.next();
+       int result;
+      String link= BalancerInte.GetLinkProcessor(IdentificadorProcessador);
+      if(link.length()>0)
+      {
+          ProcessorInterface ProcessorInte = (ProcessorInterface) Naming.lookup(link);
+          result= ProcessorInte.GetEstado(IdentificadorRequest);
+          if(result==1)
+          {
+             System.out.println("O request "+IdentificadorRequest +" está em execução!");
+          }
+          else if(result==2)
+          {
+              System.out.println("O request "+IdentificadorRequest +" já foi executado!");
+          } else if (result==1000)
+          {
+              System.out.println("O request "+IdentificadorRequest +" já não se encontra no Processador!");
+          }
+      }
+       System.out.println("Press Enter to continue…");
+       System.in.read();
+   }
    public static void CreateRequest () throws IOException, NotBoundException, InterruptedException {
        File pathfile;
        System.out.println("Identificador do Ficheiro a enviar no request:");
@@ -103,6 +130,7 @@ public class Main {
         System.out.println("2-Receber um ficheiro dado o seu identificador.");
         System.out.println("3-Enviar um request.");
         System.out.println("4-Receber o output do ficheiro.");
+        System.out.println("5-Receber o Estado de um request perguntando diretamente ao processador!");
         System.out.println("0-Para sair.");
         op=scan.next();
         if(op.equals("1"))
@@ -118,6 +146,8 @@ public class Main {
             x=1;
         } else if (op.equals("4")) {
             getOutput();
+        } else if (op.equals("5")) {
+            getEstado();
         }
         }while (x!=1);
     }

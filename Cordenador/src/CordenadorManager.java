@@ -16,11 +16,9 @@ import java.util.Date;
 
 public class CordenadorManager extends UnicastRemoteObject implements CordenadorInterface , Serializable {
     BalancerInterface BalancerInte = null;
-    ArrayList<RequestClass> RequestList = new ArrayList<RequestClass>();
-    ArrayList<ProcessorClass> ProcessorList = new ArrayList<ProcessorClass>();
+    volatile ArrayList<ProcessorClass> ProcessorList = new ArrayList<ProcessorClass>();
     protected MulticastSocket socket = null;
     InetAddress group;
-    DecimalFormat df = new DecimalFormat("#%");
     ProcessorClass best;
     protected byte[] buf = new byte[256];
 
@@ -30,7 +28,7 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
         CheckProcessors(null);
     }
 
-    public  void ProcessorReciver () throws IOException, NotBoundException {
+    public synchronized  void ProcessorReciver () throws IOException, NotBoundException {
         Thread threadCordenador = (new Thread() {
             public void run()
             {
@@ -81,7 +79,7 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
         });
         threadCordenador.start();
     }
-    public void CheckProcessors(String link)
+    public synchronized void CheckProcessors(String link)
     {
         Thread theardcheckativos = (new Thread() {
             public void run()
