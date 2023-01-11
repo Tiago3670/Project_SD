@@ -13,10 +13,14 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CordenadorManager extends UnicastRemoteObject implements CordenadorInterface , Serializable {
     BalancerInterface BalancerInte = null;
     volatile ArrayList<ProcessorClass> ProcessorList = new ArrayList<ProcessorClass>();
+    HashMap<String, ProcessorClass> ProcessorMap = new HashMap<>();
+
     protected MulticastSocket socket = null;
     InetAddress group;
     ProcessorClass best;
@@ -52,19 +56,18 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
                         {
                             double CPUusage=Double.parseDouble(portstr[1]);
                            // System.out.println("Processor:"+ Link +" "+df.format(CPUusage));
-                            ProcessorList.add(new ProcessorClass(Integer.parseInt(portstr[0])));
+                           // ProcessorList.add(new ProcessorClass(Integer.parseInt(portstr[0])));
+                            ProcessorMap.put(Link, new ProcessorClass(Integer.parseInt(portstr[0])));
                             System.out.println("add->"+Link);
                             SendProcessors(Link,CPUusage);
                         } else if (portstr[2].equals("update")) //upadate processor
                         {
-                            for(int j=0;j<ProcessorList.size();j++)
+                            if(ProcessorMap.containsKey(Link))
                             {
-                                if(ProcessorList.get(j).getLink().equals(Link))
-                                {
-                                    ProcessorList.get(j).setCpuusage(Double.parseDouble(portstr[1]));
-                                    Instant d =Instant.now();
-                                    ProcessorList.get(j).setEstado(d);
-                                }
+                                ProcessorClass p = ProcessorMap.get(Link);
+                                p.setCpuusage(Double.parseDouble(portstr[1]));
+                                Instant d =Instant.now();
+                                p.setEstado(d);
                             }
                         }
                     }
@@ -85,22 +88,24 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
             public void run()
             {
                 while (true) {
-                    if(ProcessorList.size()>0)
+                    if(ProcessorMap.size()>0)
                     {
                         Instant  current, interval,date_Processor;
                         current = Instant.now();
 
-                        for(int j=0;j<ProcessorList.size();j++)
+                        for(Map.Entry<String, ProcessorClass> p : ProcessorMap.entrySet())
                         {
-                            date_Processor= ProcessorList.get(j).getEstado();
+                            date_Processor= p.getValue().getEstado();
                             interval = Instant.ofEpochSecond(ChronoUnit.SECONDS.between(date_Processor,current));
                            // System.out.println("seconds bettew="+interval.getEpochSecond());
-                           if(interval.getEpochSecond()>25) //se o intervalo de tempo passar os 30 segundos significa que ja
+                           if(interval.getEpochSecond()>10) //se o intervalo de tempo passar os 30 segundos significa que ja
                             {                               // não recebemos sinal deste processador há 30 segundos
                                 //notificar o balancer
                                 try {
-                                    RemoveProcessor(ProcessorList.get(j));
-                                    BalancerInte.RemoveProcessor(ProcessorList.get(j).getLink());
+                                    RemoveProcessor(p.getKey()); //resumir as tarefas
+                                    BalancerInte.RemoveProcessor(p.getKey()); // dizer ao balanceador para remover o utilizador
+                                    ProcessorMap.remove(p.getKey());
+                                    System.out.println("Remove-> "+p.getKey());
                                 } catch (RemoteException e) {
                                     throw new RuntimeException(e);
                                 }
@@ -111,13 +116,11 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
                                 } catch (InterruptedException e) {
                                     throw new RuntimeException(e);
                                 }
-                                System.out.println("O "+ ProcessorList.get(j).getLink() + " Rebentou");
-                                ProcessorList.remove(j);
                             }
                         }
                     }
                     try {
-                        sleep(10000);
+                        sleep(5000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -127,25 +130,28 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
         theardcheckativos.start();
     }
 
-    public  void RemoveProcessor(ProcessorClass p) throws NotBoundException, IOException, InterruptedException {
-      BalancerInte.ResumeTasks(p);
+    public  void RemoveProcessor(String link) throws NotBoundException, IOException, InterruptedException {
+        if(ProcessorMap.containsKey(link)) {
+            ProcessorClass p = ProcessorMap.get(link);
+            BalancerInte.ResumeTasks(p);
+        }
     }
     @Override
     public void SendProcessors(String Link,Double CpuUsage) throws RemoteException, MalformedURLException, NotBoundException {
         BalancerInte=(BalancerInterface) Naming.lookup("rmi://localhost:2023/Balancer");
-
-        for(int i=0;i<ProcessorList.size();i++) {
-            if (ProcessorList.get(i).getLink().equals(Link)) {
-                ProcessorList.get(i).setCpuusage(CpuUsage);
-                BalancerInte.AddProcessor(ProcessorList.get(i));
-                return;
-            }
+        ProcessorClass p=null;
+        if(ProcessorMap.containsKey(Link))
+        {
+            p=ProcessorMap.get(Link);
+            p.setCpuusage(CpuUsage);
+            BalancerInte.AddProcessor(p);
+            p=null;
         }
     }
     public ProcessorClass BestProcessor() throws RemoteException
     {
-        best=ProcessorList.get(0);
-        for(int i=0;i<ProcessorList.size();i++)
+        best=ProcessorMap.get(0);
+        for(Map.Entry<String, ProcessorClass> p : ProcessorMap.entrySet())
         {
             if(ProcessorList.get(i).getCpuusage()<best.getCpuusage())
             {
