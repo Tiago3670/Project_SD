@@ -10,10 +10,14 @@ import java.rmi.server.UnicastRemoteObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class FileManager extends UnicastRemoteObject implements FileInterface  {
-    private ArrayList<FileClass> ListFile = new ArrayList<FileClass>();
+    //private ArrayList<FileClass> ListFile = new ArrayList<FileClass>();
+    ConcurrentHashMap<String, FileClass> FileMap = new ConcurrentHashMap<>();
+
     ArrayList<String> DoneRequest=new ArrayList<>();
     private String dir = "C:/Users/tiago/OneDrive/Área de Trabalho/EI/3 Ano/SD/teste";
     //private String dir = "C:/Users/dseabra/IdeaProjects/2022/Project_SD/teste";
@@ -31,23 +35,24 @@ public class FileManager extends UnicastRemoteObject implements FileInterface  {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            this.ListFile.add(f);
+           FileMap.put(f.getIdentificadorFile(),f);
             return f.getIdentificadorFile();
     }
     @Override
     public void SubmitOutput(FileClass f,String IDRequest,String FOutput) throws IOException {
-        for(int i=0;i<ListFile.size();i++)
+
+
+        if(FileMap.containsKey(f.getIdentificadorFile()))
         {
-            if(ListFile.get(i).getIdentificadorFile().equals(f.getIdentificadorFile()))
-            {
-                File file= new File(dir+"/"+f.getIdentificadorFile()+".txt");
-                FileOutputStream out=new FileOutputStream(file);
-                out.write(FOutput.getBytes());
-                out.flush();
-                out.close();
-            }
+            File file= new File(dir+"/"+f.getIdentificadorFile()+".txt");
+            FileOutputStream out=new FileOutputStream(file);
+            out.write(FOutput.getBytes());
+            out.flush();
+            out.close();
+            DoneRequest.add(IDRequest);
+
         }
-        DoneRequest.add(IDRequest);
+
     }
    public String GetOutput(String IdentificadorRequest) throws IOException
    {
@@ -69,14 +74,13 @@ public class FileManager extends UnicastRemoteObject implements FileInterface  {
 
     @Override
     public FileClass GetFile(String UIDD) throws IOException {
-        for(int i=0;i < ListFile.size();i++)
+        if(FileMap.containsKey(UIDD))
         {
-            if(UIDD.equals(this.ListFile.get(i).getIdentificadorFile()))
-            {
-                return this.ListFile.get(i);
-            }
+            return FileMap.get(UIDD);
         }
-        return null;
+         else {
+            return null;
+        }
     }
 
 

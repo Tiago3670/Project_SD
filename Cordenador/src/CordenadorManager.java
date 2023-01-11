@@ -15,11 +15,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class CordenadorManager extends UnicastRemoteObject implements CordenadorInterface , Serializable {
     BalancerInterface BalancerInte = null;
-    volatile ArrayList<ProcessorClass> ProcessorList = new ArrayList<ProcessorClass>();
-    HashMap<String, ProcessorClass> ProcessorMap = new HashMap<>();
+    ConcurrentHashMap<String, ProcessorClass> ProcessorMap = new ConcurrentHashMap<>();
 
     protected MulticastSocket socket = null;
     InetAddress group;
@@ -98,13 +98,12 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
                             date_Processor= p.getValue().getEstado();
                             interval = Instant.ofEpochSecond(ChronoUnit.SECONDS.between(date_Processor,current));
                            // System.out.println("seconds bettew="+interval.getEpochSecond());
-                           if(interval.getEpochSecond()>10) //se o intervalo de tempo passar os 30 segundos significa que ja
+                           if(interval.getEpochSecond()>25) //se o intervalo de tempo passar os 30 segundos significa que ja
                             {                               // não recebemos sinal deste processador há 30 segundos
                                 //notificar o balancer
                                 try {
                                     RemoveProcessor(p.getKey()); //resumir as tarefas
                                     BalancerInte.RemoveProcessor(p.getKey()); // dizer ao balanceador para remover o utilizador
-                                    ProcessorMap.remove(p.getKey());
                                     System.out.println("Remove-> "+p.getKey());
                                 } catch (RemoteException e) {
                                     throw new RuntimeException(e);
@@ -120,7 +119,7 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
                         }
                     }
                     try {
-                        sleep(5000);
+                        sleep(10000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -134,6 +133,7 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
         if(ProcessorMap.containsKey(link)) {
             ProcessorClass p = ProcessorMap.get(link);
             BalancerInte.ResumeTasks(p);
+            ProcessorMap.remove(link);
         }
     }
     @Override
@@ -150,12 +150,13 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
     }
     public ProcessorClass BestProcessor() throws RemoteException
     {
-        best=ProcessorMap.get(0);
+        String firstKey = ProcessorMap.keySet().iterator().next();
+        best = ProcessorMap.get(firstKey);
         for(Map.Entry<String, ProcessorClass> p : ProcessorMap.entrySet())
         {
-            if(ProcessorList.get(i).getCpuusage()<best.getCpuusage())
+            if(p.getValue().getCpuusage()>best.getCpuusage())
             {
-              return best=ProcessorList.get(i);
+               best=p.getValue();
             }
         }
         System.out.println("best processor:"+best.getLink());
@@ -163,17 +164,15 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
     }
     public ProcessorClass BackupProcessor(ProcessorClass P)
     {
-      ProcessorClass backup = null;
-       System.out.println(P.getLink());
-        for(int i=0;i<ProcessorList.size();i++)
+        ProcessorClass backup = null;
+        for(Map.Entry<String, ProcessorClass> p : ProcessorMap.entrySet())
         {
-            if(!ProcessorList.get(i).getLink().equals(P.getLink()))
+            if(!p.getValue().getLink().equals(P.getLink()))
             {
-                backup=ProcessorList.get(i);
+                backup=p.getValue();
             }
         }
         return  backup;
-
     }
 
 }

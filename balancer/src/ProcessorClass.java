@@ -49,4 +49,6 @@ public class ProcessorClass implements Serializable
     {
         this.cpuusage=cpuusage;
     }
+
+
 }

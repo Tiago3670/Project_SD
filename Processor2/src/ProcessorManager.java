@@ -15,22 +15,20 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static java.lang.Thread.sleep;
 
 public class ProcessorManager extends UnicastRemoteObject implements ProcessorInterface, Serializable {
-
     RequestClass request;
     private DatagramSocket socket;
     private InetAddress group;
     private byte[]buf;
     FileClass f;
     ProcessorClass p;
-    volatile ArrayList<RequestClass> RequestBackupList = new ArrayList<RequestClass>();
+    ConcurrentHashMap<String, RequestClass> RequestBackupMap = new ConcurrentHashMap<>();
+
     volatile double cpu_mean_usage;
     ProcessorInterface ProcessorBackup;
     FileInterface FileInte=(FileInterface) Naming.lookup("rmi://localhost:2022/Storage");
@@ -69,34 +67,26 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
         }
     }
     public void EXECBACKUP(UUID identificadorProcessor) throws IOException, InterruptedException {
-        if(RequestBackupList.size()>0)
+        if(RequestBackupMap.size()>0)
         {
-            for(int i=0;i<RequestBackupList.size();i++)
+            for(Map.Entry<String, RequestClass> r : RequestBackupMap.entrySet())
             {
-                if(RequestBackupList.get(i).getIdentificadorProcessor().equals(identificadorProcessor))
+                if(r.getValue().getIdentificadorProcessor().equals(identificadorProcessor))
                 {
-                    Send(RequestBackupList.get(i));
+                    Send(r.getValue());
                 }
             }
         }
     }
     public void ADDBackupList(RequestClass r) throws RemoteException
     {
-        RequestBackupList.add(r);
+        RequestBackupMap.put(r.getIdentificadorRequest().toString(),r);
     }
     public void RemoveRequest(RequestClass r)
     {
-        if(RequestBackupList.size()>0)
+        if(RequestBackupMap.size()>0)
         {
-            for(int i=0;i<RequestBackupList.size();i++)
-            {
-                if(RequestBackupList.get(i).getIdentificadorRequest().equals(r.getIdentificadorRequest()))
-                {
-                    RequestBackupList.remove(i);
-                    System.out.println("Removi");
-                    return;
-                }
-            }
+            RequestBackupMap.remove(r.getIdentificadorRequest().toString());
         }
     }
 
