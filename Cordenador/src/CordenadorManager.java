@@ -172,7 +172,19 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
                 backup=p.getValue();
             }
         }
-        return  backup;
+        return backup;
+    }
+
+    public ConcurrentHashMap sendProcessors() throws RemoteException
+    {
+        if(ProcessorMap.size()>0)
+        {
+            return  ProcessorMap;
+        }
+        else
+        {
+            return null;
+        }
     }
 
 }

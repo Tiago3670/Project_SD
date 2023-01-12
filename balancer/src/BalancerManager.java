@@ -25,6 +25,7 @@ public class BalancerManager extends UnicastRemoteObject implements BalancerInte
     ProcessorInterface ProcessorBackup;
     CordenadorInterface CordenadorInte = (CordenadorInterface)  Naming.lookup("rmi://localhost:2026/Cordenador");
     protected BalancerManager() throws IOException, NotBoundException {
+        GetProcessors();
     }
     @Override
     public void AddProcessor(ProcessorClass p) throws RemoteException {
@@ -48,7 +49,6 @@ public class BalancerManager extends UnicastRemoteObject implements BalancerInte
     }
 
     public synchronized void ResumeTasks(ProcessorClass p) throws IOException, NotBoundException, InterruptedException {
-
         for(Map.Entry<String, RequestClass> r : RequestMap.entrySet())
         {
             if(r.getValue().getIdentificadorProcessor().equals(p.getIdentificador()))
@@ -61,7 +61,10 @@ public class BalancerManager extends UnicastRemoteObject implements BalancerInte
         }
 
     }
-
+    public synchronized void GetProcessors() throws RemoteException {
+        ProcessorMap.clear();
+        ProcessorMap=CordenadorInte.sendProcessors();
+    }
     public synchronized String GetLinkProcessor(String identificador) throws RemoteException
     {
         for(Map.Entry<String, ProcessorClass> p : ProcessorMap.entrySet())
