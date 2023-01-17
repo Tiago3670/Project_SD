@@ -100,7 +100,7 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
         if(f==null)
             return;
 
-        System.out.println(request.getEstado());
+       // System.out.println(request.getEstado());
         Exec(request.getUrl());
     }
 
@@ -143,11 +143,8 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
                             out.close();
 
                             StringBuilder output = new StringBuilder();
-                            //String command = "cmd /c " + url + " " + f.getUrlDir() + "\""+ request.getIdentificadorFile() + "\"";
-                            // String command = "cmd /c " + batfile.getAbsolutePath() + " \"" + temp2.getAbsolutePath() + "\"";
                             String command = "cmd /c " + "temp.bat "  + temp2 + " ";
 
-                            // System.out.println(scriptdecode.toString());
                             System.out.println(command);
                             Process process = Runtime.getRuntime().exec(command);
                             BufferedReader reader   = new BufferedReader(new InputStreamReader(process.getInputStream()));
@@ -157,7 +154,7 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
                             }
                             process.waitFor();
                             reader.close();
-                            System.out.println("->"+output.length());
+                            System.out.println("ficheiro executado com sucesso");
 
                             if (output.length() > 0) {
                                 request.setEstadoConcluido();
@@ -182,8 +179,6 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
         });
         threadExec.start();
     }
-
-
     public  synchronized void MulticastPublisher() throws IOException {
         Thread threadProcessor = (new Thread() {
             public void run() {

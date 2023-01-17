@@ -5,11 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e285521d-de92-4503-afcf-8a75a1271931" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../Cordenador/src/CordenadorInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Cordenador/src/CordenadorInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Cordenador/src/CordenadorManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Cordenador/src/CordenadorManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ProcessorManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProcessorManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/temp.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/temp2.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../balancer/src/BalancerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../balancer/src/BalancerManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../balancer/src/CordenadorInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/../balancer/src/CordenadorInterface.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,11 +39,13 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/tiago/OneDrive/Área de Trabalho/EI/3 Ano/SD/Project_SD/Processor&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "C:/Users/tiago/OneDrive/Área de Trabalho/EI/3 Ano/SD/Project_SD/Cordenador"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="" />

@@ -29,8 +29,12 @@ public class BalancerManager extends UnicastRemoteObject implements BalancerInte
     }
     @Override
     public void AddProcessor(ProcessorClass p) throws RemoteException {
-        ProcessorMap.put(p.getLink(),p);
-        System.out.println("Adicionei o "+ p.getLink());
+       if(!ProcessorMap.containsKey(p.getLink()))
+        {
+            ProcessorMap.put(p.getLink(),p);
+            System.out.println("Adicionei o "+ p.getLink());
+        }
+
     }
     public void RemoveProcessor(String link) throws RemoteException, InterruptedException, MalformedURLException, NotBoundException {
         if(ProcessorMap.size()>0)
@@ -59,7 +63,6 @@ public class BalancerManager extends UnicastRemoteObject implements BalancerInte
                 }
             }
         }
-
     }
     public synchronized void GetProcessors() throws RemoteException {
         ProcessorMap.clear();
