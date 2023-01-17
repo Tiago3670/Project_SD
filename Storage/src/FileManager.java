@@ -19,8 +19,10 @@ public class FileManager extends UnicastRemoteObject implements FileInterface  {
     ConcurrentHashMap<String, FileClass> FileMap = new ConcurrentHashMap<>();
 
     ArrayList<String> DoneRequest=new ArrayList<>();
-    private String dir = "C:/Users/tiago/OneDrive/Área de Trabalho/EI/3 Ano/SD/teste";
+    //private String dir = "C:/Users/tiago/OneDrive/Área de Trabalho/EI/3 Ano/SD/teste";
     //private String dir = "C:/Users/dseabra/IdeaProjects/2022/Project_SD/teste";
+    private String dir = "C:/Users/Tiago Almeida/Desktop/SDT/storage";
+
 
     protected FileManager() throws RemoteException {
     }

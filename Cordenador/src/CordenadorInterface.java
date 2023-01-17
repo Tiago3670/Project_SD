@@ -10,9 +10,9 @@ public interface CordenadorInterface extends Remote {
 
     public void SendProcessors(String Link,Double CpuUsage) throws RemoteException, MalformedURLException, NotBoundException;
     public ProcessorClass BestProcessor() throws RemoteException;
-    public ProcessorClass BackupProcessor(ProcessorClass P) throws RemoteException;
+    public String BackupProcessor(ProcessorClass P) throws RemoteException;
     public  void RemoveProcessor(String link) throws NotBoundException, IOException, InterruptedException ;
-    public ConcurrentHashMap sendProcessors() throws RemoteException;
+    public ConcurrentHashMap sendAllProcessors() throws RemoteException, MalformedURLException, NotBoundException;
 
 
     }

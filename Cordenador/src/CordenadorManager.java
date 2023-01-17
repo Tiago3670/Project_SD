@@ -11,10 +11,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.text.DecimalFormat;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class CordenadorManager extends UnicastRemoteObject implements CordenadorInterface , Serializable {
@@ -25,11 +22,11 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
     InetAddress group;
     ProcessorClass best;
     protected byte[] buf = new byte[256];
-
+    boolean balancer=false;
 
     protected CordenadorManager() throws IOException, NotBoundException {
         ProcessorReciver();
-        CheckProcessors(null);
+        CheckProcessors();
     }
 
     public synchronized  void ProcessorReciver () throws IOException, NotBoundException {
@@ -49,14 +46,11 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
                         if ("end".equals(received)) {
                             break;
                         }
-                        //System.out.println(portstr[2]);
                         String Link = null;
                         Link = "rmi://localhost:" + portstr[0] + "/Processor";
                         if(portstr[2].equals("setup")) //criar o processador
                         {
                             double CPUusage=Double.parseDouble(portstr[1]);
-                           // System.out.println("Processor:"+ Link +" "+df.format(CPUusage));
-                           // ProcessorList.add(new ProcessorClass(Integer.parseInt(portstr[0])));
                             ProcessorMap.put(Link, new ProcessorClass(Integer.parseInt(portstr[0])));
                             System.out.println("add->"+Link);
                             SendProcessors(Link,CPUusage);
@@ -82,7 +76,7 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
         });
         threadCordenador.start();
     }
-    public synchronized void CheckProcessors(String link)
+    public synchronized void CheckProcessors( )
     {
         Thread theardcheckativos = (new Thread() {
             public void run()
@@ -97,14 +91,16 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
                         {
                             date_Processor= p.getValue().getEstado();
                             interval = Instant.ofEpochSecond(ChronoUnit.SECONDS.between(date_Processor,current));
-                           // System.out.println("seconds bettew="+interval.getEpochSecond());
                            if(interval.getEpochSecond()>25) //se o intervalo de tempo passar os 30 segundos significa que ja
                             {                               // não recebemos sinal deste processador há 30 segundos
                                 //notificar o balancer
                                 try {
-                                    RemoveProcessor(p.getKey()); //resumir as tarefas
-                                    BalancerInte.RemoveProcessor(p.getKey()); // dizer ao balanceador para remover o utilizador
+                                    if(balancer=true)
+                                    {
+                                        BalancerInte.RemoveProcessor(p.getKey()); // dizer ao balanceador para remover o processador
+                                    }
                                     System.out.println("Remove-> "+p.getKey());
+                                    RemoveProcessor(p.getKey()); //remover e recuperar as tarefas
                                 } catch (RemoteException e) {
                                     throw new RuntimeException(e);
                                 }
@@ -130,22 +126,31 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
     }
 
     public  void RemoveProcessor(String link) throws NotBoundException, IOException, InterruptedException {
-        if(ProcessorMap.containsKey(link)) {
+        if(ProcessorMap.containsKey(link))
+        {
             ProcessorClass p = ProcessorMap.get(link);
-            BalancerInte.ResumeTasks(p);
+            if (p.getProcessorBackup().length()>0)
+            {
+                ResumeTasks(p.getProcessorBackup(),p.getIdentificador());
+            }
             ProcessorMap.remove(link);
         }
     }
+
+    public void ResumeTasks(String link, UUID identificador) throws IOException, InterruptedException, NotBoundException {
+        System.out.println("Vou recuperar as tarefas");
+        ProcessorInterface Process = (ProcessorInterface) Naming.lookup(link);
+        Process.EXECBACKUP(identificador);
+    }
     @Override
     public void SendProcessors(String Link,Double CpuUsage) throws RemoteException, MalformedURLException, NotBoundException {
-        BalancerInte=(BalancerInterface) Naming.lookup("rmi://localhost:2023/Balancer");
-        ProcessorClass p=null;
-        if(ProcessorMap.containsKey(Link))
-        {
-            p=ProcessorMap.get(Link);
-            p.setCpuusage(CpuUsage);
-            BalancerInte.AddProcessor(p);
-            p=null;
+        if(balancer==true) {
+            ProcessorClass p = null;
+            if (ProcessorMap.containsKey(Link)) {
+                p = ProcessorMap.get(Link);
+                BalancerInte.AddProcessor(p);
+                p = null;
+            }
         }
     }
     public ProcessorClass BestProcessor() throws RemoteException
@@ -159,32 +164,31 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
                best=p.getValue();
             }
         }
+
+        best.setProcessorBackup(BackupProcessor(best));
+        System.out.println("------------------------------");
         System.out.println("best processor:"+best.getLink());
+        System.out.println("backup processor:"+best.getProcessorBackup());
+        System.out.println("------------------------------");
         return best;
     }
-    public ProcessorClass BackupProcessor(ProcessorClass P)
+    public String BackupProcessor(ProcessorClass P) throws RemoteException
     {
-        ProcessorClass backup = null;
         for(Map.Entry<String, ProcessorClass> p : ProcessorMap.entrySet())
         {
             if(!p.getValue().getLink().equals(P.getLink()))
             {
-                backup=p.getValue();
+                return p.getValue().getLink();
             }
         }
-        return backup;
+      return null;
     }
 
-    public ConcurrentHashMap sendProcessors() throws RemoteException
-    {
-        if(ProcessorMap.size()>0)
-        {
-            return  ProcessorMap;
-        }
-        else
-        {
-            return null;
-        }
+    public synchronized ConcurrentHashMap sendAllProcessors() throws RemoteException, MalformedURLException, NotBoundException {
+        balancer=true;
+        BalancerInte = (BalancerInterface) Naming.lookup("rmi://localhost:2023/Balancer");
+        return  ProcessorMap;
     }
+
 
 }

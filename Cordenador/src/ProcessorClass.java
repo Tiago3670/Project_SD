@@ -13,12 +13,19 @@ public class ProcessorClass implements Serializable
     private int Port;
      private Instant estado;
 
+     private String processorBackup;
+
     public ProcessorClass(int port)
     {
         this.Identificador=UUID.fromString(UUID.nameUUIDFromBytes(String.valueOf(port).getBytes()).toString());;
         this.Port=port;
         Link = "rmi://localhost:" + port + "/Processor";
         estado=Instant.now();
+    }
+    public void setProcessorBackup(String link){processorBackup=link;}
+
+    public String getProcessorBackup() {
+        return processorBackup;
     }
 
     public void setEstado(Instant actualiza) {

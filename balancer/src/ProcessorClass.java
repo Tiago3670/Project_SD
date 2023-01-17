@@ -11,7 +11,9 @@ public class ProcessorClass implements Serializable
     private Double cpuusage;
     private String Link;
     private int Port;
-    private Instant estado; //ativo || naoativo
+    private Instant estado;
+
+    private String processorBackup;
 
     public ProcessorClass(int port)
     {
@@ -19,6 +21,11 @@ public class ProcessorClass implements Serializable
         this.Port=port;
         Link = "rmi://localhost:" + port + "/Processor";
         estado=Instant.now();
+    }
+    public void setProcessorBackup(String link){processorBackup=link;}
+
+    public String getProcessorBackup() {
+        return processorBackup;
     }
 
     public void setEstado(Instant actualiza) {
@@ -49,6 +56,4 @@ public class ProcessorClass implements Serializable
     {
         this.cpuusage=cpuusage;
     }
-
-
 }
