@@ -1,5 +1,6 @@
 import java.io.Serializable;
 import java.rmi.Remote;
+import java.time.Instant;
 import java.util.UUID;
 
 public class RequestClass implements Serializable {
@@ -9,9 +10,9 @@ public class RequestClass implements Serializable {
     private String  Script;
     private String IdentificadorFile;
     private  UUID IdentificadorProcessor;
-    private  UUID IdentificadorProcessorBackup;
+    private  String LinkProcessorBackup;
 
-
+    private Instant timeCreation;
     private int Estado; //varia entre 1->em espera 0->concluido
 
     public  RequestClass (UUID IdentificadorRequest,String script,String IdentificadorFile,int Estado,UUID IdentificadorProcessor)
@@ -21,11 +22,12 @@ public class RequestClass implements Serializable {
         this.IdentificadorFile=IdentificadorFile;
         this.Estado=1;
         this.IdentificadorProcessor=IdentificadorProcessor;
+        this.timeCreation=Instant.now();
     }
-    void setIdentificadorProcessorBackup(UUID Processor) {IdentificadorProcessorBackup=Processor;}
-    UUID getIdentificadorProcessorBackup(UUID Processor)
+    void setIdentificadorProcessorBackup(String Processor) {LinkProcessorBackup=Processor;}
+    String getIdentificadorProcessorBackup()
     {
-        return this.IdentificadorProcessorBackup;
+        return this.LinkProcessorBackup;
     }
     void setIdentificadorProcessor(UUID Processor)
     {

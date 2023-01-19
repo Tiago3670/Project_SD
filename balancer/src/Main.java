@@ -6,7 +6,7 @@ import java.rmi.registry.Registry;
 import java.util.ArrayList;
 public class Main implements Serializable {
     public static Registry r=null;
-    public  static BalancerManager balancer;
+    public  static BalancerManager Balancer;
 
     public static void main(String[] args) {
         try{
@@ -15,8 +15,8 @@ public class Main implements Serializable {
             a.printStackTrace();
         }
         try{
-            balancer=new BalancerManager();
-            r.rebind("Balancer", balancer );
+            Balancer=new BalancerManager();
+            r.rebind("Balancer", Balancer );
             System.out.println("Balancer ready");
         }catch(Exception e) {
             System.out.println("->"+e.getMessage());

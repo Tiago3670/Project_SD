@@ -89,7 +89,6 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
             RequestBackupMap.remove(r.getIdentificadorRequest().toString());
         }
     }
-
     public void Send(RequestClass r) throws IOException, InterruptedException {
         request=r;
         if(request==null)
@@ -103,7 +102,6 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
         // System.out.println(request.getEstado());
         Exec(request.getUrl());
     }
-
     public synchronized int GetEstado(String IdentificadorRequest) throws RemoteException
     {
         if(IdentificadorRequest.equals(request.getIdentificadorRequest().toString()))
@@ -114,7 +112,6 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
             return 1000;
         }
     }
-
 
     public synchronized void Exec(String url) throws IOException, InterruptedException {
         Thread threadExec = (new Thread() {
@@ -154,13 +151,15 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
                             }
                             process.waitFor();
                             reader.close();
+                            System.out.println("Press Enter to conclued de process…");
+                            System.in.read();
                             System.out.println("ficheiro executado com sucesso");
 
                             if (output.length() > 0) {
                                 request.setEstadoConcluido();
                                 if(request.getIdentificadorProcessorBackup()!=p.getLink()) {
                                     if (request.getIdentificadorProcessorBackup() != null) {
-                                        System.out.println("processor backup:"+request.getIdentificadorProcessorBackup());
+                                        System.out.println("Executei o ficheiro do processador :"+request.getIdentificadorProcessor());
                                         ProcessorBackup = (ProcessorInterface) Naming.lookup(request.getIdentificadorProcessorBackup());
                                         ProcessorBackup.RemoveRequest(request);
                                     }

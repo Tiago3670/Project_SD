@@ -17,7 +17,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class CordenadorManager extends UnicastRemoteObject implements CordenadorInterface , Serializable {
     BalancerInterface BalancerInte = null;
     ConcurrentHashMap<String, ProcessorClass> ProcessorMap = new ConcurrentHashMap<>();
-
     protected MulticastSocket socket = null;
     InetAddress group;
     ProcessorClass best;
@@ -97,6 +96,7 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
                                 try {
                                     if(balancer=true)
                                     {
+                                        BalancerInte= (BalancerInterface) Naming.lookup("rmi://localhost:2023/Balancer");
                                         BalancerInte.RemoveProcessor(p.getKey()); // dizer ao balanceador para remover o processador
                                     }
                                     System.out.println("Remove-> "+p.getKey());
@@ -126,10 +126,11 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
     }
 
     public  void RemoveProcessor(String link) throws NotBoundException, IOException, InterruptedException {
+
         if(ProcessorMap.containsKey(link))
         {
             ProcessorClass p = ProcessorMap.get(link);
-            if (p.getProcessorBackup().length()>0)
+            if (p.getProcessorBackup()!=null)
             {
                 ResumeTasks(p.getProcessorBackup(),p.getIdentificador());
             }
@@ -138,13 +139,14 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
     }
 
     public void ResumeTasks(String link, UUID identificador) throws IOException, InterruptedException, NotBoundException {
-        System.out.println("Vou recuperar as tarefas");
+        System.out.println("Vou recuperar as tarefas do "+ identificador + "no "+link);
         ProcessorInterface Process = (ProcessorInterface) Naming.lookup(link);
         Process.EXECBACKUP(identificador);
     }
     @Override
     public void SendProcessors(String Link,Double CpuUsage) throws RemoteException, MalformedURLException, NotBoundException {
         if(balancer==true) {
+            BalancerInte = (BalancerInterface) Naming.lookup("rmi://localhost:2023/Balancer");
             ProcessorClass p = null;
             if (ProcessorMap.containsKey(Link)) {
                 p = ProcessorMap.get(Link);
@@ -186,7 +188,6 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
 
     public synchronized ConcurrentHashMap sendAllProcessors() throws RemoteException, MalformedURLException, NotBoundException {
         balancer=true;
-        BalancerInte = (BalancerInterface) Naming.lookup("rmi://localhost:2023/Balancer");
         return  ProcessorMap;
     }
 

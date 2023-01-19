@@ -29,17 +29,13 @@ public class BalancerManager extends UnicastRemoteObject implements BalancerInte
     }
     @Override
     public void AddProcessor(ProcessorClass p) throws RemoteException {
-       if(ProcessorMap.containsKey(p.getLink()))
-        {
+       if(ProcessorMap.containsKey(p.getLink())) {
             System.out.println("já existe o "+ p.getLink());
-
         }
-       else
-       {
+       else {
            ProcessorMap.put(p.getLink(),p);
            System.out.println("Adicionei o "+ p.getLink());
        }
-
     }
     public void RemoveProcessor(String link) throws RemoteException, InterruptedException, MalformedURLException, NotBoundException {
         if(ProcessorMap.size()>0)
@@ -56,26 +52,13 @@ public class BalancerManager extends UnicastRemoteObject implements BalancerInte
             }
         }
     }
-/*
-    public synchronized void ResumeTasks(ProcessorClass p) throws IOException, NotBoundException, InterruptedException {
-        for(Map.Entry<String, RequestClass> r : RequestMap.entrySet())
-        {
-            if(r.getValue().getIdentificadorProcessor().equals(p.getIdentificador()))
-            {
-                if(r.getValue().getIdentificadorProcessorBackup()!=null) {
-                    ProcessorInterface Process = (ProcessorInterface) Naming.lookup(r.getValue().getIdentificadorProcessorBackup());
-                    Process.EXECBACKUP(p.getIdentificador());
-                }
-            }
-        }
-    }
-  */
     public synchronized void GetProcessors() throws RemoteException {
         ProcessorMap.clear();
         ProcessorMap=CordenadorInte.sendAllProcessors();
-        for(Map.Entry<String, ProcessorClass> p : ProcessorMap.entrySet())
-        {
-            System.out.println("Adicionei o "+p.getKey());
+        if(ProcessorMap.size()>0) {
+            for (Map.Entry<String, ProcessorClass> p : ProcessorMap.entrySet()) {
+                System.out.println("Adicionei o " + p.getKey());
+            }
         }
     }
     public synchronized String GetLinkProcessor(String identificador) throws RemoteException
@@ -94,18 +77,14 @@ public class BalancerManager extends UnicastRemoteObject implements BalancerInte
     {
         int x=0;
         best=CordenadorInte.BestProcessor(); //retorna melhor processador
+        System.out.println("Request enviado para o processador  "+best.getLink()+ ", com backup no processador "+ best.getProcessorBackup());
 
-        System.out.println("Request enviado para o processador  "+best.getLink()+ ", com backupt no processador "+best.getProcessorBackup());
-
-        if(best!=null)
-         {
+        if(best!=null) {
              ProcessorInterface ProcessorInte = (ProcessorInterface) Naming.lookup(best.getLink());
              r.setIdentificadorProcessor(best.getIdentificador());
-             if (best.getProcessorBackup().length()>0)
-             {
-
+             if (best.getProcessorBackup()!=null) {
                r.setIdentificadorProcessorBackup(best.getProcessorBackup());
-               ProcessorBackup = (ProcessorInterface) Naming.lookup(best.getLink());
+               ProcessorBackup = (ProcessorInterface) Naming.lookup(best.getProcessorBackup());
                ProcessorBackup.ADDBackupList(r);
                ProcessorBackup=null;
              }
