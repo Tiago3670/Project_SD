@@ -24,6 +24,7 @@ public class RequestClass implements Serializable {
         this.IdentificadorProcessor=IdentificadorProcessor;
         this.timeCreation=Instant.now();
     }
+    Instant getTimeCreation() {return timeCreation;}
     void setIdentificadorProcessorBackup(String Processor) {LinkProcessorBackup=Processor;}
     String getIdentificadorProcessorBackup()
     {
