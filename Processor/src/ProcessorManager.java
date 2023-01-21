@@ -15,8 +15,6 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.text.DecimalFormat;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -30,7 +28,6 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
     FileClass f;
     ProcessorClass p;
     ConcurrentHashMap<String, RequestClass> RequestBackupMap = new ConcurrentHashMap<>();
-    ConcurrentHashMap<String, RequestClass> RequestMap = new ConcurrentHashMap<>();
 
     volatile double cpu_mean_usage;
     ProcessorInterface ProcessorBackup;
@@ -93,49 +90,17 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
         }
     }
     public void Send(RequestClass r) throws IOException, InterruptedException {
-        RequestMap.put(r.getIdentificadorRequest().toString(),r);
+        request=r;
+        if(request==null)
+            return;
 
-        Thread threadSendRequest = (new Thread() {
-            public void run() {
-                while (true) {
+        f=FileInte.GetFile(request.getIdentificadorFile());
 
-                        Instant currentTime = Instant.now();
-                        if(RequestMap.size()>0) {
-                            long timewait = 0;
-                            for (Map.Entry<String, RequestClass> requestIt : RequestMap.entrySet()) {
-                                Instant timeCreation = requestIt.getValue().getTimeCreation();
-                                long secondsBetween = ChronoUnit.SECONDS.between(timeCreation, currentTime);
-                                if (secondsBetween > timewait) {
-                                    System.out.println("entrei");
-                                    request = requestIt.getValue();
-                                    timewait = secondsBetween;
+        if(f==null)
+            return;
 
-                                }
-                            }
-                        }
-                        else
-                        {
-                            request=r;
-                        }
-
-
-                        try {
-                            f = FileInte.GetFile(request.getIdentificadorFile());
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                        if (f == null)
-                            return;
-                        try {
-                            Exec(request.getUrl());
-                        } catch (IOException | InterruptedException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                }
-
-            });
-            threadSendRequest.start();
+        // System.out.println(request.getEstado());
+        Exec(request.getUrl());
     }
     public synchronized int GetEstado(String IdentificadorRequest) throws RemoteException
     {
@@ -203,12 +168,6 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
                             }
                             batfile.delete();
                             temp2.delete();
-                            if(RequestMap.containsKey(request.getIdentificadorRequest()))
-                            {
-                                RequestMap.remove(request.getIdentificadorRequest());
-                            }
-                            request=null;
-
                         } catch (NotBoundException | InterruptedException | IOException e) {
                             throw new RuntimeException(e);
                         }
