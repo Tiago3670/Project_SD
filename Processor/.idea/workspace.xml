@@ -5,7 +5,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e285521d-de92-4503-afcf-8a75a1271931" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../Cordenador/out/production/Cordenador/CordenadorManager$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Cordenador/out/production/Cordenador/CordenadorManager$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Cordenador/out/production/Cordenador/CordenadorManager$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Cordenador/out/production/Cordenador/CordenadorManager$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Cordenador/out/production/Cordenador/CordenadorManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Cordenador/out/production/Cordenador/CordenadorManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Cordenador/src/CordenadorManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Cordenador/src/CordenadorManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Cordenador/src/ProcessorClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Cordenador/src/ProcessorClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Processor/BalancerInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Processor/BalancerInterface.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Processor/FileClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Processor/FileClass.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Processor/FileInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Processor/FileInterface.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Processor/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Processor/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Processor/ProcessorClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Processor/ProcessorClass.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Processor/ProcessorInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Processor/ProcessorInterface.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Processor/ProcessorManager$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Processor/ProcessorManager$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Processor/ProcessorManager$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Processor/ProcessorManager$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Processor/ProcessorManager$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Processor/ProcessorManager$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Processor/ProcessorManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Processor/ProcessorManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Processor/RequestClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Processor/RequestClass.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BalancerInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/BalancerInterface.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ProcessorManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProcessorManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Processor2/out/production/Processor2/RequestClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Processor2/out/production/Processor2/RequestClass.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Processor2/src/BalancerInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Processor2/src/BalancerInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Processor2/src/ProcessorManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Processor2/src/ProcessorManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Processor2/src/ReplicaInterface.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../balancer/out/production/balancer/BalancerInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/../balancer/out/production/balancer/BalancerInterface.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../balancer/out/production/balancer/BalancerManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/../balancer/out/production/balancer/BalancerManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../balancer/src/BalancerInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/../balancer/src/BalancerInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../balancer/src/BalancerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../balancer/src/BalancerManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,7 +54,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="2H8lXQva3HcDWqCB0ptWzpZRzlB" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />

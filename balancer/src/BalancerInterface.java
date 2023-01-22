@@ -10,5 +10,6 @@ public interface BalancerInterface extends Remote {
     public void AddProcessor(ProcessorClass p) throws RemoteException;
     public  void RemoveProcessor(String link) throws RemoteException, InterruptedException, MalformedURLException, NotBoundException;
     public  String GetLinkProcessor(String identificador) throws RemoteException;
+    public void CordenadorFail() throws RemoteException;
 
 }

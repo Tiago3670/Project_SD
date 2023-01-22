@@ -7,10 +7,10 @@ public class ProcessorClass implements Serializable
 {
     private static final long serialVersionUID = 2509159142972867020L;
 
-    private UUID Identificador;
-    private Double cpuusage;
-    private String Link;
-    private int Port;
+     private UUID Identificador;
+     private Double cpuusage;
+     private String Link;
+     private int Port;
      private Instant estado;
 
      private String processorBackup;

@@ -1,9 +1,6 @@
 import java.io.IOException;
 import java.io.Serializable;
-import java.net.DatagramPacket;
-import java.net.InetAddress;
-import java.net.MalformedURLException;
-import java.net.MulticastSocket;
+import java.net.*;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -18,16 +15,48 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
     BalancerInterface BalancerInte = null;
     ConcurrentHashMap<String, ProcessorClass> ProcessorMap = new ConcurrentHashMap<>();
     protected MulticastSocket socket = null;
+    protected DatagramSocket socket2 = null;
+    InetAddress group2;
     InetAddress group;
     ProcessorClass best;
     protected byte[] buf = new byte[256];
-    boolean balancer=false;
+    protected byte[] buf2 = new byte[256];
+    volatile boolean balancer=false;
+    volatile boolean processors=false;
 
     protected CordenadorManager() throws IOException, NotBoundException {
         ProcessorReciver();
         CheckProcessors();
+        SendAliveBeat();
+
     }
 
+    public synchronized void SendAliveBeat()
+    {
+        Thread threadAliveCordenador= (new Thread() {
+            public void run() {
+
+                while (true) {
+                    if (processors == true) {
+                        String message = "ALIVE";
+                        try {
+                            socket2 = new DatagramSocket();
+                            group2 = InetAddress.getByName("239.0.0.0");
+                            buf2 = message.getBytes();
+                            DatagramPacket packet = new DatagramPacket(buf2, buf2.length, group2, 4447);
+                            socket2.send(packet);
+                            socket2.close();
+                            sleep(1000);
+                        } catch (InterruptedException | IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }
+            }
+        });
+
+        threadAliveCordenador.start();
+    }
     public synchronized  void ProcessorReciver () throws IOException, NotBoundException {
         Thread threadCordenador = (new Thread() {
             public void run()
@@ -47,11 +76,13 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
                         }
                         String Link = null;
                         Link = "rmi://localhost:" + portstr[0] + "/Processor";
+
                         if(portstr[2].equals("setup")) //criar o processador
                         {
                             double CPUusage=Double.parseDouble(portstr[1]);
                             ProcessorMap.put(Link, new ProcessorClass(Integer.parseInt(portstr[0])));
                             System.out.println("add->"+Link);
+                            processors=true;
                             SendProcessors(Link,CPUusage);
                         } else if (portstr[2].equals("update")) //upadate processor
                         {

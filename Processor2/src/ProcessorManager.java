@@ -15,20 +15,28 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.text.DecimalFormat;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static java.lang.Thread.sleep;
 
+
 public class ProcessorManager extends UnicastRemoteObject implements ProcessorInterface, Serializable {
     RequestClass request;
     private DatagramSocket socket;
+    protected MulticastSocket socket2 = null;
+
+    volatile private Instant lastHeartCordenador=Instant.now();
     private InetAddress group;
+    private InetAddress group2;
     private byte[]buf;
+    protected byte[] buf2 = new byte[256];
     FileClass f;
     ProcessorClass p;
     ConcurrentHashMap<String, RequestClass> RequestBackupMap = new ConcurrentHashMap<>();
-
+    BalancerInterface BalancerInte;
     volatile double cpu_mean_usage;
     ProcessorInterface ProcessorBackup;
     FileInterface FileInte=(FileInterface) Naming.lookup("rmi://localhost:2022/Storage");
@@ -36,6 +44,8 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
     protected ProcessorManager(ProcessorClass po) throws IOException, NotBoundException {
         p=po;
         MulticastPublisher();
+        CheckCordenador();
+        CordenadorFail();
     }
     public ProcessorClass GetProcessor(ProcessorClass p) throws RemoteException {
         return p;
@@ -197,6 +207,7 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
                         {
                             message=message+",update";
                         }
+
                         buf = message.getBytes();
                         DatagramPacket packet = new DatagramPacket(buf, buf.length, group, 4446);
                         socket.send(packet);
@@ -209,5 +220,74 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
             }
         });
         threadProcessor.start();
+    }
+    volatile boolean stopTheard =false;
+    public synchronized void CheckCordenador() throws IOException, NotBoundException
+    {
+        Thread threadCordenador = (new Thread() {
+            public void run()
+            {
+                try {
+                    socket2 = new MulticastSocket(4447);
+                    group2=InetAddress.getByName("239.0.0.0");
+                    socket2.joinGroup(group2);
+                    String received = null;
+                    while (true) {
+                        DatagramPacket packet = new DatagramPacket(buf2, buf2.length);
+                        socket2.receive(packet);
+                        if(received!=null)
+                        {
+                            lastHeartCordenador=Instant.now();
+                        }
+                        received = new String(packet.getData(), 0, packet.getLength());
+                        if ("end".equals(received)) {
+                            break;
+                        }
+                    }
+                    socket2.leaveGroup(group2);
+                    socket2.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+        if(stopTheard==false)
+        {
+            threadCordenador.start();
+        }
+        else
+        {
+            threadCordenador.interrupt();
+        }
+    }
+
+    private synchronized void CordenadorFail() {
+
+        Thread threadCheckCordenador = (new Thread() {
+            public void run() {
+                while (!stopTheard) {
+
+                    Instant current, interval;
+                    current = Instant.now();
+                    interval = Instant.ofEpochSecond(ChronoUnit.SECONDS.between(lastHeartCordenador, current));
+                    if (interval.getEpochSecond() > 25) {
+                        try {
+                            BalancerInte = (BalancerInterface) Naming.lookup("rmi://localhost:2023/Balancer");
+                            BalancerInte.CordenadorFail();
+                        } catch (NotBoundException | MalformedURLException | RemoteException e) {
+                            throw new RuntimeException(e);
+                        }
+                        stopTheard=true;
+                    }
+                    try {
+                        sleep(10000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
+        threadCheckCordenador.start();
     }
 }

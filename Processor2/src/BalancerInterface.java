@@ -5,4 +5,5 @@ import java.rmi.RemoteException;
 
 public interface BalancerInterface extends Remote {
      public void SendRequest(RequestClass r) throws RemoteException, MalformedURLException, NotBoundException;
+     public void CordenadorFail() throws RemoteException;
 }

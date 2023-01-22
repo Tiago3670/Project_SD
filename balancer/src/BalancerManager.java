@@ -23,6 +23,8 @@ public class BalancerManager extends UnicastRemoteObject implements BalancerInte
     ConcurrentHashMap<String, RequestClass> RequestMap = new ConcurrentHashMap<>();
     ProcessorClass best;
     ProcessorInterface ProcessorBackup;
+
+    int failsCordenador=0;
     CordenadorInterface CordenadorInte = (CordenadorInterface)  Naming.lookup("rmi://localhost:2026/Cordenador");
     protected BalancerManager() throws IOException, NotBoundException {
         GetProcessors();
@@ -71,6 +73,16 @@ public class BalancerManager extends UnicastRemoteObject implements BalancerInte
             }
         }
             return null;
+    }
+
+    @Override
+    public void CordenadorFail() throws RemoteException {
+        failsCordenador++;
+
+        if(failsCordenador==ProcessorMap.size())
+        {
+            System.out.println("Cordenador Falhou!");
+        }
     }
 
     public synchronized UUID SendRequest(RequestClass r) throws IOException, NotBoundException, InterruptedException
