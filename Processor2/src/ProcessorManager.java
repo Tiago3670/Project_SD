@@ -161,15 +161,12 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
                             }
                             process.waitFor();
                             reader.close();
-                            System.out.println("Press Enter to conclued de process…");
-                            System.in.read();
                             System.out.println("ficheiro executado com sucesso");
 
                             if (output.length() > 0) {
                                 request.setEstadoConcluido();
                                 if(request.getIdentificadorProcessorBackup()!=p.getLink()) {
-                                    if (request.getIdentificadorProcessorBackup() != null) {
-                                        System.out.println("Executei o ficheiro do processador :"+request.getIdentificadorProcessor());
+                                    if (request.getIdentificadorProcessorBackup() != null) {// diz ao processador backup que o request foi bem executado
                                         ProcessorBackup = (ProcessorInterface) Naming.lookup(request.getIdentificadorProcessorBackup());
                                         ProcessorBackup.RemoveRequest(request);
                                     }

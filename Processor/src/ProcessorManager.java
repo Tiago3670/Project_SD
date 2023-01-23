@@ -161,15 +161,12 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
                             }
                             process.waitFor();
                             reader.close();
-                            System.out.println("Press Enter to conclued de process…");
-                            System.in.read();
                             System.out.println("ficheiro executado com sucesso");
 
                             if (output.length() > 0) {
                                 request.setEstadoConcluido();
                                 if(request.getIdentificadorProcessorBackup()!=p.getLink()) {
-                                    if (request.getIdentificadorProcessorBackup() != null) {
-                                        System.out.println("Executei o ficheiro do processador :"+request.getIdentificadorProcessor());
+                                    if (request.getIdentificadorProcessorBackup() != null) {// diz ao processador backup que o request foi bem executado
                                         ProcessorBackup = (ProcessorInterface) Naming.lookup(request.getIdentificadorProcessorBackup());
                                         ProcessorBackup.RemoveRequest(request);
                                     }
@@ -233,17 +230,17 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
                     socket2.joinGroup(group2);
                     String received = null;
                     while (true) {
-                            DatagramPacket packet = new DatagramPacket(buf2, buf2.length);
-                            socket2.receive(packet);
-                            if(received!=null)
-                            {
-                                lastHeartCordenador=Instant.now();
-                            }
-                            received = new String(packet.getData(), 0, packet.getLength());
-                            if ("end".equals(received)) {
-                                break;
-                            }
+                        DatagramPacket packet = new DatagramPacket(buf2, buf2.length);
+                        socket2.receive(packet);
+                        if(received!=null)
+                        {
+                            lastHeartCordenador=Instant.now();
                         }
+                        received = new String(packet.getData(), 0, packet.getLength());
+                        if ("end".equals(received)) {
+                            break;
+                        }
+                    }
                     socket2.leaveGroup(group2);
                     socket2.close();
                 } catch (IOException e) {
@@ -260,6 +257,7 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
             threadCordenador.interrupt();
         }
     }
+
     private synchronized void CordenadorFail() {
 
         Thread threadCheckCordenador = (new Thread() {
@@ -286,6 +284,7 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
                 }
             }
         });
+
         threadCheckCordenador.start();
     }
 }
