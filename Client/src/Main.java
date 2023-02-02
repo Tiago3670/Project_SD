@@ -79,13 +79,14 @@ public class Main {
    }
 
    public  static void getEstado() throws IOException, NotBoundException {
+       int result;
        System.out.println("Qual o processador?");
        String IdentificadorProcessador=scan.next();
        System.out.println("Qual o request?");
        String IdentificadorRequest=scan.next();
-       int result;
-      String link= BalancerInte.GetLinkProcessor(IdentificadorProcessador);
-      if(link.length()>0)
+       String link= BalancerInte.GetLinkProcessor(IdentificadorProcessador);
+       System.out.println("link->"+link);
+      if(link!=null)
       {
           ProcessorInterface ProcessorInte = (ProcessorInterface) Naming.lookup(link);
           result= ProcessorInte.GetEstado(IdentificadorRequest);

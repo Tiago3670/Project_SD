@@ -46,7 +46,7 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
                             DatagramPacket packet = new DatagramPacket(buf2, buf2.length, group2, 4447);
                             socket2.send(packet);
                             socket2.close();
-                            sleep(1000);
+                            Thread.sleep(1000);
                         } catch (InterruptedException | IOException e) {
                             throw new RuntimeException(e);
                         }
@@ -57,7 +57,7 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
 
         threadAliveCordenador.start();
     }
-    public synchronized  void ProcessorReciver () throws IOException, NotBoundException {
+    public synchronized void ProcessorReciver () throws IOException, NotBoundException {
         Thread threadCordenador = (new Thread() {
             public void run()
             {
@@ -146,7 +146,7 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
                         }
                     }
                     try {
-                        sleep(10000);
+                        Thread.sleep(10000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -156,7 +156,7 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
         theardcheckativos.start();
     }
 
-    public  void RemoveProcessor(String link) throws NotBoundException, IOException, InterruptedException {
+    public synchronized void RemoveProcessor(String link) throws NotBoundException, IOException, InterruptedException {
 
         if(ProcessorMap.containsKey(link))
         {
@@ -169,13 +169,13 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
         }
     }
 
-    public void ResumeTasks(String link, UUID identificador) throws IOException, InterruptedException, NotBoundException {
+    public  synchronized void ResumeTasks(String link, UUID identificador) throws IOException, InterruptedException, NotBoundException {
         System.out.println("Vou recuperar as tarefas do "+ identificador + "no "+link);
         ProcessorInterface Process = (ProcessorInterface) Naming.lookup(link);
         Process.EXECBACKUP(identificador);
     }
     @Override
-    public void SendProcessors(String Link,Double CpuUsage) throws RemoteException, MalformedURLException, NotBoundException {
+    public  synchronized void SendProcessors(String Link,Double CpuUsage) throws RemoteException, MalformedURLException, NotBoundException {
         if(balancer==true) {
             BalancerInte = (BalancerInterface) Naming.lookup("rmi://localhost:2023/Balancer");
             ProcessorClass p = null;
@@ -186,7 +186,7 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
             }
         }
     }
-    public ProcessorClass BestProcessor() throws RemoteException
+    public  synchronized ProcessorClass BestProcessor() throws RemoteException
     {
         String firstKey = ProcessorMap.keySet().iterator().next();
         best = ProcessorMap.get(firstKey);
@@ -205,7 +205,7 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
         System.out.println("------------------------------");
         return best;
     }
-    public String BackupProcessor(ProcessorClass P) throws RemoteException
+    public synchronized String BackupProcessor(ProcessorClass P) throws RemoteException
     {
         for(Map.Entry<String, ProcessorClass> p : ProcessorMap.entrySet())
         {

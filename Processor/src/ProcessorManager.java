@@ -181,7 +181,6 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
                     }
                 }
             }
-
         });
         threadExec.start();
     }

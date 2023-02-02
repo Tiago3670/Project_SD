@@ -54,7 +54,7 @@ public class BalancerManager extends UnicastRemoteObject implements BalancerInte
         }
     }
 
-    public synchronized void GetProcessors() throws RemoteException {
+    public  void GetProcessors() throws RemoteException {
         ProcessorMap.clear();
         ProcessorMap = CordenadorInte.sendAllProcessors();
         if (ProcessorMap.size() > 0) {
@@ -64,9 +64,9 @@ public class BalancerManager extends UnicastRemoteObject implements BalancerInte
         }
     }
 
-    public synchronized String GetLinkProcessor(String identificador) throws RemoteException {
+    public  String GetLinkProcessor(String identificador) throws RemoteException {
         for (Map.Entry<String, ProcessorClass> p : ProcessorMap.entrySet()) {
-            if (p.getValue().getIdentificador().equals(identificador)) {
+            if (p.getValue().getIdentificador().toString().equals(identificador)) {
                 return p.getKey();
             }
         }
