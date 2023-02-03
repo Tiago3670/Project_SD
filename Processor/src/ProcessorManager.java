@@ -39,6 +39,7 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
     BalancerInterface BalancerInte;
     volatile double cpu_mean_usage;
     ProcessorInterface ProcessorBackup;
+    volatile boolean stopTheard =false;
     FileInterface FileInte=(FileInterface) Naming.lookup("rmi://localhost:2022/Storage");
     int enviar=0;
     protected ProcessorManager(ProcessorClass po) throws IOException, NotBoundException {
@@ -51,7 +52,7 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
         return p;
     }
 
-    public void cpuUsage() throws InterruptedException {
+    public synchronized void cpuUsage() throws InterruptedException {
 
         com.sun.management.OperatingSystemMXBean osBean = ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class);
         int it = 0, it_max = 9;
@@ -208,7 +209,7 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
                         DatagramPacket packet = new DatagramPacket(buf, buf.length, group, 4446);
                         socket.send(packet);
                         socket.close();
-                        sleep(3000);
+                        Thread.sleep(3000);
                     } catch (InterruptedException | IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -217,7 +218,7 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
         });
         threadProcessor.start();
     }
-    volatile boolean stopTheard =false;
+
     public synchronized void CheckCordenador() throws IOException, NotBoundException
     {
         Thread threadCordenador = (new Thread() {
@@ -262,7 +263,6 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
         Thread threadCheckCordenador = (new Thread() {
             public void run() {
                 while (!stopTheard) {
-
                     Instant current, interval;
                     current = Instant.now();
                     interval = Instant.ofEpochSecond(ChronoUnit.SECONDS.between(lastHeartCordenador, current));
@@ -276,7 +276,7 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
                         stopTheard=true;
                     }
                     try {
-                        sleep(10000);
+                        Thread.sleep(10000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

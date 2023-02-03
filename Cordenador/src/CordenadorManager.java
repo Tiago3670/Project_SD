@@ -33,9 +33,8 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
 
     public synchronized void SendAliveBeat()
     {
-        Thread threadAliveCordenador= (new Thread() {
+        Thread threadAliveCordenador = (new Thread() {
             public void run() {
-
                 while (true) {
                     if (processors == true) {
                         String message = "ALIVE";
@@ -109,8 +108,8 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
     public synchronized void CheckProcessors( )
     {
         Thread theardcheckativos = (new Thread() {
-            public void run()
-            {
+            public void run() {
+
                 while (true) {
                     if(ProcessorMap.size()>0)
                     {

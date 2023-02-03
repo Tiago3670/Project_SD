@@ -5,22 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e285521d-de92-4503-afcf-8a75a1271931" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../Client/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Client/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Cordenador/src/CordenadorInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Cordenador/src/CordenadorInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../100lines.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../Cordenador/src/CordenadorManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Cordenador/src/CordenadorManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Processor/ProcessorManager$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Processor/ProcessorManager$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Processor/ProcessorManager$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Processor/ProcessorManager$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Processor/ProcessorManager$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Processor/ProcessorManager$3.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Processor/ProcessorManager$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Processor/ProcessorManager$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Processor/ProcessorManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Processor/ProcessorManager.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ProcessorManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProcessorManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RequestClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RequestClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Processor2/temp.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Processor2/temp2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/temp.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/temp2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Processor2/src/ProcessorManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Processor2/src/ProcessorManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Storage/out/production/Storage/FileManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Storage/out/production/Storage/FileManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Storage/src/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Storage/src/FileManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../balancer/out/production/balancer/BalancerManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/../balancer/out/production/balancer/BalancerManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../balancer/src/BalancerInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/../balancer/src/BalancerInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../balancer/src/BalancerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../balancer/src/BalancerManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../d.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ei.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../s.bat" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +53,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/Tiago Almeida/Desktop/SDT/Project_SD/Client"
+    "last_opened_file_path": "C:/Users/Tiago/Desktop/SDT/Project_SD/Processor2"
   }
 }]]></component>
   <component name="RecentsManager">

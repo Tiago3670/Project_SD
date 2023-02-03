@@ -19,14 +19,12 @@ public class FileManager extends UnicastRemoteObject implements FileInterface  {
     ConcurrentHashMap<String, FileClass> FileMap = new ConcurrentHashMap<>();
 
     ArrayList<String> DoneRequest=new ArrayList<>();
-    //private String dir = "C:/Users/tiago/OneDrive/Área de Trabalho/EI/3 Ano/SD/teste";
     //private String dir = "C:/Users/dseabra/IdeaProjects/2022/Project_SD/teste";
-    private String dir = "C:/Users/Tiago Almeida/Desktop/SDT/storage";
-
+  //  private String dir = "C:/Users/Tiago Almeida/Desktop/SDT/storage";
+    private String dir = "C:/Users/Tiago/Desktop/SDT/storage";
 
     protected FileManager() throws RemoteException {
     }
-
     @Override
     public String SendFile(FileClass f) throws RemoteException {
             UUID identificador;
@@ -42,7 +40,6 @@ public class FileManager extends UnicastRemoteObject implements FileInterface  {
     }
     @Override
     public void SubmitOutput(FileClass f,String IDRequest,String FOutput) throws IOException {
-
 
         if(FileMap.containsKey(f.getIdentificadorFile()))
         {
@@ -67,15 +64,14 @@ public class FileManager extends UnicastRemoteObject implements FileInterface  {
         }
         return "Request não encontrado!";
    }
-
     public void ToFile(FileClass f) throws IOException {
         byte[] clientfile = Base64.getDecoder().decode(f.FileBase64().getBytes(StandardCharsets.UTF_8));
         Path serverpath = Paths.get(dir, f.getNameIdent());
         Files.write(serverpath, clientfile);
     }
-
     @Override
     public FileClass GetFile(String UIDD) throws IOException {
+
         if(FileMap.containsKey(UIDD))
         {
             return FileMap.get(UIDD);
@@ -84,6 +80,4 @@ public class FileManager extends UnicastRemoteObject implements FileInterface  {
             return null;
         }
     }
-
-
 }

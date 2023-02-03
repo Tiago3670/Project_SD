@@ -181,7 +181,6 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
                     }
                 }
             }
-
         });
         threadExec.start();
     }
@@ -209,7 +208,7 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
                         DatagramPacket packet = new DatagramPacket(buf, buf.length, group, 4446);
                         socket.send(packet);
                         socket.close();
-                        sleep(3000);
+                        Thread.sleep(3000);
                     } catch (InterruptedException | IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -277,7 +276,7 @@ public class ProcessorManager extends UnicastRemoteObject implements ProcessorIn
                         stopTheard=true;
                     }
                     try {
-                        sleep(10000);
+                        Thread.sleep(10000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
