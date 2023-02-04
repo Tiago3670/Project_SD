@@ -26,8 +26,7 @@ public class BalancerManager extends UnicastRemoteObject implements BalancerInte
     protected byte[] buf2 = new byte[256];
     volatile boolean Cordenador = true;
     volatile String linkCordenador=null;
-    int failsCordenador = 0;
-
+    volatile int failsCordenador = 0;
     CordenadorInterface CordenadorInte;
     protected BalancerManager() throws IOException, NotBoundException {
         CheckCordenador();
@@ -125,7 +124,7 @@ public class BalancerManager extends UnicastRemoteObject implements BalancerInte
     }
 
     @Override
-    public void CordenadorFail() throws RemoteException {
+    public synchronized void CordenadorFail() throws RemoteException {
         failsCordenador++;
         if (failsCordenador == ProcessorMap.size()) {
             Cordenador = false;
@@ -133,7 +132,7 @@ public class BalancerManager extends UnicastRemoteObject implements BalancerInte
         }
     }
 
-    public synchronized UUID SendRequest(RequestClass r) throws IOException, NotBoundException, InterruptedException {
+    public UUID SendRequest(RequestClass r) throws IOException, NotBoundException, InterruptedException {
         if (Cordenador == true) {
             CordenadorInterface CordenadorInte = (CordenadorInterface) Naming.lookup(linkCordenador);
             int x = 0;

@@ -22,22 +22,22 @@ public class ProcessorClass implements Serializable
         Link = "rmi://localhost:" + port + "/Processor";
         estado=Instant.now();
     }
-    public void setProcessorBackup(String link){processorBackup=link;}
+    public synchronized void setProcessorBackup(String link){processorBackup=link;}
 
-    public String getProcessorBackup() {
+    public synchronized String getProcessorBackup() {
         return processorBackup;
     }
 
-    public void setEstado(Instant actualiza) {
+    public synchronized void  setEstado(Instant actualiza) {
         this.estado =actualiza;
     }
-    public Instant getEstado(){return  this.estado;}
+    public synchronized Instant  getEstado(){return  this.estado;}
 
     public void SetDesativo()
     {
         this.Link="NONE";
     }
-    public UUID getIdentificador()
+    public synchronized UUID getIdentificador()
     {
         return this.Identificador;
     }
@@ -45,14 +45,14 @@ public class ProcessorClass implements Serializable
         return this.Port;
     }
 
-    public String getLink() {
+    public synchronized String getLink() {
         return this.Link;
     }
 
-    public Double getCpuusage() {
+    public synchronized Double getCpuusage() {
         return this.cpuusage;
     }
-    public void setCpuusage(Double cpuusage)
+    public synchronized void setCpuusage(Double cpuusage)
     {
         this.cpuusage=cpuusage;
     }

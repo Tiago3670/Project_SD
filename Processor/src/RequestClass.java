@@ -44,7 +44,7 @@ public class RequestClass implements Serializable {
     {
         return this.IdentificadorFile;
     }
-    public  int getEstado()
+    synchronized public  int getEstado()
     {
         return this.Estado;
     }
@@ -52,7 +52,7 @@ public class RequestClass implements Serializable {
     {
         this.Estado=3;
     }
-    public  void setEstadoConcluido()
+    synchronized public  void setEstadoConcluido()
     {
         this.Estado=2;
     }

@@ -22,13 +22,11 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
     protected byte[] buf = new byte[256];
     protected byte[] buf2 = new byte[256];
     volatile boolean balancer=false;
-    volatile boolean processors=false;
 
     protected CordenadorManager() throws IOException, NotBoundException {
         ProcessorReciver();
         CheckProcessors();
         SendAliveBeat();
-
     }
 
     public synchronized void SendAliveBeat()
@@ -50,12 +48,10 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
                         }
                     }
                 }
-
         });
-
         threadAliveCordenador.start();
     }
-    public synchronized void ProcessorReciver () throws IOException, NotBoundException {
+    public synchronized void ProcessorReciver() throws IOException, NotBoundException {
         Thread threadCordenador = (new Thread() {
             public void run()
             {
@@ -80,7 +76,6 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
                             double CPUusage=Double.parseDouble(portstr[1]);
                             ProcessorMap.put(Link, new ProcessorClass(Integer.parseInt(portstr[0])));
                             System.out.println("add->"+Link);
-                            processors=true;
                             SendProcessors(Link,CPUusage);
                         } else if (portstr[2].equals("update")) //upadate processor
                         {
@@ -104,11 +99,10 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
         });
         threadCordenador.start();
     }
-    public synchronized void CheckProcessors( )
+    public synchronized void CheckProcessors()
     {
         Thread theardcheckativos = (new Thread() {
             public void run() {
-
                 while (true) {
                     if(ProcessorMap.size()>0)
                     {
@@ -173,7 +167,7 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
         Process.EXECBACKUP(identificador);
     }
     @Override
-    public  synchronized void SendProcessors(String Link,Double CpuUsage) throws RemoteException, MalformedURLException, NotBoundException {
+    public synchronized void SendProcessors(String Link,Double CpuUsage) throws RemoteException, MalformedURLException, NotBoundException {
         if(balancer==true) {
             BalancerInte = (BalancerInterface) Naming.lookup("rmi://localhost:2023/Balancer");
             ProcessorClass p = null;
@@ -184,7 +178,7 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
             }
         }
     }
-    public  synchronized ProcessorClass BestProcessor() throws RemoteException
+    public synchronized ProcessorClass BestProcessor() throws RemoteException
     {
         String firstKey = ProcessorMap.keySet().iterator().next();
         best = ProcessorMap.get(firstKey);

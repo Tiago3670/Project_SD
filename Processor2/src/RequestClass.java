@@ -5,13 +5,11 @@ import java.util.UUID;
 
 public class RequestClass implements Serializable {
     private static final long serialVersionUID = 5902050570918905273L;
-
     private UUID IdentificadorRequest;
     private String  Script;
     private String IdentificadorFile;
     private  UUID IdentificadorProcessor;
     private  String LinkProcessorBackup;
-
     private Instant timeCreation;
     private int Estado; //varia entre 1->em espera 0->concluido
 
@@ -24,6 +22,7 @@ public class RequestClass implements Serializable {
         this.IdentificadorProcessor=IdentificadorProcessor;
         this.timeCreation=Instant.now();
     }
+    Instant getTimeCreation() {return timeCreation;}
     void setIdentificadorProcessorBackup(String Processor) {LinkProcessorBackup=Processor;}
     String getIdentificadorProcessorBackup()
     {
@@ -45,7 +44,7 @@ public class RequestClass implements Serializable {
     {
         return this.IdentificadorFile;
     }
-    public  int getEstado()
+    synchronized public  int getEstado()
     {
         return this.Estado;
     }
@@ -53,7 +52,7 @@ public class RequestClass implements Serializable {
     {
         this.Estado=3;
     }
-    public  void setEstadoConcluido()
+    synchronized public  void setEstadoConcluido()
     {
         this.Estado=2;
     }
