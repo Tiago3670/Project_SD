@@ -36,8 +36,7 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
         Thread threadAliveCordenador = (new Thread() {
             public void run() {
                 while (true) {
-                    if (processors == true) {
-                        String message = "ALIVE";
+                        String message = "2026";
                         try {
                             socket2 = new DatagramSocket();
                             group2 = InetAddress.getByName("239.0.0.0");
@@ -45,13 +44,13 @@ public class CordenadorManager extends UnicastRemoteObject implements Cordenador
                             DatagramPacket packet = new DatagramPacket(buf2, buf2.length, group2, 4447);
                             socket2.send(packet);
                             socket2.close();
-                            Thread.sleep(1000);
+                            Thread.sleep(10000);
                         } catch (InterruptedException | IOException e) {
                             throw new RuntimeException(e);
                         }
                     }
                 }
-            }
+
         });
 
         threadAliveCordenador.start();

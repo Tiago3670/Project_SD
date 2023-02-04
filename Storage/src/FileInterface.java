@@ -9,5 +9,5 @@ public interface FileInterface extends Remote {
     void SubmitOutput(FileClass f,String IDRequest,String FOutput) throws IOException;
     void ToFile(FileClass f) throws IOException;
     FileClass GetFile(String UIDD) throws IOException;
-    String GetOutput(String IdentificadorRequest) throws IOException;
+    String GetResult(String IdentificadorRequest) throws IOException;
 }

@@ -49,11 +49,10 @@ public class FileManager extends UnicastRemoteObject implements FileInterface  {
             out.flush();
             out.close();
             DoneRequest.add(IDRequest);
-
         }
 
     }
-   public String GetOutput(String IdentificadorRequest) throws IOException
+   public String GetResult(String IdentificadorRequest) throws IOException
    {
         for(int i=0;i<DoneRequest.size();i++)
         {

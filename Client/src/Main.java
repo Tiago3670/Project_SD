@@ -72,7 +72,7 @@ public class Main {
    {
        System.out.println("Qual o request?");
        String IdentificadorRequest=scan.next();
-       String result= FileInte.GetOutput(IdentificadorRequest);
+       String result= FileInte.GetResult(IdentificadorRequest);
        System.out.println(result);
        System.out.println("Press Enter to continue…");
        System.in.read();
