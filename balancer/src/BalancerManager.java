@@ -43,7 +43,6 @@ public class BalancerManager extends UnicastRemoteObject implements BalancerInte
                     while (true) {
                         DatagramPacket packet = new DatagramPacket(buf2, buf2.length);
                         socket2.receive(packet);
-                        System.out.println(received);
                         if (received != null) {
                            String link = "rmi://localhost:" + received + "/Cordenador";
                             Cordenador = true;
