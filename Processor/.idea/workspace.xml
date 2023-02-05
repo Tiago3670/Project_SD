@@ -5,16 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e285521d-de92-4503-afcf-8a75a1271931" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../Cordenador/out/production/Cordenador/CordenadorManager$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Cordenador/out/production/Cordenador/CordenadorManager$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Cordenador/out/production/Cordenador/CordenadorManager$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Cordenador/out/production/Cordenador/CordenadorManager$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Cordenador/out/production/Cordenador/CordenadorManager$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Cordenador/out/production/Cordenador/CordenadorManager$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Cordenador/out/production/Cordenador/CordenadorManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Cordenador/out/production/Cordenador/CordenadorManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Cordenador/out/production/Cordenador/ProcessorClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Cordenador/out/production/Cordenador/ProcessorClass.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Processor2/out/production/Processor2/RequestClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Processor2/out/production/Processor2/RequestClass.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../balancer/out/production/balancer/BalancerManager$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../balancer/out/production/balancer/BalancerManager$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../balancer/out/production/balancer/BalancerManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/../balancer/out/production/balancer/BalancerManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../balancer/src/BalancerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../balancer/src/BalancerManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
